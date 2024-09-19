@@ -6,5 +6,6 @@ export interface Posts {
     likes:       number;
     username:    string;
     id:          number;
+    profile_pic: string;
 }
 

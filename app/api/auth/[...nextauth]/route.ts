@@ -1,3 +1,4 @@
+
 import NextAuth from "next-auth"
 import GitHubProvider from "next-auth/providers/github";
 
@@ -8,12 +9,10 @@ const handler = NextAuth({
           clientSecret: process.env.GITHUB_SECRET as string,
         })
       ],
-      callbacks: {
-        async redirect({ url, baseUrl }) {
-          // Redirige a /handlesession después del inicio de sesión
-          return '/handleSession'
-        }
-    }
+      pages: {
+        signIn: "/login"
+      },
+      
       
 })
 
