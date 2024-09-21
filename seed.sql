@@ -2,9 +2,9 @@
 --  CONSULTAS DE CREACION DE TABLAS
 CREATE TABLE users(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
     name TEXT NOT NULL,
     email TEXT NOT NULL,
-    password TEXT NOT NULL,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     profile_pic TEXT DEFAULT "https://res.cloudinary.com/drsdz7hde/image/upload/v1725059307/user-profile-icon-free-vector_lij3vx.jpg"
@@ -89,6 +89,7 @@ SELECT users.name, language.name la from users
 INNER JOIN users_languages ON users.id = users_languages.user_id
 INNER JOIN language ON users_languages.language_id = language.id;
 
+SELECT * FROM language;
 
 -- ⬇️INSERTS⬇️
 
@@ -105,7 +106,7 @@ DELETE FROM follow_users WHERE user_id = 1 AND followed_user_id = 2;
 INSERT INTO SHARED_POSTS (id_post, user_id, comment, created_at) VALUES (1, 2, "coampartodo 1", CURRENT_TIMESTAMP);
 
 -- CREAR UN USUARIO
-INSERT INTO users (name, email, password, created_at) VALUES ("andres", "andres@gmail.com", "123456", CURRENT_DATE);
+INSERT INTO users (name, email, password, profile_pic, created_at) VALUES ("andres", "andres@gmail.com", "123456", CURRENT_DATE);
 
 --INSERTAR LOS POSTS
 INSERT INTO posts (title, code, id_language, image, created_at, updated_at, author_id) VALUES ("Hello World", "console.log('Hello World')", 2, "https://res.cloudinary.com/drsdz7hde/image/upload/v1725058393143/user-profile-icon-free-vector_lij3vx.jpg", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2);

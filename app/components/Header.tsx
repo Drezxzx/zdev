@@ -25,13 +25,13 @@ export default function HeaderDesktop() {
             <div className="flex bg-slate-400/50 p-1 items-center gap-x-4">
                 <li><img className="size-16 rounded-full" src={session?.user?.image as string} alt="Imagen de usario" /></li>
                <li>{session?.user?.name}</li>
-               <li onClick={() => {signOut({callbackUrl: "/"})}}>Logout</li>
+               <li className="cursor-pointer" onClick={() => {signOut({callbackUrl: "/"})}}>Logout</li>
             </div>
         )
     }
     }
     return (
-      <header className="w-screen ">
+      <header className="w-screen h-24 ">
         <nav className="flex justify-between w-full items-center p-4">
             <ul className="flex w-full justify-between items-center gap-x-4">
                 <li><a href="/">Home</a></li>
