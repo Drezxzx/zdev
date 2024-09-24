@@ -1,7 +1,8 @@
 "use client"
+
 import { languajes } from "@/app/libs/languajes";
 import { useSession } from "next-auth/react"
-import { FormEvent, use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 interface Props {
     image: boolean | undefined;
@@ -12,6 +13,7 @@ interface Props {
 export default function CreatePost() {
     const { data: session } = useSession()
     const [content, setContent] = useState("")
+    const [hastags, setHastags] = useState<string[]>([])
     const [author, setAuthor] = useState("")
     const [code, setCode] = useState("")
     const [id_language, setIdLanguage] = useState<string>("")
@@ -33,7 +35,7 @@ export default function CreatePost() {
     const handleClickImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const $image = document.getElementById("imageLabel") as HTMLInputElement
 
-        if ($image && postMode.image) {
+        if ($image) {
             $image.click()
         }else{
             setImagePreview("")

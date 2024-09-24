@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 import { signOut, useSession } from "next-auth/react"
+import Link from "next/link";
  import { useEffect, useState } from "react";
 export default function HeaderDesktop() {
 
@@ -23,8 +24,13 @@ export default function HeaderDesktop() {
     } else {
         return(
             <div className="flex bg-slate-400/50 p-1 items-center gap-x-4">
-                <li><img className="size-16 rounded-full" src={session?.user?.image as string} alt="Imagen de usario" /></li>
-               <li>{session?.user?.name}</li>
+              
+                  <Link  className="flex justify-center items-center gap-x-2" href="/profile/[username]" as={`/profile/${session?.user?.username}`}>
+                    <img className="size-16 rounded-full" src={session?.user?.image as string} alt="Imagen de usario" />
+                    <span>{session?.user?.username}</span>
+                  </Link>
+                
+               
                <li className="cursor-pointer" onClick={() => {signOut({callbackUrl: "/"})}}>Logout</li>
             </div>
         )

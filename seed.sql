@@ -44,6 +44,23 @@ CREATE TABLE posts(
     FOREIGN KEY(id_language) REFERENCES language(id)
 );
 
+CREATE TABLE hastags(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    FOREIGN KEY(id) REFERENCES posts(id)
+);
+
+CREATE TABLE users_hastags(
+    user_id INTEGER NOT NULL,
+    hastag_id INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(hastag_id) REFERENCES hastags(id)
+);
+
+
+
 CREATE TABLE notifications(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
@@ -72,12 +89,11 @@ CREATE TABLE SHARED_POSTS(
     FOREIGN KEY(id_post) REFERENCES posts(id),
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
-
 CREATE TABLE follow_users(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     followed_user_id INTEGER NOT NULL,
     created_at TEXT NOT NULL,
+    PRIMARY KEY(user_id, followed_user_id),
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(followed_user_id) REFERENCES users(id)
 );
@@ -85,9 +101,10 @@ CREATE TABLE follow_users(
 -- ⬇️consultas select⬇️
 
 -- Devuelve el nombre de los usuarios y el nombre de su lenguajes preferidos
-SELECT users.name, language.name la from users
+SELECT  language.name la from users
 INNER JOIN users_languages ON users.id = users_languages.user_id
-INNER JOIN language ON users_languages.language_id = language.id;
+INNER JOIN language ON users_languages.language_id = language.id
+WHERE users.username = "andres";
 
 SELECT * FROM language;
 

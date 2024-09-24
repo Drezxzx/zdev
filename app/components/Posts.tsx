@@ -1,28 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { type Posts } from "../types/type";
+import { type PostsType } from "../types/type";
 import LikeButton from "./LikeButton";
 import CodeExample from "./CodeExampler";
 import CreatePost from "./CreatePost";
 
 
-export default function Posts() {
-    const [posts, setPosts] = useState<Posts[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        setIsLoading(true);
-        fetch("/api/posts")
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setIsLoading(false);
-                setPosts(data);
-            });
-    }, []);
+export default function Posts({posts, isLoading, isProfile}: {posts: PostsType[], isLoading: boolean, isProfile: boolean}) {
 
     if (isLoading) {
         return <div className="flex flex-col gap-5 w-screen h-screen inset-0 absolute items-center justify-center bg-gray-900">
@@ -33,7 +18,7 @@ export default function Posts() {
 
     return (
         <div className="flex flex-col gap-7 max-w-screen-md w-full items-center justify-center">
-            <CreatePost/>
+            {!isProfile && <CreatePost/>}
 
             <article className="flex flex-col w-full items-center justify-center">
                 {posts.map((post, i) => (

@@ -4,6 +4,7 @@ import HeaderDesktop from "./components/Header";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <App>
+        <Toaster position="top-right" expand={true} richColors/>
           {children}
         </App>
          
