@@ -28,8 +28,16 @@ export default function CreatePost() {
     }, [session])
     
     const handleClickLanguage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const $selct = document.getElementById("id_language") as HTMLSelectElement
         e.preventDefault();
         setpostMode({...postMode, code : !postMode.code})
+        if (!postMode.code) {
+            setIdLanguage("")
+            setCode("")
+        }
+        if ($selct) {
+            $selct.click()
+        }
     }
 
     const handleClickImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -44,6 +52,14 @@ export default function CreatePost() {
         e.preventDefault();
 
         setpostMode({...postMode, image: !postMode.image})
+    }
+
+    const ButtonUpload = () => {
+        if (content.length > 0|| code.length > 0 || imagePreview.length > 0) {
+            return (
+                <button onClick={handleSubmit} className="bg-gray-500 text-white px-4 py-2 rounded-lg">Upload</button>
+            )
+        } 
     }
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +92,7 @@ export default function CreatePost() {
         return (
             <select 
             onChange={handleLanguage}
+            id="id_language"
             value={languajes.find(lang => lang.id.toString() === id_language)?.id}
             className="w-1/4 p-2 min-h-[40px] max-h-[40px] focus:outline-none bg-[#28343E] text-white placeholder-gray-400 rounded-lg resize-none overflow-hidden">
                 {
@@ -91,8 +108,8 @@ export default function CreatePost() {
         e.preventDefault();
         const formData = new FormData();
         formData.append("title", content);
-        formData.append("code", code);
-        formData.append("file", image as File);
+        if(postMode.code){formData.append("code", code);}
+        if(postMode.image){formData.append("file", image as File);}
         formData.append("author_email", author);
         formData.append("id_language", id_language);
 
@@ -170,7 +187,9 @@ export default function CreatePost() {
                           text-white px-4 py-2 rounded-lg`}>
                             Code
                             </button>
-                        <button onClick={handleSubmit} className="bg-gray-500 text-white px-4 py-2 rounded-lg">Upload</button>
+
+                        <ButtonUpload />
+                       
                     </div>
                 </form>
             </div>

@@ -9,6 +9,10 @@ export interface PostsType {
     profile_pic: string;
 }
 
+export interface FolloWer {
+    follower: boolean;
+}
+
 export interface Language {
     id: number;
     img : string;
@@ -43,4 +47,8 @@ export interface LanguajeType {
 export interface DataLanguage {
     id: number;
     name: string;
+}
+
+export interface FollowRes {
+    success: boolean;
 }

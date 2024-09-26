@@ -1,5 +1,10 @@
 export const languajes = [
     {
+        "id": 2000,
+        "name": "language",
+        "img" : ""
+    },
+    {
         "id": 1,
         "name": "python",
         "img" : "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"

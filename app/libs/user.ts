@@ -1,5 +1,5 @@
 
-import {  LanguajeType, User, type PostsType } from "../types/type";
+import {  FolloWer, FollowRes, LanguajeType, User, type PostsType } from "../types/type";
 
 export async function getPostByUsername(username: string) {
     const response = await fetch(`/api/posts?username=${username}`);
@@ -14,4 +14,37 @@ export async function getUser(username: string) {
     let data = await response.json() as User;
     data.languages = resFavoritesLanguages.data;
     return data;
+}
+
+export async function checkIfFollower({username, followedUser}: {username: string | undefined, followedUser: string}) {
+    const res = await fetch(`/api/users?username=${username}&followedUser=${followedUser}`);  
+    return await res.json() as FolloWer;
+}
+
+export async function followUser({username, followedUser}: {username: string | undefined, followedUser: string}) {
+    const res = await fetch(`/api/users/follow`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            followedUser
+        })
+    });
+    return await res.json() as FollowRes;  
+}
+
+export async function unFollowUser({username, followedUser}: {username: string | undefined, followedUser: string}) {
+    const res = await fetch(`/api/users/follow`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            followedUser
+        })
+    });
+    return await res.json() as FollowRes;  
 }

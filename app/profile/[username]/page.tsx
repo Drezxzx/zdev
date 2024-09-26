@@ -10,11 +10,12 @@ import { SectionProfile } from "@/app/components/SectionProfile";
 export default function Profile({ params }: { params: { username: string } }) {
     const [isMe, setIsMe] = useState(false);
     const [dataUser, setDataUser ] = useState<DataUser>();
+    const [followers, setFollowers] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(true);
     const [languages, setLanguages] = useState<DataLanguage[]>([]);
     const [posts, setPosts] = useState<PostsType[]>([]);
     const { data: session } = useSession();
-    console.log(session);
+    
 
     useEffect(()=>{
         setIsLoading(true);
@@ -27,22 +28,21 @@ export default function Profile({ params }: { params: { username: string } }) {
         getUser(params.username)
             .then((data) => {
                 setDataUser(data.data);
+                setFollowers(data.data.followers);
                 setLanguages(data.languages);
+                setIsLoading(false);
             })
 
-        if (session && session.user.username === params.username) {
-            setIsMe(true);
-            return;
-        }
-    }, [session])
-    console.log(dataUser)
+       
+    }, [])
+    
 
     
     return (
         <>
             <HeaderDesktop/>
             <main className="w-screen h-auto  flex flex-col items-center justify-center">
-               {dataUser && <SectionProfile languajes={languages} user={dataUser} isMe={isMe} />}
+               {dataUser && <SectionProfile setFollowers={setFollowers} languajes={languages} user={dataUser} isMe={isMe} followers={followers} />}
                 <Posts isProfile={true} posts={posts} isLoading={isLoading} />
             </main>
         </>

@@ -28,7 +28,7 @@ export default function Posts({posts, isLoading, isProfile}: {posts: PostsType[]
                         <div className="flex gap-3 flex-col items-start">
                           <h2>{post.username}</h2>
                           <h2>{post.title}</h2>
-                          {post.code.length > 0 && <CodeExample language={post.name} codeString={post.code} />}
+                          {post.code && post.code.length > 0 && <CodeExample language={post.name} codeString={post.code} />}
                          {post.image  && <img className="w-[30rem] h-[30rem] object-contain" src={post.image} alt="Imagen de un post" /> } 
 
                           <LikeButton idPost={post.id} actualLikes={post.likes} />

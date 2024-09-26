@@ -7,7 +7,7 @@ export async function GET(request: Request) {
         const response = await client.execute({sql : `SELECT  language.name, language.id from users
         INNER JOIN users_languages ON users.id = users_languages.user_id
         INNER JOIN language ON users_languages.language_id = language.id
-        WHERE users.username = ?;`, args: [username]});
+        WHERE users.username = ? limit 6  ;`, args: [username]});
 
         
 
@@ -50,6 +50,6 @@ export async function POST(request: Request) {
 }
 
 async function userHasLanguage(email: any, language_id: any) {
-    const response = await client.execute({sql : "SELECT * FROM users_languages WHERE (SELECT id FROM users WHERE email = ?) AND language_id = ?;", args: [email, language_id]});
+    const response = await client.execute({sql : "SELECT * FROM users_languages WHERE user_id = (SELECT id FROM users WHERE email = ?) AND language_id = ?;", args: [email, language_id]});
     return response.rows[0] ? true : false;
 }
