@@ -1,8 +1,6 @@
 "use client";
-
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState, useOptimistic } from "react";
 import { checkIfFollower, followUser, unFollowUser } from "../libs/user";
 
 export default function ButtonFollowUnfollow({
@@ -17,88 +15,59 @@ export default function ButtonFollowUnfollow({
   const { data: session } = useSession();
   const [isFollower, setIsFollower] = useState(false);
   const [initialState, setInitialState] = useState<boolean>(false);
-  const [timer, setTimer] = useState<NodeJS.Timeout>();
+
+  // Hook para estado optimista de los seguidores
 
   useEffect(() => {
-    
     checkIfFollower({ username: session?.user?.username, followedUser })
       .then((data) => {
-        console.log(data);
         setIsFollower(data.follower);
         setInitialState(data.follower);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [session, followedUser]);
 
-  const handleUnFollow = async () => {
-    console.log(isFollower);
-    setIsFollower(!isFollower);
-    let initialFollowers = followers;
-    setNumberFollowers(initialFollowers - 1);
-    timer && clearTimeout(timer);
-
-    let timerPetition = setTimeout(() => {
-      {
-        unFollowUser({ username: session?.user?.username, followedUser })
-          .then((data) => {
-            if (data.success) {
-              console.log(data);
-              setIsFollower(false)
-              setInitialState(false);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-            setIsFollower(initialState);
-            setNumberFollowers(initialFollowers);
-          });
-      }
-    }, 3000);
-    console.log(isFollower);
-    setTimer(timerPetition);
-  };
+  const [optimisticIsFollower, setOptimisticIsFollower] = useOptimistic(
+    initialState,
+    (prevIsFollower: boolean, newState: boolean) => newState 
+  );
 
   const handleFollow = async () => {
-    console.log(isFollower);
-    let initialFollowers = followers;
-    setNumberFollowers(initialFollowers + 1);
-    setIsFollower(!isFollower);
+    setOptimisticIsFollower(true); 
+    setNumberFollowers((prev) => prev + 1);
 
-    timer && clearTimeout(timer);
-
-    let timerPetition = setTimeout(() => {
-      
-      {
-        followUser({ username: session?.user?.username, followedUser })
-          .then((data) => {
-            if (data.success) {
-              setIsFollower(true)
-              setInitialState(true);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-            setNumberFollowers(initialFollowers);
-            setIsFollower(initialState);
-          });
-      }
-      console.log(isFollower);
-    }, 3000);
-  
-    setTimer(timerPetition);
+    try {
+      await followUser({ username: session?.user?.username, followedUser });
+    } catch (error) {
+      // Si hay error, revertir la acción optimista
+      setOptimisticIsFollower(false);
+      setNumberFollowers((prev) => prev - 1);
+      console.error(error);
+    }
   };
 
-  
+  const handleUnFollow = async () => {
+    setOptimisticIsFollower(false); // Actualiza optimistamente a "no siguiendo"
+    setNumberFollowers((prev) => prev - 1);
 
-  
+    try {
+      await unFollowUser({ username: session?.user?.username, followedUser });
+    } catch (error) {
+      // Si hay error, revertir la acción optimista
+      setOptimisticIsFollower(true);
+      setNumberFollowers((prev) => prev + 1);
+      console.error(error);
+    }
+  };
+
   return (
     <button
-      onClick={isFollower ? handleUnFollow : handleFollow}
+      onClick={optimisticIsFollower ? handleUnFollow : handleFollow}
       className="bg-blue-500 text-white px-4 py-2 rounded-lg"
     >
-      {isFollower ? "Dejar de seguir" : "Seguir"}
+      {optimisticIsFollower ? "Dejar de seguir" : "Seguir"}
     </button>
   );
 }

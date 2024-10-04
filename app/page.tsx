@@ -4,6 +4,7 @@ import { type PostsType } from "./types/type";
 import HeaderDesktop from "./components/Header";
 import Posts from "./components/Posts";
 import { useState } from "react";
+import React from "react";
 
 export  default  function Home() {
   const [isLoading, setIsLoading] = useState(true);

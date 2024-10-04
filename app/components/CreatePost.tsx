@@ -162,7 +162,7 @@ export default function CreatePost() {
                                 id="code"
                                 onChange={handleInput}
                                 rows={1}
-                                maxLength={1000}
+                                maxLength={2000}
                                 placeholder="writte your code"
                             />
                             <SelectLanguajes/>

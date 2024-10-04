@@ -18,7 +18,8 @@ export const SectionProfile = ({
   setFollowers: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   
-
+  console.log(isMe);
+  
   const ImgLanguaje = ({ lang }: { lang: DataLanguage }) => {
     if (!arrlanguages.find((la) => la.id === lang.id)?.img) {
       return;
@@ -41,6 +42,7 @@ export const SectionProfile = ({
         </button>
       );
     }
+
     return (
       <ButtonFollowUnfollow
         followedUser={user.username}
@@ -83,12 +85,13 @@ export const SectionProfile = ({
         </article>
       </article>
       <article className="bg-[#1B2730]  rounded-lg w-[40%]">
+      <h1 className="text-center my-1 font-bold">Lenguajes Favoritos</h1>
         <div className=" grid grid-cols-2 p-2 gap-2 w-full h-auto ">
           {languajes.map((lang) => {
             return (
               <div
                 title="Lenguajes Favoritos"
-                className="text-white cursor-default font-semibold lg:gap-x-2 gap-x-1 flex-row rounded-full py-4 px-4 bg-white/5 hover:scale-110 transition hover:bg-white/10 border border-white/10 flex justify-between items-center mg:gap-x-4 mg:py-3 mg:px-4 text-xs mg:text-base max-w-[200px] overflow-hidden"
+                className="text-white cursor-default font-semibold lg:gap-x-2 gap-x-1 flex-row rounded-full py-2 px-2 bg-white/5 hover:scale-110 transition hover:bg-white/10 border border-white/10 flex justify-between items-center mg:gap-x-4 mg:py-3 mg:px-4 text-xs mg:text-base max-w-[200px] overflow-hidden"
                 key={lang.id}
               >
                 <h2 className="text-wrap truncate max-w-[100px]">

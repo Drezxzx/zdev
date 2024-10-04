@@ -24,11 +24,11 @@ CREATE TABLE users_languages(
 );
 
 CREATE TABLE users_likes(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     post_id INTEGER NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
-    FOREIGN KEY(post_id) REFERENCES posts(id)
+    FOREIGN KEY(post_id) REFERENCES posts(id),
+    PRIMARY KEY(user_id, post_id)
 );
 
 CREATE TABLE posts(

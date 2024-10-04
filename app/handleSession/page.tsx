@@ -8,7 +8,7 @@ import { Language, resInsertLanguage } from "../types/type"
 
 export default function HandleSession() {
   const { data: session } = useSession()
-  const initiallanguages = languajes.filter((lang, i) => i <= 15)
+  const initiallanguages = languajes.filter((lang, i) => i <= 15 && lang.id !== 2000)
   const [filteredLanguages, setFilteredLanguages] = useState(initiallanguages)
   const [selectedLanguajes, setSelectedLanguajes] = useState<Language[]>([])
   const router = useRouter()
@@ -27,7 +27,7 @@ export default function HandleSession() {
     }
     setFilteredLanguages(initiallanguages)
     
-  }
+  } 
 
   const handleClick = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
