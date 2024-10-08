@@ -21,7 +21,7 @@ export default function ComentsSection({ idPost, post }: { idPost: number, post:
     return (
         <div className="flex gap-3 flex-col justify-center items-center">
             {!isLoading && <span className="text-slate-400/80">{numberComents} coments</span>}
-            <Link href={`/detail/${idPost}`}><IconMessageCircle /></Link>
+            <Link href={`/home/detail/${idPost}`}><IconMessageCircle /></Link>
         </div>
     )
 }

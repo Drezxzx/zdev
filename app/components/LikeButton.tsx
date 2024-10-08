@@ -4,12 +4,11 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Like from "../libs/like";
 
-export default function LikeButton({ idPost, actualLikes }: { idPost: number, actualLikes: number }) {
+export default function LikeButton({ idPost, actualLikes, col }: { idPost: number, actualLikes: number, col : undefined | boolean }) {
     const [likes, setLikes] = useState(actualLikes);
     const [isLiked, setIsLiked] = useState(false);
     const { data: session } = useSession();
 
-    // Este efecto se ejecuta cuando la sesión cambia
     useEffect(() => {
         if (session?.user) {
             Like.isLiked(idPost.toString(), session?.user.email as string)
@@ -40,12 +39,24 @@ export default function LikeButton({ idPost, actualLikes }: { idPost: number, ac
         }
     };
 
+   if (col) {
     return (
         <div className="flex gap-3 flex-col justify-center items-center">
             <h2 className="text-slate-400/80">{likes} likes</h2>
             <button onClick={handleClick}>
                 <Button />
             </button>
+            
         </div>
     );
+   } 
+
+   return (
+    <div className="flex gap-3 justify-center items-center">
+        <h2 className="text-slate-400/80">{likes} likes</h2>
+        <button onClick={handleClick}>
+            <Button />
+        </button>
+    </div>
+);
 }

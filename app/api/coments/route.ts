@@ -17,6 +17,20 @@ export async function GET(req: Request) {
     }
 }
 
+export async function POST(req: Request) {
+    const {post_id, comment, username} = await req.json();
+    try {
+        const res = await client.execute({
+            sql: "INSERT INTO coments (post_id, user_id, comment, created_at) VALUES (?, (SELECT id FROM users WHERE username = ?), ?, CURRENT_TIMESTAMP);",
+            args: [post_id, username, comment]
+        })
+        return new Response(JSON.stringify({ success: res.rowsAffected > 0 }), { status: 200 });
+    } catch (error) {
+        console.log(error);
+        return new Response(JSON.stringify({ error: "Error al insertar comentario" }), { status: 500 });
+    }
+}
+
 
 
 async function getNumberComents(postId: string) {

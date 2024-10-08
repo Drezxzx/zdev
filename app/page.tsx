@@ -1,33 +1,24 @@
-"use client"
-import { useEffect } from "react";
-import { type PostsType } from "./types/type";
-import HeaderDesktop from "./components/Header";
-import Posts from "./components/Posts";
-import { useState } from "react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import React from "react";
 
-export  default  function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [posts, setPosts] = useState<PostsType[]>([]);
+export default async function Home() {
+ const session = await getServerSession();
+console.log(session);
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch("/api/posts")
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            setIsLoading(false);
-            setPosts(data);
-        });
-  }, []);
+if (!session) {
+  redirect("/login");
+}else{
+  redirect("/home")
+}
+
+
+
 
   return (
     <>
-      <HeaderDesktop/>
-      <main className="w-screen h-auto  flex flex-col items-center justify-center">
-        <Posts isProfile={false} posts={posts} isLoading={isLoading} />
-      </main>
+
     </>
-    
+
   );
 }

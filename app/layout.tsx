@@ -21,11 +21,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-        <App>
-        <Toaster position="top-right" expand={true} richColors/>
-          {children}
-        </App>
-         
+        {children}   
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import FullScreenCode from './FullScreenCode';
 export default function CodeExample({ language, codeString }: { language: string; codeString: string }) {
  
   const [copied, setCopied] = useState<boolean>(false);
+  const [isBlocked, setIsBlocked] = useState<boolean>(true);
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
 
   const formattedCode = codeString.replace(/\\n/g, '\n'); 
@@ -25,13 +26,13 @@ export default function CodeExample({ language, codeString }: { language: string
     setIsFullScreen(!isFullScreen);
   };
 
-  // Verificar si es modo fullscreen y ajustar el overflow del body
     const body = document.querySelector('body');
     if (body) {
       body.style.overflow = 'auto';
     }
+  const overflow = isBlocked ? "overflow-hidden cursor-pointer" : "overflow-auto cursor-text"
     return (
-      <div className="max-w-2xl z-50 overflow-auto max-h-[80vh] rounded-lg bg-gray-800 p-2 relative">
+      <div onClick={()=>{setIsBlocked(!isBlocked)}} className={`max-w-2xl ${overflow}  z-50 max-h-[80vh] rounded-lg bg-gray-800 p-2 relative`}>
         <div className='w-full flex justify-between items-center'>
           <button className={`transition-all text-white px-4 ${copied ? "bg-green-500" : ""} py-2 rounded-lg`}onClick={handleCoppy}>{copied ? <IconCheck /> : <IconCopy />}</button>
           <button onClick={handleIsfullScreen} className="hover:scale-110 transition-all cursor-zoom-in"><IconArrowsDiagonal2 /></button>

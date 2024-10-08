@@ -53,3 +53,18 @@ export interface DataLanguage {
 export interface FollowRes {
     success: boolean;
 }
+
+export interface PostDetail {
+    post:     PostsType;
+    comments: Comment[];
+}
+
+export interface Comment {
+    created_at:  Date;
+    profile_pic: string;
+    id:          number;
+    comment:     string;
+    likes:       number;
+    username:    string;
+}
+

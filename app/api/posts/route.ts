@@ -2,23 +2,32 @@ import client from "@/app/conn/conn";
 import cloudinary from "@/app/conn/cloudinary";
 import { UploadApiResponse } from "cloudinary";
 import { Readable } from "stream";
+import auth from "@/app/libs/auth";
 
 export async function GET(req : Request) {
     const url = new URL(req.url)
     const username = url.searchParams.get("username") as string
-    const isLogged = url.searchParams.get("isLogged") as string
-    
-    if (username &&username.length > 0) {
-        const posts = await client.execute({
-            sql :`SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name, users.name as username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id where posts.author_id = (SELECT id FROM users WHERE username = ?) order by posts.created_at desc LIMIT 100;`, 
-            args :[username]});
-            console.log(posts)
-            return Response.json(posts.rows);
-    }
+    const post_id = url.searchParams.get("post_id") as string
+    const autorired = await auth() 
+    console.log(post_id)
 
-    if (isLogged && isLogged === "true") {
+    // if(!autorired){
+    //     return new Response(JSON.stringify({error:"No autorizado"}), {status:401})
+    // }
 
-    }
+   if(post_id && post_id.length > 0){
+       const post = await client.execute({
+           sql :`SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name, users.name as username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id where posts.id = ?;`, 
+           args :[post_id]});
+           console.log(post)
+           
+        const comments = await client.execute({
+            sql :`SELECT coments.created_at,  users.profile_pic as profile_pic, coments.id, coments.comment, coments.likes, users.username FROM coments INNER JOIN users ON coments.user_id = users.id where coments.post_id = ? order by coments.likes asc, coments.created_at  desc;`, 
+            args :[post_id]});
+
+            return Response.json({post:post.rows[0], comments:comments.rows});
+   }
+
     const posts = await client.execute("SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name, users.name as username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id order by posts.created_at desc LIMIT 100;");
     
     return Response.json(posts.rows);
