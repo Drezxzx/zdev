@@ -1,1 +1,1 @@
-DELETE from users where id = 11;
+SELECT count(*) FROM comments_like_users GROUP BY user_id HAVING user_id = (SELECT id FROM users WHERE username = 'Drezxzx') AND comment_id = 1;

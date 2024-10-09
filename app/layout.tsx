@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import App from "./components/App";
-import HeaderDesktop from "./components/Header";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import { Toaster } from "sonner";
+
+
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
+        
         {children}   
       </body>
     </html>

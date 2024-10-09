@@ -7,8 +7,8 @@ export default class Coments {
         return data.comentarios;
     }
 
-    static async getDetailComents(post_id: string):Promise<PostDetail> {
-        const res = await fetch(`/api/posts?post_id=${post_id}`);
+    static async getDetailComents(post_id: string, username : string):Promise<PostDetail> {
+        const res = await fetch(`/api/posts?post_id=${post_id}&username=${username}`);
         const data = await res.json() as PostDetail;
         return data;
     }
@@ -26,6 +26,41 @@ export default class Coments {
             })
         })
         
+        if (res.status === 200) {
+            return true;
+        }
+        return false;
+    }
+
+    static async likeComent(post_id: string, username: string) {
+        const res = await fetch(`/api/coments?insertLike=true`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                post_id,
+                username
+            })
+        });
+        if (res.status === 200) {
+            return true;
+        }
+        return false;
+       
+    }
+
+    static async unlikeComent(post_id: string, username: string) {
+        const res = await fetch(`/api/coments`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                post_id,
+                username
+            })
+        });
         if (res.status === 200) {
             return true;
         }

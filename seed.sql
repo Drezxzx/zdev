@@ -31,6 +31,12 @@ CREATE TABLE users_likes(
     PRIMARY KEY(user_id, post_id)
 );
 
+CREATE TABLE comments_like_users (
+    user_id integer NOT NULL,
+    comment_id integer NOT NULL,
+    PRIMARY KEY (user_id, comment_id)
+);
+
 CREATE TABLE posts(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,

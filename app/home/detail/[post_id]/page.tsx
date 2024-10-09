@@ -9,18 +9,26 @@ import { IconArrowBack } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import SectionComents from "./Coments";
+import { useSession } from "next-auth/react";
 
 export default function DetailPost({ params }: { params: { post_id: string } }) {
     const [post, setPost] = useState<PostsType>()
     const [comments, setComments] = useState<Comment[]>([])
+    const {data : session} = useSession()
 
     useEffect(() => {
-        Coments.getDetailComents(params.post_id)
+        
+        if(session?.user?.username && session.user.username.length > 0){
+        Coments.getDetailComents(params.post_id, session.user.username)
             .then(data => {
                 setPost(data.post)
                 setComments(data.comments)
+                console.log(data.comments)
+            }).catch(e =>{
+                console.error(e)
             })
-    }, [])
+        }
+    }, [session])
 
     const router = useRouter()
     const handleBack = () => {

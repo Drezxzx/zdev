@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { mirage } from "ldrs"
+import CommentButtonLike from "./CommentButtonLike"
 mirage.register("my-mirage")
 
 export default function SectionComents({ comments, post_id, post_likes, setComments }: { comments: Comment[], post_id: number, post_likes: number, setComments: React.Dispatch<React.SetStateAction<Comment[]>> }) {
@@ -97,7 +98,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
             <section className="w-full flex flex-col justify-center items-center gap-3 p-1">
                 {comentsPost.length > 0 ? (
                     comentsPost.map((comment, index) => (
-                        <article className="w-full flex flex-col gap-1">
+                        <article key={index} className="w-full flex flex-col gap-1">
                             {
                                 mostLikedComent.likes > 0 && comment.id === mostLikedComent.id &&
                                 <span className={"text-[12px] text-white/70"}>Comentario más popular 🏆</span>
@@ -112,10 +113,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
                                         <p className="text-white text-sm">{comment.comment}</p>
                                     </div>
                                     <div>
-                                        <div className="justify-center items-center flex flex-col">
-                                            <IconHeart />
-                                            <span className="text-slate-400/80 text-sm">{comment.likes}</span>
-                                        </div>
+                                       <CommentButtonLike liked={comment.liked} comentId={comment.id} initialLikes={comment.likes} />
                                     </div>
                                 </div>
                             </article>

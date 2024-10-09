@@ -4,32 +4,47 @@ import { UploadApiResponse } from "cloudinary";
 import { Readable } from "stream";
 import auth from "@/app/libs/auth";
 
-export async function GET(req : Request) {
+export async function GET(req: Request) {
     const url = new URL(req.url)
     const username = url.searchParams.get("username") as string
+    console.log(username)
     const post_id = url.searchParams.get("post_id") as string
-    const autorired = await auth() 
+    const autorired = await auth()
     console.log(post_id)
 
     // if(!autorired){
     //     return new Response(JSON.stringify({error:"No autorizado"}), {status:401})
     // }
 
-   if(post_id && post_id.length > 0){
-       const post = await client.execute({
-           sql :`SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name, users.name as username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id where posts.id = ?;`, 
-           args :[post_id]});
-           console.log(post)
-           
-        const comments = await client.execute({
-            sql :`SELECT coments.created_at,  users.profile_pic as profile_pic, coments.id, coments.comment, coments.likes, users.username FROM coments INNER JOIN users ON coments.user_id = users.id where coments.post_id = ? order by coments.likes asc, coments.created_at  desc;`, 
-            args :[post_id]});
+    if (post_id && post_id.length > 0) {
+        const post = await client.execute({
+            sql: `SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name, users.name as username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id where posts.id = ?;`,
+            args: [post_id]
+        });
+        console.log(post)
 
-            return Response.json({post:post.rows[0], comments:comments.rows});
-   }
+        const comments = await client.execute({
+            sql: `SELECT coments.created_at, 
+            (SELECT COUNT(comment_id) FROM comments_like_users WHERE comments_like_users.comment_id  = coments.id ) as likes,
+            users.name as username, users.profile_pic as profile_pic, coments.id, coments.comment, users.username FROM coments INNER JOIN users ON coments.user_id = users.id where coments.post_id = ? ORDER BY likes desc LIMIT 50;`,
+            args: [ post_id]
+        });
+
+        const response = await Promise.all(
+            comments.rows.map(async (com) => {
+              const liked = await isLiked(username, com.id as string);
+              return { ...com, liked };
+            })
+          );
+
+        if (response.length > 0) {
+            return Response.json({ post: post.rows[0], comments: response });
+        }
+        
+    }
 
     const posts = await client.execute("SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name, users.name as username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id order by posts.created_at desc LIMIT 100;");
-    
+
     return Response.json(posts.rows);
 }
 
@@ -76,7 +91,7 @@ export async function POST(req: Request) {
                 return new Response(JSON.stringify({ error: "Error subiendo imagen" }), { status: 500 });
             }
 
-            imageUrl = result.secure_url; 
+            imageUrl = result.secure_url;
         } catch (error) {
             console.error("Error subiendo la imagen:", error);
             return new Response(JSON.stringify({ error: "Error subiendo la imagen" }), { status: 500 });
@@ -104,6 +119,20 @@ export async function POST(req: Request) {
         console.error("Error insertando en la base de datos:", error);
         return new Response(JSON.stringify({ error: "Error insertando en la base de datos" }), { status: 500 });
     }
+}
+
+async function isLiked( username: string, comment_id: string) {
+    console.log(username, comment_id)
+    const res = await client.execute({
+        sql: `SELECT COUNT(*) as liked 
+        FROM comments_like_users 
+        WHERE user_id = (SELECT id FROM users WHERE username = ?) 
+        AND comment_id = ?`,
+        args: [username, comment_id]
+    })
+    const count = res.rows[0]?.liked as number
+
+    return count > 0
 }
 
 
