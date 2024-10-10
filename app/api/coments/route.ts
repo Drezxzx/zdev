@@ -21,11 +21,12 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
     const {post_id, comment, username} = await req.json();
+    
     const url = new URL(req.url)
-    const like = url.searchParams.get("username") as string
     const insertLike = url.searchParams.get("insertLike") as string
     try {
-        if (like && like.length > 0) {
+        if (username && username.length > 0) {
+            console.log({post_id, comment, username})
             const res = await createNewComent(post_id, comment, username)
             return Response.json(res, {status: 200});
         }
@@ -57,7 +58,7 @@ async function createNewComent(post_id: string, comment: string, username: strin
         sql: "INSERT INTO coments (post_id, user_id, comment, created_at) VALUES (?, (SELECT id FROM users WHERE username = ?), ?, CURRENT_TIMESTAMP);",
         args: [post_id, username, comment]
     })
-    return new Response(JSON.stringify({ success: res.rowsAffected > 0 }), { status: 200 });
+    return JSON.stringify({ success: res.rowsAffected > 0 }), { status: 200 };
 }
 
 

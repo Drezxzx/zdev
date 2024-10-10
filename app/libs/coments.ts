@@ -25,7 +25,7 @@ export default class Coments {
                 username
             })
         })
-        
+        console.log(res)
         if (res.status === 200) {
             return true;
         }
