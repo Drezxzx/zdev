@@ -40,3 +40,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env
+
+#database 
+zdev.db
+zdev.db-shm
+zdev.db-wal
+zdev.session.sql
+seed.sql
+
+.vscode
