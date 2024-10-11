@@ -3,6 +3,7 @@ export interface PostsType {
     image: string;
     title: string;
     name: string;
+    language: string;
     likes: number;
     username: string;
     id: number;

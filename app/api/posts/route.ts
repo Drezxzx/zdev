@@ -43,7 +43,12 @@ export async function GET(req: Request) {
         
     }
 
-    const posts = await client.execute("SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name, users.name as username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id order by posts.created_at desc LIMIT 100;");
+    if (username && username.length > 0) {
+        const post = await client.execute({sql:`SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name as language, users.name, users.username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id where posts.author_id = (SELECT id FROM users WHERE username = ?) order by posts.created_at desc LIMIT 100;`, args: [username]});
+        return Response.json(post.rows);
+    }
+
+    const posts = await client.execute("SELECT posts.created_at,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name as language, users.name,  users.username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id order by posts.created_at desc LIMIT 100;");
 
     return Response.json(posts.rows);
 }
@@ -122,7 +127,6 @@ export async function POST(req: Request) {
 }
 
 async function isLiked( username: string, comment_id: string) {
-    console.log(username, comment_id)
     const res = await client.execute({
         sql: `SELECT COUNT(*) as liked 
         FROM comments_like_users 

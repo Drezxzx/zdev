@@ -73,7 +73,7 @@ export default function HandleSession() {
 
   useEffect(() => {
     if (!session?.user || isInserted) {
-      return; // Evitar inserción si ya se hizo o no hay sesión
+      return; 
     }
 
     const username = session.user.username || "";

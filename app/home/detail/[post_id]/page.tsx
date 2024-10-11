@@ -14,19 +14,19 @@ import { useSession } from "next-auth/react";
 export default function DetailPost({ params }: { params: { post_id: string } }) {
     const [post, setPost] = useState<PostsType>()
     const [comments, setComments] = useState<Comment[]>([])
-    const {data : session} = useSession()
+    const { data: session } = useSession()
 
     useEffect(() => {
-        
-        if(session?.user?.username && session.user.username.length > 0){
-        Coments.getDetailComents(params.post_id, session.user.username)
-            .then(data => {
-                setPost(data.post)
-                setComments(data.comments)
-                console.log(data.comments)
-            }).catch(e =>{
-                console.error(e)
-            })
+
+        if (session?.user?.username && session.user.username.length > 0) {
+            Coments.getDetailComents(params.post_id, session.user.username)
+                .then(data => {
+                    setPost(data.post)
+                    setComments(data.comments)
+                    console.log(data.comments)
+                }).catch(e => {
+                    console.error(e)
+                })
         }
     }, [session])
 
@@ -50,15 +50,14 @@ export default function DetailPost({ params }: { params: { post_id: string } }) 
                             <img className="size-14 ml-2 object-contain rounded-full" src={post?.profile_pic} alt={`imagen de perfil de ${post?.profile_pic} `} />
                             <div className="flex gap-3 flex-col w-[80%] justify-center ">
                                 <div className=" gap-3 flex justify-between items-center">
-                                    <div className="flex gap-3 flex-col">
-                                        <h2>{post?.username}</h2>
-                                        <h2>{post?.title}</h2>
+                                    <div className="flex gap-1 justify-start items-center">
+                                        <h1 className="text-white font-semibold text-lg">{post.name}</h1>
+                                        <h2 className="text-slate-400/80 text-sm">@{post.username}</h2>
                                     </div>
-
                                     <LikeButton col={false} idPost={post?.id} actualLikes={post?.likes} />
                                 </div>
 
-                                {post?.code && post?.code.length > 0 && <CodeExample language={post?.name} codeString={post?.code} />}
+                                {post?.code && post?.code.length > 0 && <CodeExample language={post?.language} codeString={post?.code} />}
                                 <div className=" w-full flex justify-center items-center">
                                     {post?.image && <img className="w-[30rem] rounded-md h-[30rem] object-contain" src={post?.image} alt="Imagen de un post" />}
                                 </div>

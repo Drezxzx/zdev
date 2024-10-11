@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
     providers: [
@@ -7,13 +8,25 @@ const handler = NextAuth({
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string,
             profile(profile) {
-                // Aquí es donde puedes mapear los datos que necesites del perfil devuelto por GitHub
                 return {
                     id: profile.id,
                     name: profile.name,
-                    username: profile.login, // Aquí se encuentra el nombre de usuario en GitHub
+                    username: profile.login,
                     email: profile.email,
                     image: profile.avatar_url
+                };
+            },
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            profile(profile) {
+                return {
+                    id: profile.sub, 
+                    name: profile.name,
+                    username: profile.email.split('@')[0],
+                    email: profile.email,
+                    image: profile.picture, 
                 };
             },
         }),
