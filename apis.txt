@@ -1,2 +1,0 @@
---api for svg logos:
-https://api.svgl.app/?search=javascript
