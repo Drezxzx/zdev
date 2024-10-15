@@ -2,7 +2,7 @@
 import LikeButton from "@/app/components/LikeButton"
 import Coments from "@/app/libs/coments"
 import { Comment } from "@/app/types/type"
-import { IconHeart } from "@tabler/icons-react"
+import { IconHeart, IconRosetteDiscountCheckFilled } from "@tabler/icons-react"
 import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -109,7 +109,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
 
                                 <div className="flex justify-between w-full gap-3">
                                     <div className="flex flex-col gap-1">
-                                        <h2 className="text-white font-semibold text-base">{comment.username}</h2>
+                                        <h2 className="text-white flex justify-center items-center gap-1 font-semibold text-base">{comment.username} {Boolean(comment.is_verified ) && <IconRosetteDiscountCheckFilled  size={20} color="#1DA1F3" />}</h2>
                                         <p className="text-white text-sm">{comment.comment}</p>
                                     </div>
                                     <div>

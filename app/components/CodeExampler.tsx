@@ -2,7 +2,7 @@
 import {IconArrowsDiagonal2, IconCopy, IconCheck} from "@tabler/icons-react";
 import { useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import FullScreenCode from './FullScreenCode';
 
 export default function CodeExample({ language, codeString }: { language: string; codeString: string }) {
@@ -27,7 +27,7 @@ export default function CodeExample({ language, codeString }: { language: string
   };
 
     const body = document.querySelector('body');
-    if (body) {
+    if (body) { 
       body.style.overflow = 'auto';
     }
   const overflow = isBlocked ? "overflow-hidden cursor-pointer" : "overflow-auto cursor-text"
@@ -38,7 +38,7 @@ export default function CodeExample({ language, codeString }: { language: string
           <button onClick={handleIsfullScreen} className="hover:scale-110 transition-all cursor-zoom-in"><IconArrowsDiagonal2 /></button>
         </div>
   
-        <SyntaxHighlighter language={language} wrapLines={true} style={atomDark}>
+        <SyntaxHighlighter language={language} wrapLines={true} style={nightOwl}>
           {formattedCode}
         </SyntaxHighlighter>
       

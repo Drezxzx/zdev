@@ -2,7 +2,7 @@
 import { DataLanguage, DataUser } from "../types/type";
 import { languajes as arrlanguages } from "../libs/languajes";
 import ButtonFollowUnfollow from "./ButtonFollowUnfollow";
-import { useState } from "react";
+import {IconRosetteDiscountCheckFilled} from "@tabler/icons-react";
 
 export const SectionProfile = ({
   user,
@@ -18,7 +18,7 @@ export const SectionProfile = ({
   setFollowers: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   
-  console.log(isMe);
+  console.log(user);
   
   const ImgLanguaje = ({ lang }: { lang: DataLanguage }) => {
     if (!arrlanguages.find((la) => la.id === lang.id)?.img) {
@@ -61,14 +61,15 @@ export const SectionProfile = ({
           alt={`imagen de perfil de ${user.username}`}
         />
         <article className="flex-col ">
-          <div className="flex flex-col items-start gap-2">
-            <h1 className="text-3xl font-bold">{user.name}</h1>
+          <div className="flex flex-col m-1 items-start gap-2">
+            <h1 className="text-2xl font-bold gap-2 flex justify-center items-center ">{user.name} {user.is_verified && <IconRosetteDiscountCheckFilled  size={20} color="#1DA1F3" />}</h1>
             <span className="text-base text-slate-400/85">
               @{user.username}
             </span>
           </div>
           <section className="flex gap-3 flex-col ">
             <div className="flex gap-3 flex-col">
+              {/* description <p className="text-sm">https://github.com/Drezxzx</p> */}
               <div className="flex gap-3 ">
                 <div className="flex gap-3 flex-col items-start">
                   <h2>Seguidores</h2>

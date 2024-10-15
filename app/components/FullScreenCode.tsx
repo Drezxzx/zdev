@@ -1,6 +1,6 @@
 import { IconCopy, IconCheck, IconArrowsDiagonalMinimize } from '@tabler/icons-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
  
  export default function FullScreenCode({ copied, handleCoppy, language, formattedCode, handleIsfullScreen }: { copied: boolean, handleCoppy: any, language: string, formattedCode: string, handleIsfullScreen: any }) {
@@ -18,7 +18,7 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
             <button onClick={handleIsfullScreen} className='hover:scale-110 transition-all cursor-zoom-out'><IconArrowsDiagonalMinimize /></button>
           </div>
   
-          <SyntaxHighlighter language={language} wrapLines={true} style={atomDark}>
+          <SyntaxHighlighter language={language} wrapLines={true} style={nightOwl}>
             {formattedCode}
           </SyntaxHighlighter>
         </div>

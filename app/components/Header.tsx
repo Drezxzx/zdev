@@ -1,53 +1,67 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
+import { IconBellFilled, IconHome, IconHomeFilled, IconLogout, IconMessageFilled } from "@tabler/icons-react";
 import { signOut, useSession } from "next-auth/react"
 import Link from "next/link";
- import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import SearchSecction from "./SearchSecction";
 export default function HeaderDesktop() {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const { data: session } = useSession()
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: session } = useSession()
+
   useEffect(() => {
     if (session) {
       setIsLoggedIn(true);
     }
   }, [session]);
-    
-    const UserInformation = () =>{
-        if (!isLoggedIn) {
-        return (
-            <div>
-                <li><a href="/login">Login</a></li>
-            </div>
-        )
+
+  const UserInformation = () => {
+    if (!isLoggedIn) {
+      return (
+        <div>
+          <li><a href="/login">Login</a></li>
+        </div>
+      )
     } else {
-        return(
-            <div className="flex bg-slate-400/50 p-1 items-center gap-x-4">
-              
-                  <Link  className="flex justify-center items-center gap-x-2" href="/profile/[username]" as={`/profile/${session?.user?.username}`}>
-                    <img className="size-16 rounded-full" src={session?.user?.image as string} alt="Imagen de usario" />
-                    <span>{session?.user?.username}</span>
-                  </Link>
-                
-               
-               <li className="cursor-pointer" onClick={() => {signOut({callbackUrl: "/"})}}>Logout</li>
-            </div>
-        )
+      return (
+        <div className="flex bg-[#1B2730] h-[4.5rem] py-2 px-4 justify-center rounded-xl items-center gap-x-4">
+
+          <Link className="flex justify-center items-center gap-x-2 hover:underline" href="/profile/[username]" as={`/profile/${session?.user?.username}`}>
+            <img className="size-14 rounded-full" src={session?.user?.image as string} alt="Imagen de usario" />
+            <span className="text-base text-balance">{session?.user?.username}</span>
+          </Link>
+
+          <div className="border-l-2 flex justify-end pl-2 items-center border-slate-500/80 h-[80%]">
+            <li title="Cerrar sesión" className="cursor-pointer hover:scale-105 transition-all" onClick={() => { signOut({ callbackUrl: "/" }) }}><IconLogout size={25} color="#C7D6E6" /></li>
+          </div>
+
+        </div>
+      )
     }
-    }
-    return (
-      <header className="w-screen h-24 ">
-        <nav className="flex justify-between w-full items-center p-4">
-            <ul className="flex w-full justify-between items-center gap-x-4">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">Notifications</a></li>
-                <li><a href="/contact">Messegaes</a></li>
-                <UserInformation />
-            </ul>
-        </nav>
-      </header>
-    )
- 
-  
+  }
+
+  return (
+    <header className="w-screen h-24 ">
+      <nav className="flex justify-between w-full items-center p-4">
+      <SearchSecction />
+      
+        <ul className="flex w-full justify-end  items-center gap-x-4">
+          <li className="transition-all hover:scale-105 font-semibold flex gap-1 justify-center items-center bg-white  p-2 rounded-full">
+            <Link className="flex justify-center items-center gap-2" href={"/"}>
+            <IconHomeFilled color="#1DA1F3" size={25} />
+            <span className="text-black text-xs">Home</span>
+            </Link>
+      
+           
+            </li>
+          <li className="cursor-pointer transition-all hover:bg-[#1B2730] p-2 rounded-xl"><IconBellFilled color="#C7D6E6" size={25} /></li>
+          <li className="cursor-pointer transition-all hover:bg-[#1B2730] p-2 rounded-xl"><a href="/inbox"><IconMessageFilled color="#C7D6E6" size={25} /></a></li>
+          <UserInformation />
+        </ul>
+      </nav>
+    </header>
+  )
+
+
 }

@@ -1,6 +1,7 @@
 export interface PostsType {
     code: string;
     image: string;
+    is_verified : boolean;
     title: string;
     name: string;
     language: string;
@@ -36,6 +37,7 @@ export interface DataUser {
     name: string;
     email: string;
     created_at: Date;
+    is_verified : boolean;
     updated_at: Date;
     profile_pic: string;
     followed: number;
@@ -63,6 +65,7 @@ export interface PostDetail {
 export interface Comment {
     created_at: Date;
     profile_pic: string;
+    is_verified : boolean;
     id: number;
     comment: string;
     likes: number;
