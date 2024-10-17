@@ -44,7 +44,7 @@ export default function HeaderDesktop() {
   return (
     <header className="w-screen h-24 ">
       <nav className="flex justify-between w-full items-center p-4">
-      <SearchSecction />
+      
       
         <ul className="flex w-full justify-end  items-center gap-x-4">
           <li className="transition-all hover:scale-105 font-semibold flex gap-1 justify-center items-center bg-white  p-2 rounded-full">
@@ -56,6 +56,7 @@ export default function HeaderDesktop() {
            
             </li>
           <li className="cursor-pointer transition-all hover:bg-[#1B2730] p-2 rounded-xl"><IconBellFilled color="#C7D6E6" size={25} /></li>
+          <li className="cursor-pointer transition-all hover:bg-[#1B2730] p-2 rounded-xl"><SearchSecction /></li>
           <li className="cursor-pointer transition-all hover:bg-[#1B2730] p-2 rounded-xl"><a href="/inbox"><IconMessageFilled color="#C7D6E6" size={25} /></a></li>
           <UserInformation />
         </ul>

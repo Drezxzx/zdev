@@ -62,7 +62,7 @@ export const SectionProfile = ({
         />
         <article className="flex-col ">
           <div className="flex flex-col m-1 items-start gap-2">
-            <h1 className="text-2xl font-bold gap-2 flex justify-center items-center ">{user.name} {user.is_verified && <IconRosetteDiscountCheckFilled  size={20} color="#1DA1F3" />}</h1>
+            <h1 className="text-2xl font-bold gap-2 flex justify-center items-center ">{user.name} {Boolean(user.is_verified) && <IconRosetteDiscountCheckFilled  size={20} color="#1DA1F3" />}</h1>
             <span className="text-base text-slate-400/85">
               @{user.username}
             </span>

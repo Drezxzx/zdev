@@ -62,6 +62,13 @@ export interface PostDetail {
     comments: Comment[];
 }
 
+export interface ResultSearch {
+    username: string;
+    name: string;
+    profile_pic: string;
+    isVerificed: boolean;
+}
+
 export interface Comment {
     created_at: Date;
     profile_pic: string;

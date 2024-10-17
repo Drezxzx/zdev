@@ -16,9 +16,8 @@ export default function Home() {
       fetch("/api/posts")
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          setIsLoading(false);
           setPosts(data);
+          setIsLoading(false)
         })
         .catch(err =>{
           console.error(err);
@@ -29,7 +28,7 @@ export default function Home() {
   return (
     <>
       <main className="w-screen h-auto  flex flex-col items-center justify-center">
-        <Posts isProfile={false} posts={posts} isLoading={isLoading} />
+        <Posts setIsLoading={setIsLoading} isProfile={false} posts={posts} isLoading={isLoading} />
       </main>
     </>
 
