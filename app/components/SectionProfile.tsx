@@ -3,6 +3,7 @@ import { DataLanguage, DataUser } from "../types/type";
 import { languajes as arrlanguages } from "../libs/languajes";
 import ButtonFollowUnfollow from "./ButtonFollowUnfollow";
 import {IconRosetteDiscountCheckFilled} from "@tabler/icons-react";
+import EditProfile from "./EditProfile";
 
 export const SectionProfile = ({
   user,
@@ -37,9 +38,7 @@ export const SectionProfile = ({
   const ButtonProfile = () => {
     if (isMe) {
       return (
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-          Edit profile
-        </button>
+       <EditProfile user={user} />
       );
     }
 
