@@ -15,7 +15,6 @@ export default function SearchSection() {
     const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = e.target.value;
         setSearch(searchValue);
-
         if (searchValue.length > 0) {
             const results = await searchUser(searchValue);
             setResults(results);
@@ -74,6 +73,10 @@ export default function SearchSection() {
                                     </div>
                                 </Link>
                             ))}
+
+                            {results.length === 0 && search.length > 0 && 
+                                <div className="text-base text-center font-bold text-slate-300/70">No se encontraron resultados</div>
+                            }
                         </div>
                     </section>
                 )}

@@ -3,6 +3,8 @@
 import { languajes } from "@/app/libs/languajes";
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
+import { getUserByEmail } from "../libs/user";
+import {IconCode, IconPhotoFilled, IconUpload } from "@tabler/icons-react";
 
 interface Props {
     image: boolean | undefined;
@@ -12,6 +14,7 @@ interface Props {
 
 export default function CreatePost() {
     const { data: session } = useSession()
+    const [profile_pic,setProfilePic] = useState("")
     const [content, setContent] = useState("")
     const [hastags, setHastags] = useState<string[]>([])
     const [author, setAuthor] = useState("")
@@ -21,6 +24,12 @@ export default function CreatePost() {
     const [imagePreview, setImagePreview] = useState("")
     const [postMode, setpostMode] = useState<Props>({image: false, code: false, text: false})
     
+    useEffect(()=>{
+        getUserByEmail(session?.user.email as string).then(res => {
+            setProfilePic(res.profile_pic)
+        })
+    }, [session])
+
     useEffect(() => {
         if (session?.user) {
             setAuthor(session.user.email as string)
@@ -57,7 +66,10 @@ export default function CreatePost() {
     const ButtonUpload = () => {
         if (content.length > 0|| code.length > 0 || imagePreview.length > 0) {
             return (
-                <button onClick={handleSubmit} className="bg-gray-500 text-white px-4 py-2 rounded-lg">Upload</button>
+                <button onClick={handleSubmit} className={`hover:bg-slate-200/50  transition-all border border-slate-200/45 rounded-full text-white px-4 py-2 flex gap-2 `}>
+                    <IconUpload className="text-purple-500" filter=" drop-shadow(0px 0px 5px #a855f7)" />
+                    <span>Subir</span>
+                    </button>
             )
         } 
     }
@@ -133,18 +145,16 @@ export default function CreatePost() {
     return (
         <section className="flex w-full items-center h-auto gap-10 bg-[#1B2730] rounded-lg p-4 max-w-screen-md">
             
-            {session?.user?.image && (
+            {profile_pic.length > 0  && (
                 <img
                     className="rounded-full w-14 h-14"
-                    src={session.user.image as string}
+                    src={profile_pic}
                     alt="Imagen de usuario"
                 />
             )}
             
             <div className="flex w-full h-full flex-col gap-5">
-                {/* Formulario para crear el post */}
-                <form className="flex h-full flex-col gap-2">
-                    {/* Textarea para escribir el post, crece dinámicamente */}
+                <form className="flex h-full flex-col gap-6">
                     <textarea
                         className="w-full p-2 min-h-[40px] focus:outline-none bg-[#28343E] text-white placeholder-gray-400 rounded-lg resize-none overflow-hidden"
                         value={content}
@@ -152,7 +162,7 @@ export default function CreatePost() {
                         id="post"
                         rows={1}
                         maxLength={500}
-                        placeholder="What's on your mind?"
+                        placeholder="¿En que estás pensando?"
                     />
                         {postMode.code && 
                         <div className="flex gap-2 justify-evenly">
@@ -181,11 +191,14 @@ export default function CreatePost() {
                     
                     {/* Botones de acción */}
                     <div className="flex gap-2 justify-evenly">
-                        <button onClick={handleClickImage} className={`bg-blue-500 ${postMode.image ? "shadow-lg shadow-blue-500" : ""} text-white px-4 py-2 rounded-lg`}>Image</button>
+                        <button onClick={handleClickImage} className={`hover:bg-slate-200/50  transition-all border border-slate-200/45 rounded-full text-white px-4 py-2 flex gap-2 `}>
+                        <IconPhotoFilled className="text-emerald-400" filter=" drop-shadow(0px 0px 5px #34d399)" />
+                        <span>Image</span>
+                        </button>
                         <button onClick={handleClickLanguage} 
-                        className={`bg-green-500 ${postMode.code ? "shadow-lg shadow-green-500" : ""} 
-                          text-white px-4 py-2 rounded-lg`}>
-                            Code
+                        className={` hover:bg-slate-200/50  transition-all 
+                          text-white px-4 py-2 border border-slate-200/45 rounded-full flex gap-2 `}>                    <IconCode className="text-blue-500"  filter=" drop-shadow(0px 0px 5px #3b82f6)"/>
+                          <span>Code</span>  
                             </button>
 
                         <ButtonUpload />

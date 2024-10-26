@@ -6,7 +6,8 @@ import { PostsType } from "../types/type";
 import Link from "next/link";
 
 
-export default function ComentsSection({ idPost, post, setIsLoading }: { idPost: number, post: PostsType, setIsLoading: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function ComentsSection({ idPost, post
+}: { idPost: number, post: PostsType }) {
     const [numberComents, setNumberComents] = useState(0);
     const [isLoading, setIsLoadingg] = useState(true);
 
@@ -16,7 +17,6 @@ export default function ComentsSection({ idPost, post, setIsLoading }: { idPost:
             setNumberComents(data);
             setIsLoadingg(false);
         })
-        console.log(Coments);
     }, [])
 
     return (

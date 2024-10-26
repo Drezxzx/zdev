@@ -64,7 +64,6 @@ export async function POST(req: Request) {
 
     let imageUrl: string | null = null;
 
-    // Función para convertir Blob a Buffer
     async function blobToBuffer(blob: Blob): Promise<Buffer> {
         const arrayBuffer = await blob.arrayBuffer();
         return Buffer.from(arrayBuffer);

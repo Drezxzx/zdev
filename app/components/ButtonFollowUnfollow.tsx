@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, useOptimistic } from "react";
-import { checkIfFollower, followUser, unFollowUser } from "../libs/user";
+import { checkIfFollower, followUser, getUserByEmail, unFollowUser } from "../libs/user";
 
 export default function ButtonFollowUnfollow({
   followedUser,
@@ -14,12 +14,18 @@ export default function ButtonFollowUnfollow({
 }) {
   const { data: session } = useSession();
   const [isFollower, setIsFollower] = useState(false);
+  const [username, setUsername] = useState("")
   const [initialState, setInitialState] = useState<boolean>(false);
 
-  // Hook para estado optimista de los seguidores
+  useEffect(()=>{
+    getUserByEmail(session?.user.email as string).then(res => {
+      setUsername(res.username)
+    })  
+  }, [session])
 
   useEffect(() => {
-    checkIfFollower({ username: session?.user?.username, followedUser })
+    if(username.length === 0)return
+    checkIfFollower({ username:username, followedUser })
       .then((data) => {
         setIsFollower(data.follower);
         setInitialState(data.follower);
@@ -27,7 +33,7 @@ export default function ButtonFollowUnfollow({
       .catch((error) => {
         console.error(error);
       });
-  }, [session, followedUser]);
+  }, [username, followedUser]);
 
   const [optimisticIsFollower, setOptimisticIsFollower] = useOptimistic(
     initialState,
@@ -39,7 +45,7 @@ export default function ButtonFollowUnfollow({
     setNumberFollowers((prev) => prev + 1);
 
     try {
-      await followUser({ username: session?.user?.username, followedUser });
+      await followUser({ username: username, followedUser });
     } catch (error) {
       // Si hay error, revertir la acción optimista
       setOptimisticIsFollower(false);
@@ -53,7 +59,7 @@ export default function ButtonFollowUnfollow({
     setNumberFollowers((prev) => prev - 1);
 
     try {
-      await unFollowUser({ username: session?.user?.username, followedUser });
+      await unFollowUser({ username: username, followedUser });
     } catch (error) {
       // Si hay error, revertir la acción optimista
       setOptimisticIsFollower(true);

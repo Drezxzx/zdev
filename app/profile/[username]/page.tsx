@@ -1,21 +1,32 @@
 "use client";
-import { getPostByUsername, getUser } from "@/app/libs/user";
+import { getPostByUsername, getUser, getUserByEmail } from "@/app/libs/user";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Posts from "@/app/components/Posts";
+import {useChangeProfile} from "@/app/context/changeProfile"
 import { DataLanguage, DataUser, type PostsType } from "@/app/types/type";
 import HeaderDesktop from "@/app/components/Header";
 import { SectionProfile } from "@/app/components/SectionProfile";
 import React from "react";
 
 export default function Profile({ params }: { params: { username: string } }) {
-  const [isMe, setIsMe] = useState(false);
+  const [isMe, setIsMe] = useState <Boolean | undefined>();
+  const {isChange, setChange} = useChangeProfile()
   const [dataUser, setDataUser] = useState<DataUser>();
   const [followers, setFollowers] = useState<number>(0);
+  const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [languages, setLanguages] = useState<DataLanguage[]>([]);
   const [posts, setPosts] = useState<PostsType[]>([]);
   const { data: session } = useSession();
+
+  useEffect(() => {
+    if(!session)return
+
+    getUserByEmail(session.user.email as string).then(res => {
+      setUsername(res.username)
+    })
+  }, [session]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,30 +36,35 @@ export default function Profile({ params }: { params: { username: string } }) {
     });
 
     getUser(params.username).then((data) => {
-      if (data.data.username === params.username) {
-        setIsMe(true);
-      }
-      setDataUser(data.data);
-      setFollowers(data.data.followers);
-      setLanguages(data.languages);
-      setIsLoading(false);
+      console.log(data)
+        console.log({username1 : username , username2 : params.username})
+        if (data.data.username === username) {
+          setIsMe(true);
+        }
+        if(isChange){
+            setChange(false)
+        }
+        setDataUser(data.data);
+        setFollowers(data.data.followers);
+        setLanguages(data.languages);
+        setIsLoading(false);
+      
     });
-  }, []);
-
+  }, [session, username, isChange]);
+  
   return (
     <>
-      <HeaderDesktop />
       <main className="w-screen h-auto  flex flex-col items-center justify-center">
-        {dataUser && (
+        {dataUser && isMe !== undefined && (
           <SectionProfile
             setFollowers={setFollowers}
             languajes={languages}
             user={dataUser}
-            isMe={isMe}
+            isMe={isMe as boolean}
             followers={followers}
           />
         )}
-        <Posts isProfile={true} posts={posts} isLoading={isLoading} />
+        <Posts  isProfile={true} posts={posts} isLoading={isLoading} />
       </main>
     </>
   );

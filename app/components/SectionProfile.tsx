@@ -2,8 +2,10 @@
 import { DataLanguage, DataUser } from "../types/type";
 import { languajes as arrlanguages } from "../libs/languajes";
 import ButtonFollowUnfollow from "./ButtonFollowUnfollow";
-import {IconRosetteDiscountCheckFilled} from "@tabler/icons-react";
+import { useChangeProfile } from "@/app/context/changeProfile"
+import { IconRosetteDiscountCheckFilled } from "@tabler/icons-react";
 import EditProfile from "./EditProfile";
+import { useEffect } from "react";
 
 export const SectionProfile = ({
   user,
@@ -18,9 +20,14 @@ export const SectionProfile = ({
   followers: number;
   setFollowers: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  
-  console.log(user);
-  
+
+  const {setChange} = useChangeProfile()
+
+  useEffect(() => {
+    setChange(false)  
+  }, [])
+
+
   const ImgLanguaje = ({ lang }: { lang: DataLanguage }) => {
     if (!arrlanguages.find((la) => la.id === lang.id)?.img) {
       return;
@@ -38,7 +45,7 @@ export const SectionProfile = ({
   const ButtonProfile = () => {
     if (isMe) {
       return (
-       <EditProfile user={user} />
+        <EditProfile user={user} />
       );
     }
 
@@ -55,13 +62,13 @@ export const SectionProfile = ({
     <section className="flex mb-5 w-full h-auto gap-x-5 rounded-lg  max-w-screen-md">
       <article className="flex gap-3 w-[60%] p-5 rounded-lg bg-[#1B2730]  items-start">
         <img
-          className="size-24 ml-2 rounded-full"
+          className="size-24 ml-2 rounded-full object-cover"
           src={user.profile_pic as string}
           alt={`imagen de perfil de ${user.username}`}
         />
         <article className="flex-col ">
           <div className="flex flex-col m-1 items-start gap-2">
-            <h1 className="text-2xl font-bold gap-2 flex justify-center items-center ">{user.name} {Boolean(user.is_verified) && <IconRosetteDiscountCheckFilled  size={20} color="#1DA1F3" />}</h1>
+            <h1 className="text-2xl font-bold gap-2 flex justify-center items-center ">{user.name} {Boolean(user.is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}</h1>
             <span className="text-base text-slate-400/85">
               @{user.username}
             </span>
@@ -85,13 +92,13 @@ export const SectionProfile = ({
         </article>
       </article>
       <article className="bg-[#1B2730]  rounded-lg w-[40%]">
-      <h1 className="text-center my-1 font-bold">Lenguajes Favoritos</h1>
+        <h1 className="text-center my-1 font-bold">Lenguajes Favoritos</h1>
         <div className=" grid grid-cols-2 p-2 gap-2 w-full h-auto ">
           {languajes.map((lang) => {
             return (
               <div
                 title="Lenguajes Favoritos"
-                className="text-white cursor-default font-semibold lg:gap-x-2 gap-x-1 flex-row rounded-full py-2 px-2 bg-white/5 hover:scale-110 transition hover:bg-white/10 border border-white/10 flex justify-between items-center mg:gap-x-4 mg:py-3 mg:px-4 text-xs mg:text-base max-w-[200px] overflow-hidden"
+                className="text-white cursor-default font-semibold lg:gap-x-2 gap-x-1 flex-row rounded-full py-2 px-2 bg-white/5 hover:scale-110 transition hover:bg-white/10 border border-white/10 flex justify-between items-center mg:gap-x-4 min-h-[46px] mg:py-3 mg:px-4 text-xs mg:text-base max-w-[200px] overflow-hidden"
                 key={lang.id}
               >
                 <h2 className="text-wrap truncate max-w-[100px]">

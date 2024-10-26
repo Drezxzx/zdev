@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       <main className="w-screen h-auto  flex flex-col items-center justify-center">
-        <Posts setIsLoading={setIsLoading} isProfile={false} posts={posts} isLoading={isLoading} />
+        <Posts isProfile={false} posts={posts} isLoading={isLoading} />
       </main>
     </>
 

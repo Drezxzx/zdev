@@ -11,6 +11,10 @@ export interface PostsType {
     profile_pic: string;
 }
 
+export interface UpdateUserRes {
+    success: boolean;
+    error: string;
+}
 
 export interface FolloWer {
     follower: boolean;
