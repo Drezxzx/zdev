@@ -1,14 +1,14 @@
 "use client"
 import { useEffect } from "react";
 import { type PostsType } from "../types/type";
-import HeaderDesktop from "../components/Header";
 import Posts from "../components/Posts";
 import { useState } from "react";
 import React from "react";
-
+import {useChangeProfile} from '@/app/context/changeProfile'
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState<PostsType[]>([]);
+  const {isChange} = useChangeProfile()
 
   useEffect(() => {
     if (posts.length >= 0) {
@@ -23,11 +23,12 @@ export default function Home() {
           console.error(err);
         });
     }
-  }, []);
+  }, [isChange]);
 
   return (
     <>
-      <main className="w-screen h-auto  flex flex-col items-center justify-center">
+      <main className="w-screen  h-auto p-2 lg:p-0  flex flex-col items-center justify-center">
+        <div className="mt-24 "></div>
         <Posts isProfile={false} posts={posts} isLoading={isLoading} />
       </main>
     </>

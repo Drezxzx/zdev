@@ -10,10 +10,24 @@
     --background-end-rgb: 0, 0, 0;
   }
 
+html{
+  @apply scroll-smooth
+}
+
+.fullscreen-proyects {
+  z-index: 1000 !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: #06141D;
+  background: #05121a;
+  overflow-x: hidden !important;
+  
 }
 
 @layer utilities {

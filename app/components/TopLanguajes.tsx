@@ -6,6 +6,7 @@ import { languajes } from "../libs/languajes";
 export default  function TopLanguajes() {
     const [topLanguajes, setTopLanguajes] = useState<TopLanguajesResponse[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    
     useEffect(() => {
         getTopLanguajes().then(data => {
             console.log(data)
@@ -19,7 +20,7 @@ export default  function TopLanguajes() {
         return languaje?.img;
     }
 
-    const trophies = ["🏆", "🥈", "🥉"]
+    const trophies = ["1.", "2.", "3."]
     return (
         !isLoading && 
         <section className="flex h-fit w-72 py-4 flex-col gap-4 fixed bg-containers-rounded rounded-lg  p-2 items-center justify-start">

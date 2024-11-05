@@ -1,4 +1,5 @@
 import client from "@/app/conn/conn";
+import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
@@ -6,13 +7,16 @@ export async function GET() {
             SELECT l.name, COUNT(ul.language_id) as numberLenguajes
             FROM users_languages AS ul
             INNER JOIN language as l ON ul.language_id = l.id
-            GROUP BY ul.language_id ORDER BY numberLenguajes DESC LIMIT 3;
-            `)
+            GROUP BY ul.language_id
+            ORDER BY numberLenguajes DESC
+            LIMIT 3;
+        `);
 
-            return Response.json({ languajes: res.rows }, { status: 200 });
+        const response = NextResponse.json({ languajes: res.rows }, { status: 200 });
+
+        return response;
     } catch (error) {
-        console.log(error);
-        return Response.json({ error: "Server error" }, { status: 500 });
+        console.error("Database query failed:", error);
+        return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
-
 }

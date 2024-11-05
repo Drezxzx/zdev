@@ -27,8 +27,10 @@ export default function CodeExample({ language, codeString }: { language: string
   };
 
     const body = document.querySelector('body');
+    const header = document.querySelector("header")
     if (body) { 
       body.style.overflow = 'auto';
+      header?.classList.remove("hidden")
     }
   const overflow = isBlocked ? "overflow-hidden cursor-pointer" : "overflow-auto cursor-text"
     return (

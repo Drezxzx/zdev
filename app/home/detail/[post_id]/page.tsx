@@ -36,21 +36,21 @@ export default function DetailPost({ params }: { params: { post_id: string } }) 
     }
 
     return (
-        <main className="w-screen h-auto  flex flex-col items-center justify-center">
-            <div className="w-full flex items-start">
+        <main className="w-screen h-auto p-2 lg:p-0  flex flex-col items-center justify-center">
+            <div className="w-full flex absolute top-[4.5rem] lg:top-0 items-start">
                 <button onClick={handleBack}>
                     <IconArrowBack />
                 </button>
             </div>
             {post?.id &&
-                <div className="flex flex-col gap-7 max-w-screen-md w-full items-center justify-center">
+                <div className="flex mt-24 lg:mt-0 flex-col gap-7 max-w-screen-md w-full items-center justify-center">
                     <article className="flex flex-col w-full items-center justify-center">
-                        <div className="flex w-full  py-4 rounded-lg bg-[#1B2730] gap-6 flex-row mb-12">
-                            <img className="size-14 ml-2 object-contain rounded-full" src={post?.profile_pic} alt={`imagen de perfil de ${post?.profile_pic} `} />
-                            <div className="flex gap-3 flex-col w-[80%] justify-center ">
+                        <div className="flex w-full py-4 p-1 lg:p-0 rounded-lg bg-[#1B2730] gap-2 lg:gap-6 flex-row mb-5">
+                            <img className="lg:size-14 size-12 object-cover lg:ml-2 rounded-full" src={post?.profile_pic} alt={`imagen de perfil de ${post?.profile_pic} `} />
+                            <div className="flex gap-2 lg:gap-3 flex-col w-[80%] justify-center  ">
                                 <div className=" gap-3 flex justify-between items-center">
                                     <div className="flex gap-1 justify-start items-center">
-                                        <h1 className="text-white font-semibold text-lg flex items-center justify-center gap-1">{post.name} {Boolean(post.is_verified ) && <IconRosetteDiscountCheckFilled  size={20} color="#1DA1F3" />}</h1>
+                                        <h1 className="text-white font-semibold text-base lg:text-lg flex items-center justify-center gap-1">{post.name} {Boolean(post.is_verified ) && <IconRosetteDiscountCheckFilled  size={20} color="#1DA1F3" />}</h1>
                                         <h2 className="text-slate-400/80 text-sm">@{post.username} </h2>
                                     </div>
                                     <LikeButton col={false} idPost={post?.id} actualLikes={post?.likes} />

@@ -52,6 +52,15 @@ export interface LanguajeType {
     data: DataLanguage[];
 }
 
+export interface Proyects {
+    id : string,
+    nameProyect : string,
+    gitRepository : string,
+    previewLink : string,
+    preview : string,
+    description : string
+}
+
 export interface DataLanguage {
     id: number;
     name: string;

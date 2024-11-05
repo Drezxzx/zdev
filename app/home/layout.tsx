@@ -1,20 +1,20 @@
 import { Toaster } from "sonner";
 import App from "../components/App";
+import AsideLeft from '@/app/components/AsideLeft'
 import HeaderDesktop from "../components/Header";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Aside from "@/app/components/Aside";
-
-const queryClient = new QueryClient();
-
-
+import Aside from "@/app/components/AsideRight";
 
 export default function HomeLayout({ children }: { children: React.ReactNode }) {
-    return (
-      <App>
-        <HeaderDesktop/>
-      <Toaster position="top-right" expand={false} richColors/>
-      <Aside/>
-        {children}
-      </App>
-    )
+  return (
+    <App>
+      <div id="portal-root"></div>
+      <Toaster closeButton position="top-right" expand={false} richColors/>
+      <HeaderDesktop/>
+      <div className="grid grid-cols-[auto_1fr_auto]">
+        <Aside />
+        <main>{children}</main>
+        <AsideLeft />
+      </div>
+    </App>
+  );
 }

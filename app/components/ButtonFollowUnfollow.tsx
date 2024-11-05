@@ -14,34 +14,38 @@ export default function ButtonFollowUnfollow({
 }) {
   const { data: session } = useSession();
   const [isFollower, setIsFollower] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("")
   const [initialState, setInitialState] = useState<boolean>(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     getUserByEmail(session?.user.email as string).then(res => {
       setUsername(res.username)
-    })  
+    })
   }, [session])
 
   useEffect(() => {
-    if(username.length === 0)return
-    checkIfFollower({ username:username, followedUser })
+    if (username.length === 0) return
+    setIsLoading(true);
+    checkIfFollower({ username: username, followedUser })
       .then((data) => {
         setIsFollower(data.follower);
         setInitialState(data.follower);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
+        setIsLoading(false);
       });
   }, [username, followedUser]);
 
   const [optimisticIsFollower, setOptimisticIsFollower] = useOptimistic(
     initialState,
-    (prevIsFollower: boolean, newState: boolean) => newState 
+    (prevIsFollower: boolean, newState: boolean) => newState
   );
 
   const handleFollow = async () => {
-    setOptimisticIsFollower(true); 
+    setOptimisticIsFollower(true);
     setNumberFollowers((prev) => prev + 1);
 
     try {
@@ -69,11 +73,17 @@ export default function ButtonFollowUnfollow({
   };
 
   return (
-    <button
-      onClick={optimisticIsFollower ? handleUnFollow : handleFollow}
-      className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-    >
-      {optimisticIsFollower ? "Dejar de seguir" : "Seguir"}
-    </button>
+    <>
+      {
+        !isLoading && <button
+          onClick={optimisticIsFollower ? handleUnFollow : handleFollow}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+        >
+          {optimisticIsFollower ? "Dejar de seguir" : "Seguir"}
+        </button>
+      }
+
+    </>
+
   );
 }

@@ -13,6 +13,7 @@
     "@midudev/tailwind-animations": "^0.1.0",
     "@tabler/icons-react": "^3.19.0",
     "@tanstack/react-query": "^5.59.8",
+    "@types/ws": "^8.5.12",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.5.0",
     "jsonwebtoken": "^9.0.2",
@@ -24,8 +25,10 @@
     "react-dom": "^18",
     "react-loading-skeleton": "^3.5.0",
     "react-syntax-highlighter": "^15.5.0",
+    "socket.io-client": "^4.8.1",
     "sonner": "^1.5.0",
     "unique-names-generator": "^4.7.1",
+    "ws": "^8.18.0",
     "zustand": "^5.0.0"
   },
   "devDependencies": {
@@ -39,6 +42,7 @@
     "eslint-plugin-react": "^7.36.1",
     "globals": "^15.9.0",
     "postcss": "^8",
+    "prettier": "3.3.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
     "typescript-eslint": "^8.6.0"
