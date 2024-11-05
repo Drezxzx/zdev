@@ -1,3 +1,5 @@
+"use client"
+
 import { IconCopy, IconCheck, IconArrowsDiagonalMinimize } from '@tabler/icons-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/prism';
