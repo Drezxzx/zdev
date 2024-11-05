@@ -25,7 +25,7 @@ export default function SuggestionsSection() {
         if (email.length === 0) return
 
         Suggestions.getSuggestions({ email: email }).then(res => {
-            console.log(res)
+            console.log({res})
             setSuggestions(res)
         })
     }, [email])

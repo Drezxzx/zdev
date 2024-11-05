@@ -1,3 +1,4 @@
+"use client"
 import { Toaster } from "sonner";
 import App from "../components/App";
 import AsideLeft from '@/app/components/AsideLeft'

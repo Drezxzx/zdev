@@ -2,6 +2,7 @@ import client from "@/app/conn/conn";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+    console.log("kjsdkjansdkjasbdadbamsndbasd asdbamnsdbamsndas")
     try {
         const res = await client.execute(`
             SELECT l.name, COUNT(ul.language_id) as numberLenguajes
@@ -12,9 +13,11 @@ export async function GET() {
             LIMIT 3;
         `);
 
-        const response = NextResponse.json({ languajes: res.rows }, { status: 200 });
+        console.log(res);
 
-        return response;
+        return Response.json({ languajes: res.rows }, { status: 200 });
+
+        
     } catch (error) {
         console.error("Database query failed:", error);
         return NextResponse.json({ error: "Server error" }, { status: 500 });

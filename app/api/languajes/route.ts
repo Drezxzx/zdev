@@ -31,20 +31,23 @@ export async function POST(request: Request) {
         const body = await request.json();
         const { email, language_id } = body;
         languajesArr = language_id
+        console.log(languajesArr);
+        
 
 
         const response = await client.execute({ sql: "DELETE FROM users_languages WHERE user_id = (SELECT id FROM users WHERE email = ?);", args: [email] });
-        if (response.rowsAffected > 0) {
+        if (response.rowsAffected >= 0) {
             isInserted = true
         }
 
-        if (response.rowsAffected > 0) {
+        if (response.rowsAffected >= 0) {
             for (let lang of languajesArr) {
-                console.log(lang)
+                
                 if (await userHasLanguage(email, lang)) {
                     console.log("ya existe")
                 } else {
                     const response = await client.execute({ sql: "INSERT INTO users_languages (user_id, language_id) VALUES ((SELECT id FROM users WHERE email = ?), ?);", args: [email, lang] });
+                    console.log({response})
 
                     if (response.rowsAffected > 0) {
                         isInserted = true

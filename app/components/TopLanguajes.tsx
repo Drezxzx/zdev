@@ -9,7 +9,7 @@ export default  function TopLanguajes() {
     
     useEffect(() => {
         getTopLanguajes().then(data => {
-            console.log(data)
+            console.log({data})
             setTopLanguajes(data as TopLanguajesResponse[])
             setIsLoading(false)
         })

@@ -58,6 +58,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
                 language_id: selectedLanguajes.map(lang => lang.id)
             })
         })
+
         const resjson = await res.json() as resInsertLanguage
         if (res.status !== 200) {
             toast.error("Error al actualizar los lenguajes")
@@ -102,7 +103,6 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
         const search = e.target.value
         const filtered = languajes.filter(lang => lang.name.toLowerCase().includes(search.toLowerCase()))
         const resultLimit = filtered.slice(0, 15)
-
         if (search.length > 0) {
             setFilteredLanguages(resultLimit)
             return

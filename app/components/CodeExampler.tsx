@@ -32,6 +32,7 @@ export default function CodeExample({ language, codeString }: { language: string
       body.style.overflow = 'auto';
       header?.classList.remove("hidden")
     }
+    console.log(language)
   const overflow = isBlocked ? "overflow-hidden cursor-pointer" : "overflow-auto cursor-text"
     return (
       <div onClick={()=>{setIsBlocked(!isBlocked)}} className={`max-w-2xl ${overflow}  z-50 max-h-[80vh] rounded-lg bg-gray-800 p-2 relative`}>
@@ -39,12 +40,12 @@ export default function CodeExample({ language, codeString }: { language: string
           <button className={`transition-all text-white px-4 ${copied ? "bg-green-500" : ""} py-2 rounded-lg`}onClick={handleCoppy}>{copied ? <IconCheck /> : <IconCopy />}</button>
           <button onClick={handleIsfullScreen} className="hover:scale-110 transition-all cursor-zoom-in"><IconArrowsDiagonal2 /></button>
         </div>
-  
-        <SyntaxHighlighter language={language} wrapLines={true} style={nightOwl}>
+        
+        <SyntaxHighlighter language={language.toLocaleLowerCase()} wrapLines={true} style={nightOwl}>
           {formattedCode}
         </SyntaxHighlighter>
       
-        {isFullScreen &&<FullScreenCode copied={copied} handleCoppy={handleCoppy} language={language} formattedCode={formattedCode} handleIsfullScreen={handleIsfullScreen} />}
+        {isFullScreen &&<FullScreenCode copied={copied} handleCoppy={handleCoppy} language={language.toLocaleLowerCase()} formattedCode={formattedCode} handleIsfullScreen={handleIsfullScreen} />}
       </div>
     
       

@@ -13,9 +13,11 @@ import { languajes } from "../libs/languajes";
 
 
 export default function Posts({ posts, isLoading, isProfile }: { posts: PostsType[], isLoading: boolean, isProfile: boolean }) {
-    
+    console.log(posts)
     const getImageLanguaje = (languajeId: string):string | undefined => {
-        const languaje = languajes.find(lang => lang.name === languajeId);
+        console.log(languajeId)
+        const languaje = languajes.find(lang => lang.name.toLocaleLowerCase() === languajeId.toLocaleLowerCase());
+        console.log(languajes)
         return languaje?.img;
     }
 

@@ -1,5 +1,6 @@
+"use client"
 /* eslint-disable @next/next/no-img-element */
-"use client";
+;
 import { IconBellFilled, IconHomeFilled, IconLogout, IconMessageFilled } from "@tabler/icons-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
