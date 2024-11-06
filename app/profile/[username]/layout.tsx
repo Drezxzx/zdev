@@ -9,6 +9,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
     <App>
       <Toaster position="top-right" expand={false} richColors />
       <HeaderDesktop />
+      <div id="portal-root"></div>
       <div className="grid grid-cols-[auto_1fr_auto]">
         <Aside />
         <main>{children}</main>
