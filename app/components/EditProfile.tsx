@@ -89,7 +89,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
                         </div>
                         <h1 className="text-white text-2xl font-bold">Editar perfil</h1>
                         <label className="relative" htmlFor="image">
-                            <input onChange={handleChange} capture="user" type="file" className="hidden" id="image" accept="image/*" />
+                            <input onChange={handleChange} capture="environment" type="file" className="hidden" id="image" accept="image/*" />
                             <img src={imagePreview} alt="Imagen de perfil" className="size-24 object-cover rounded-full" />
                             <IconPencil className="absolute inset-0 bg-white rounded-full p-1" size={25} color="black" />
                         </label>
