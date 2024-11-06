@@ -14,7 +14,7 @@ export async function GET(req: Request) {
     const autorired = await auth()
     console.log(post_id)
 
-    const pageNumber = page ? Number(page) : 1
+    const pageNumber = page ? Number(page) : 0
     const elementsPerPageNumber = elementsPerPage ? Number(elementsPerPage) : 5
 
     // if(!autorired){
