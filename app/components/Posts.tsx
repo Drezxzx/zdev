@@ -17,7 +17,7 @@ import { toast } from "sonner";
 
 export default function Posts({ posts, setPosts, edit, isLoading, isProfile }: { posts: PostsType[], edit: boolean, isLoading: boolean, isProfile: boolean, setPosts: React.Dispatch<React.SetStateAction<PostsType[]>> }) {
 
-    const [page, setCurrentPage] = useState(1);
+    const [page, setCurrentPage] = useState(0);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const elementsPerPage = 5;
