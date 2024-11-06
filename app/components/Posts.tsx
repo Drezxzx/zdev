@@ -28,6 +28,7 @@ export default function Posts({ posts, setPosts, edit, isLoading, isProfile }: {
     };
 
     useEffect(() => {
+       if (!edit){return} 
         const handleScroll = () => {
             if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100 && !isLoadingMore && hasMore) {
                 setCurrentPage((prevPage) => prevPage + 1);
@@ -39,6 +40,7 @@ export default function Posts({ posts, setPosts, edit, isLoading, isProfile }: {
     }, [isLoadingMore, hasMore]);
 
     useEffect(() => {
+if (!edit){return} 
         const fetchPosts = async () => {
             setIsLoadingMore(true);
             const res = await PostsClass.getPosts(elementsPerPage.toString(), page.toString());
