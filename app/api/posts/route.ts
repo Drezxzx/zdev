@@ -56,6 +56,7 @@ export async function POST(req: Request) {
     const title = body.get("title") as string;
     const code = body.get("code") as string;
     const author_email = body.get("author_email") as string;
+    console.log(author_email)
     let id_language = body.get("id_language") as string;
     id_language = id_language === "" ? "1000" : id_language;
     const file = body.get("file");
@@ -68,6 +69,14 @@ export async function POST(req: Request) {
         const arrayBuffer = await blob.arrayBuffer();
         return Buffer.from(arrayBuffer);
     }
+
+    const checkEmail = await client.execute({
+        sql: `SELECT COUNT(*) as count FROM users WHERE email = ?;`,
+        args: [author_email]
+    })
+    console.log(checkEmail)
+    
+
 
     // Si se ha enviado un archivo, intentamos subirlo a Cloudinary
     if (file && typeof file === "object") {
@@ -100,6 +109,8 @@ export async function POST(req: Request) {
         }
     }
 
+    
+
     // Inserción en la base de datos
     try {
         const insertSql = imageUrl
@@ -107,8 +118,11 @@ export async function POST(req: Request) {
             : "INSERT INTO posts (title, code, id_language, created_at, updated_at, author_id) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = ?));";
 
         const args = imageUrl
-            ? [title, code, id_language, imageUrl, author_email]
-            : [title, code, id_language, author_email];
+            ? [title !== undefined ? title : "", code !== null ? "" : "", Number(id_language), imageUrl, author_email]
+            
+            : [title !== undefined ? title : "", code !== null ? "" : "", Number(id_language), author_email];
+
+            console.log(args)
 
         const insert = await client.execute({
             sql: insertSql,
