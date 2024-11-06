@@ -7,6 +7,7 @@ import { getUserByEmail } from "../libs/user";
 import { IconCode, IconPhotoFilled, IconUpload } from "@tabler/icons-react";
 import { useChangeProfile } from '@/app/context/changeProfile'
 import { toast } from "sonner";
+import { PostsClass } from "../libs/Posts";
 
 interface Props {
     image: boolean | undefined;
@@ -14,9 +15,9 @@ interface Props {
     text: boolean | undefined;
 }
 
-export default function CreatePost(){
+export default function CreatePost() {
     const { data: session } = useSession()
-    const { setChange } = useChangeProfile()
+    const { setChangePost, isChangePost } = useChangeProfile()
     const [profile_pic, setProfilePic] = useState("")
     const [content, setContent] = useState("")
     const [author, setAuthor] = useState("")
@@ -126,24 +127,17 @@ export default function CreatePost(){
         if (postMode.image) { formData.append("file", image as File); }
         formData.append("author_email", author);
         formData.append("id_language", id_language);
+    
+        toast.promise( PostsClass.createPost(formData), {
+            loading: 'Creando el post...',
+            success: (data) => {
+                setChangePost(!isChangePost)
+                return `El post ha sido creado èxitosamente`;
+                
+            },
+            error: "Error al crear el post",
+        });
 
-        const res = await fetch("/api/posts", {
-            method: "POST",
-            body: formData
-        })
-
-        if (res.status !== 200) {
-            console.error("Error al crear el post");
-            return;
-        }
-
-        res.json().then((data) => {
-            if (data.success) {
-               
-                toast.success("Post creado exitosamente")
-                setChange(true)
-            }
-        })
     }
 
     return (
@@ -151,7 +145,7 @@ export default function CreatePost(){
 
             {profile_pic.length > 0 && (
                 <img
-                    className="rounded-full w-14 h-14"
+                    className="md:block hidden rounded-full w-14 h-14"
                     src={profile_pic}
                     alt="Imagen de usuario"
                 />
@@ -166,7 +160,7 @@ export default function CreatePost(){
                         id="post"
                         rows={1}
                         maxLength={500}
-                        placeholder="¿En que estás pensando?"
+                        placeholder={`¿En que estás pensando?`}
                     />
                     {postMode.code &&
                         <div className="flex gap-2 justify-evenly">
@@ -194,7 +188,7 @@ export default function CreatePost(){
 
 
                     {/* Botones de acción */}
-                    <div className="flex gap-2 justify-evenly">
+                    <div className="flex gap-1 justify-center items-center md:gap-2 md:justify-evenly">
                         <button onClick={handleClickImage} className={`hover:bg-slate-200/50  transition-all border border-slate-200/45 rounded-full text-white px-4 py-2 flex gap-2 `}>
                             <IconPhotoFilled className="text-emerald-400" filter=" drop-shadow(0px 0px 5px #34d399)" />
                             <span>Image</span>

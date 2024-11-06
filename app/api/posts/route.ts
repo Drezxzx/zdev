@@ -7,10 +7,15 @@ import auth from "@/app/libs/auth";
 export async function GET(req: Request) {
     const url = new URL(req.url)
     const username = url.searchParams.get("username") as string
+    const elementsPerPage = url.searchParams.get("elementsPerPage") as string
+    const page = url.searchParams.get("page") as string
     console.log(username)
     const post_id = url.searchParams.get("post_id") as string
     const autorired = await auth()
     console.log(post_id)
+
+    const pageNumber = page ? Number(page) : 1
+    const elementsPerPageNumber = elementsPerPage ? Number(elementsPerPage) : 5
 
     // if(!autorired){
     //     return new Response(JSON.stringify({error:"No autorizado"}), {status:401})
@@ -46,7 +51,10 @@ export async function GET(req: Request) {
         return Response.json(post.rows);
     }
 
-    const posts = await client.execute("SELECT posts.created_at, users.is_verified,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name as language, users.name,  users.username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id order by posts.created_at desc LIMIT 100;");
+    const posts = await client.execute({
+        sql : "SELECT posts.created_at, users.is_verified,  users.profile_pic as profile_pic, posts.id, posts.code, posts.image, (SELECT COUNT(*) FROM users_likes WHERE users_likes.post_id = posts.id) as likes, posts.title, posts.image, language.name as language, users.name,  users.username FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN language ON posts.id_language = language.id order by posts.created_at desc LIMIT ? OFFSET ?;",
+        args : [elementsPerPageNumber, pageNumber * elementsPerPageNumber ]
+    });
 
     return Response.json(posts.rows);
 }
@@ -118,9 +126,9 @@ export async function POST(req: Request) {
             : "INSERT INTO posts (title, code, id_language, created_at, updated_at, author_id) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = ?));";
 
         const args = imageUrl
-            ? [title !== undefined ? title : "", code !== null ? "" : "", Number(id_language), imageUrl, author_email]
+            ? [title !== undefined ? title : "", code !== null ? code : "", Number(id_language), imageUrl, author_email]
             
-            : [title !== undefined ? title : "", code !== null ? "" : "", Number(id_language), author_email];
+            : [title !== undefined ? title : "", code !== null ? code : "", Number(id_language), author_email];
 
             console.log(args)
 
@@ -135,6 +143,35 @@ export async function POST(req: Request) {
         console.error("Error insertando en la base de datos:", error);
         return new Response(JSON.stringify({ error: "Error insertando en la base de datos" }), { status: 500 });
     }
+}
+
+export async function DELETE(request: Request) {
+    try {
+        const url = new URL(request.url);
+    const post_id = url.searchParams.get("post_id");
+    console.log(`DELETE FROM posts WHERE id = ${post_id}`)
+
+    const deleteComents = client.execute({
+        sql : "DELETE FROM users_likes WHERE post_id = ?;",
+        args : [post_id]
+    })
+
+    const deleteLikes = client.execute({
+        sql : "DELETE from coments WHERE post_id = ?;",
+        args : [post_id]
+    })
+    
+    const res = await client.execute({
+        sql: `DELETE FROM posts WHERE id = ? `,
+        args: [Number(post_id)]
+    })
+    
+    return Response.json({success : res.rowsAffected > 0}, {status : 200})
+    } catch (error) {
+        console.log(error)
+        return Response.json({error : "Ha habido un error"}, {status : 400})
+    }
+    
 }
 
 async function isLiked( username: string, comment_id: string) {

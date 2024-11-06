@@ -10,7 +10,7 @@ import { SectionProfile } from "@/app/components/SectionProfile";
 import React from "react";
 
 export default function Profile({ params }: { params: { username: string } }) {
-  const [isMe, setIsMe] = useState<Boolean | undefined>();
+  const [isMe, setIsMe] = useState<boolean | undefined>();
   const { isChange, setChange } = useChangeProfile()
   const [dataUser, setDataUser] = useState<DataUser>();
   const [followers, setFollowers] = useState<number>(0);
@@ -68,7 +68,7 @@ export default function Profile({ params }: { params: { username: string } }) {
           />
         )}
         
-        <Posts isProfile={true} posts={posts} isLoading={isLoading} />
+       {isMe && <Posts setPosts={setPosts} edit={isMe} isProfile={true} posts={posts} isLoading={isLoading} />}
       </main>
     </>
   );

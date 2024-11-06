@@ -2,7 +2,9 @@ import { create } from 'zustand'
 
 interface ChnageType {
   isChange: boolean
+  isChangePost : boolean
   setChange: (by: boolean) => void
+  setChangePost : ( isChangePost: boolean) => void
 }
 
 interface User {
@@ -18,6 +20,8 @@ interface User {
 
 export const useChangeProfile = create<ChnageType>()((set) => ({
   isChange: false,
+  isChangePost : false,
+  setChangePost : (isChangePost) => set((state) => ({ isChangePost:  isChangePost })),
   setChange: (by) => set((state) => ({ isChange:  by })),
 }))
 

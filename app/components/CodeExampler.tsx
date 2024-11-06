@@ -32,7 +32,6 @@ export default function CodeExample({ language, codeString }: { language: string
       body.style.overflow = 'auto';
       header?.classList.remove("hidden")
     }
-    console.log(language)
   const overflow = isBlocked ? "overflow-hidden cursor-pointer" : "overflow-auto cursor-text"
     return (
       <div onClick={()=>{setIsBlocked(!isBlocked)}} className={`max-w-2xl ${overflow}  z-50 max-h-[80vh] rounded-lg bg-gray-800 p-2 relative`}>

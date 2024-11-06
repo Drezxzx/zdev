@@ -6,18 +6,19 @@ import Portal from "./Portal";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { ProyectsClass } from "../libs/proyects";
+import { useProyects } from "../context/proyects";
 
 
-export default function FullScreenProyects({ username, proyects, isHidden, setIsHidden, setProjects }: { username: string, proyects: Proyects[], isHidden: boolean, setIsHidden: React.Dispatch<React.SetStateAction<boolean>>, setProjects : React.Dispatch<React.SetStateAction<Proyects[]>>  }) {
-
+export default function FullScreenProyects({ username, proyects, setProjects }: { username: string, proyects: Proyects[], setProjects : React.Dispatch<React.SetStateAction<Proyects[]>>  }) {
+    
+    const { isHiddenFullScreenProyects, setIsHiddenFullScreenProyects, setisHiddenCreateProyect } = useProyects();
+    
     const handleClick = () => {
-        setIsHidden(!isHidden);
+        setIsHiddenFullScreenProyects(!isHiddenFullScreenProyects);
     };
 
     const handleDelete = (e : React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
         const elemnt = e.currentTarget
-        console.log(elemnt.id)
-        console.log(proyects)
         const nameProyect = proyects.filter(pro => pro.id.toString() === elemnt.id)[0].nameProyect
         toast.warning(`¿Esta seguro que quiere eliminar el proyecto ${nameProyect}?`, {
             action: {
@@ -33,19 +34,20 @@ export default function FullScreenProyects({ username, proyects, isHidden, setIs
 
     useEffect(() => {
         const body = document.querySelector('body');
-        if (body) body.style.overflow = isHidden ? 'auto' : 'hidden';
-    }, [isHidden]);
+        if (body) body.style.overflow = isHiddenFullScreenProyects ? 'auto' : 'hidden';
+    }, [isHiddenFullScreenProyects]);
 
-    if (isHidden) return null;
+    if (isHiddenFullScreenProyects) return null;
 
     return (
         <Portal>
             <section className="w-screen  flex-col px-5 h-screen fixed top-0 left-0 z-[1000] flex items-center justify-center bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
-                <h1 className="text-2xl p-2 items-center flex justify-between w-full font-bold">
+                <h1 className="md:text-2xl text-xl p-2 items-center flex justify-between w-full font-bold">
                     <span className="cursor-pointer hover:scale-105" onClick={handleClick}><IconX /></span>
                     Proyectos de {username}
+                    <button onClick={() => { setisHiddenCreateProyect(false) }} className="text-sm hover:scale-105 text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full">Crear proyecto</button>
                 </h1>
-                <div className="z-[1000] grid grid-cols-2 p-2 overflow-auto gap-4">
+                <div className="z-[1000] w-full md:w-fit grid lg:grid-cols-2 p-2 overflow-auto gap-4">
                     {
                         proyects.map(proyect =>
                             <div key={proyect.id}  className="flex relative bg-containers-rounded flex-col border border-slate-700/55 rounded-lg p-4 gap-3 items-start">
@@ -58,7 +60,7 @@ export default function FullScreenProyects({ username, proyects, isHidden, setIs
                                     <Beadge href={proyect.gitRepository}> GitHub <IconBrandGithub size={20} /></Beadge>
                                     <Beadge href={proyect.previewLink}> Preview <IconLink size={20} /></Beadge>
                                 </div>
-                                <div className="w-[541px] h-[344.047px]">
+                                <div className="md:w-[541px] w-[323px] h-[323px] md:h-[344.047px]">
                                     <img className="w-full h-full object-cover" src={proyect.preview} alt="Preview" />
                                 </div>
 

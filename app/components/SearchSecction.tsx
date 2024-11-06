@@ -27,7 +27,7 @@ export default function SearchSection() {
         }
     };
 
-    const NameResalted = ({name}: { name: string }) => {
+    const NameResalted = ({ name }: { name: string }) => {
         console.log(name)
         let indexOfLettersResalted = []
         const letterName = name.split("")
@@ -41,12 +41,12 @@ export default function SearchSection() {
         return (
             <div className="flex" key={crypto.randomUUID()}>
                 {
-                letterName.map((letter, i) => {
-                    if (indexOfLettersResalted.some(index => index === i)) {
-                        return <span key={letter} className="text-red-500">{letter}</span>
-                    }
-                    return <span key={letter}>{letter}</span>
-                })}
+                    letterName.map((letter, i) => {
+                        if (indexOfLettersResalted.some(index => index === i)) {
+                            return <span key={letter} className="text-red-500">{letter}</span>
+                        }
+                        return <span key={letter}>{letter}</span>
+                    })}
             </div>
 
         )
@@ -66,14 +66,16 @@ export default function SearchSection() {
     return (
         <>
             {!isVisible && (
-                <IconSearch onClick={() => toggleSearch(true)} size={22} color="#C7D6E6" />
+                <li className="cursor-pointer transition-all hover:bg-[#1B2730] p-2 rounded-xl"><IconSearch onClick={() => toggleSearch(true)} size={22} color="#C7D6E6" /></li>
+
             )}
-            <section className="w-[40%] flex gap-2 items-center flex-col justify-center">
-                {/* Icono de búsqueda para abrir el formulario */}
+
+            {/* Icono de búsqueda para abrir el formulario */}
 
 
-                {/* Formulario y resultados de búsqueda cuando el buscador está visible */}
-                {isVisible && (
+            {/* Formulario y resultados de búsqueda cuando el buscador está visible */}
+            {isVisible && (
+                <section className="w-[40%] flex gap-2 items-center flex-col justify-center">
                     <section
                         className="w-screen h-screen fixed top-0 left-0 z-[100] flex items-center justify-center bg-[#1b27309c] animate-blurred-fade-in animate-duration-faster backdrop-blur-md"
                         style={{ transform: "translateX(-50%)", left: "50%" }}
@@ -88,7 +90,7 @@ export default function SearchSection() {
                                     className="focus:outline-none rounded-md p-2 w-full bg-[#4b5c6a] text-white font-semibold text-base"
                                     placeholder="buscar usuarios..."
                                 />
-                                <IconX onClick={() => toggleSearch(false)} size={22} color="#C7D6E6" />
+                                <IconX className="cursor-pointer" onClick={() => toggleSearch(false)} size={22} color="#C7D6E6" />
                             </form>
                             <div className="flex flex-col lg:w-full lg:items-center gap-2 h-[25rem] overflow-y-auto">
                                 {results.map(user => (
@@ -100,7 +102,7 @@ export default function SearchSection() {
                                         <img src={user.profile_pic} alt="Imagen de usuario" className="size-14 rounded-full" />
                                         <div>
                                             <span className="text-base flex gap-2 items-center">
-                                                <NameResalted key={"asdasd"} name={user.username}  />
+                                                <NameResalted key={"asdasd"} name={user.username} />
                                                 {Boolean(user.isVerificed) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}
                                             </span>
                                         </div>
@@ -112,10 +114,10 @@ export default function SearchSection() {
                             </div>
                         </div>
                     </section>
+                </section>
 
+            )}
 
-                )}
-            </section>
         </>
 
     );

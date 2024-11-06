@@ -60,8 +60,8 @@ export const SectionProfile = ({
   };
 
   return (
-    <section className="flex  lg:mb-5 p-2 lg:p-0  mt-24 w-full flex-col lg:flex-row h-auto gap-3 lg:gap-x-5 rounded-lg  max-w-screen-md">
-      <article className="flex gap-3 lg:w-[60%] p-5 rounded-lg bg-[#1B2730]  items-start">
+    <section className="flex  lg:mb-5 p-2 lg:p-0  mt-24 w-full flex-col md:flex-row lg:flex-row h-auto gap-3 lg:gap-x-5 rounded-lg  max-w-screen-md">
+      <article className="flex gap-3 md:w-[60%] p-5 rounded-lg bg-[#1B2730]  items-start">
         <img
           className="size-24 ml-2 rounded-full object-cover"
           src={user.profile_pic as string}
@@ -92,7 +92,7 @@ export const SectionProfile = ({
           </section>
         </article>
       </article>
-      <article className="bg-[#1B2730] p-1 lg:p-0  rounded-lg lg:w-[40%]">
+      <article className="bg-[#1B2730] p-1 lg:p-0  rounded-lg md:w-[40%]">
         <h1 className="text-center my-1 font-bold">Lenguajes Favoritos</h1>
         <div className=" grid grid-cols-2 p-2 gap-2 w-full h-auto ">
           {languajes.map((lang) => {
