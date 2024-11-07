@@ -13,7 +13,6 @@ import { languajes } from "../libs/languajes";
 import { useEffect, useState } from "react";
 import { PostsClass } from "../libs/Posts";
 import { toast } from "sonner";
-import { FadeLoader } from "react-spinners";
 
 
 
