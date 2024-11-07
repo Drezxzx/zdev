@@ -79,7 +79,7 @@ export default function CreateProyect({
     return (
         <Portal>
             {!isHiddenCreateProyect && (
-                <section className="w-screen flex-col gap-5 px-5 h-screen fixed top-0 left-0 z-[1500] flex items-center justify-center bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
+                <section className="w-screen flex-col gap-3 md:gap-5 px-5 py-2 md:py-0 h-screen fixed top-0 left-0 z-[1500] flex items-center justify-start bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
                     <h1 className="text-2xl flex justify-center items-center gap-2 font-bold">Crear un proyecto</h1>
                     <form onSubmit={handleSubmit} className="flex relative flex-col gap-4 items-center justify-center bg-containers-rounded p-6 rounded-lg shadow-md"> 
                         <div className="absolute right-2 top-2" ><IconX onClick={()=> setisHiddenCreateProyect(true)} className="text-2xl cursor-pointer hover:scale-105" /></div>

@@ -13,6 +13,9 @@ import { languajes } from "../libs/languajes";
 import { useEffect, useState } from "react";
 import { PostsClass } from "../libs/Posts";
 import { toast } from "sonner";
+import { FadeLoader } from "react-spinners";
+
+
 
 
 export default function Posts({ username, posts, setPosts, edit, isLoading, isProfile }
@@ -22,6 +25,8 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const elementsPerPage = 5;
+
+
 
     const getImageLanguaje = (languajeId: string) => {
         const languaje = languajes.find(lang => lang.name.toLowerCase() === languajeId.toLowerCase());
@@ -46,9 +51,9 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
             setIsLoadingMore(true);
 
             if (username !== undefined) {
-                 res = await PostsClass.getPostByUsername(username, elementsPerPage.toString(), page.toString());
+                res = await PostsClass.getPostByUsername(username, elementsPerPage.toString(), page.toString());
             } else {
-                 res = await PostsClass.getPosts(elementsPerPage.toString(), page.toString());
+                res = await PostsClass.getPosts(elementsPerPage.toString(), page.toString());
             }
 
             if (res.length < elementsPerPage) {
@@ -89,7 +94,7 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
         return <PostsSkeleton />;
     }
     return (
-        <div className="flex flex-col gap-7 p-2 lg:p-0 max-w-screen-md w-full items-center justify-center">
+        <div className="flex flex-col gap-7 p-2 pb-4 lg:p-0 max-w-screen-md w-full items-center justify-center">
             {!isProfile && <CreatePost />}
 
             <article className="flex flex-col w-full items-center justify-center">
@@ -122,6 +127,7 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
                     </div>
 
                 ))}
+                
                 {!hasMore && <p className="font-semibold">No hay más publicaciones para cargar.</p>}
             </article>
         </div>
