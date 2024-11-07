@@ -28,6 +28,7 @@ export default function CreatePost() {
     const [postMode, setpostMode] = useState<Props>({ image: false, code: false, text: false })
 
     useEffect(() => {
+        if(!session)return
         getUserByEmail(session?.user.email as string).then(res => {
             setProfilePic(res.profile_pic)
         })

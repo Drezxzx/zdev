@@ -132,9 +132,9 @@ export default function CreateProyect({
                                 />
                             </label>
                         </div>
-                        <label htmlFor="preview" className="w-full flex bg-transparent h-80 border-slate-400/60 border-dashed border-2 flex-col items-center justify-center mt-2">
+                        <label htmlFor="preview" className="w-full flex bg-transparent h-40 md:h-80 border-slate-400/60 border-dashed border-2 flex-col items-center justify-center mt-2">
                             {imgPreview ? (
-                                <img className="size-80 max-h-80 object-contain " src={imgPreview} alt="Preview" />
+                                <img className="md:size-80 size-60 max-h-60 md:max-h-80 object-contain " src={imgPreview} alt="Preview" />
                             ) : (
                                 <span className="text-gray-500">Sube una imagen*</span>
                             )}
@@ -147,7 +147,7 @@ export default function CreateProyect({
                                 accept="image/*"
                             />
                         </label>
-                        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        <button className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full ">
                             Crear
                         </button>
                     </form>
