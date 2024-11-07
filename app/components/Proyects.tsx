@@ -38,7 +38,7 @@ export default function Proyects() {
             </div>
 
             <div className="flex flex-col space-y-1 justify-center items-center">
-                {proyects.map((projects, index) => (
+                {proyects.length > 0 ? proyects.map((projects, index) => (
                     <div id={projects.id.toString()} key={index} className="flex flex-col border border-slate-700/55 w-[256px] rounded-lg max-w-[256px] p-2 gap-3 items-start">
                         <h2 className="text-xl font-bold">{projects.nameProyect}</h2>
 
@@ -53,7 +53,9 @@ export default function Proyects() {
 
                         <img src={projects.preview} alt="Preview" className="rounded-lg size-60 object-contain" />
                     </div>
-                ))}
+                )) : 
+                <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">No hay proyectos</span>
+                }
             </div>
         </section>
 
