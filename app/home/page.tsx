@@ -32,7 +32,7 @@ export default function Home() {
     <>
       <main className="w-screen  h-auto p-2 lg:p-0  flex flex-col items-center justify-center">
         <div className="mt-24 "></div>
-        <Posts edit={false} setPosts={setPosts} isProfile={false} posts={posts} isLoading={isLoading} />
+        <Posts edit={false} username={undefined} setPosts={setPosts} isProfile={false} posts={posts} isLoading={isLoading} />
       </main>
     </>
 

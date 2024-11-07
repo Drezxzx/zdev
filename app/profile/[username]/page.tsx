@@ -1,5 +1,5 @@
 "use client";
-import { getPostByUsername, getUser, getUserByEmail } from "@/app/libs/user";
+import { getUser, getUserByEmail } from "@/app/libs/user";
 import { useSession } from "next-auth/react";
 import { use, useEffect, useState } from "react";
 import Posts from "@/app/components/Posts";
@@ -8,6 +8,7 @@ import { DataLanguage, DataUser, type PostsType } from "@/app/types/type";
 import HeaderDesktop from "@/app/components/Header";
 import { SectionProfile } from "@/app/components/SectionProfile";
 import React from "react";
+import { PostsClass } from "@/app/libs/Posts";
 
 export default function Profile({ params }: { params: { username: string } }) {
   const [isMe, setIsMe] = useState<boolean | undefined>();
@@ -19,6 +20,8 @@ export default function Profile({ params }: { params: { username: string } }) {
   const [languages, setLanguages] = useState<DataLanguage[]>([]);
   const [posts, setPosts] = useState<PostsType[]>([]);
   const { data: session } = useSession();
+  const page = 0
+  const elementsPerPage = 5
 
   useEffect(() => {
     if (!session) return
@@ -30,14 +33,15 @@ export default function Profile({ params }: { params: { username: string } }) {
 
   useEffect(() => {
     setIsLoading(true);
-    getPostByUsername(params.username).then((data) => {
+    if (username.length === 0) return
+
+    PostsClass.getPostByUsername(params.username, elementsPerPage.toString(), page.toString()).then((data) => {
       setIsLoading(false);
+      console.log(data)
       setPosts(data);
     });
 
     getUser(params.username).then((data) => {
-      console.log(data)
-      console.log({ username1: username, username2: params.username })
       if (data.data.username === username) {
         setIsMe(true);
       }else{
@@ -68,7 +72,7 @@ export default function Profile({ params }: { params: { username: string } }) {
           />
         )}
         
-       {isMe && <Posts setPosts={setPosts} edit={isMe} isProfile={true} posts={posts} isLoading={isLoading} />}
+       {isMe !== undefined && posts.length > 0 && params.username.length > 0 && <Posts username={params.username} setPosts={setPosts} edit={isMe} isProfile={true} posts={posts} isLoading={isLoading} />}
       </main>
     </>
   );

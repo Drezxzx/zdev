@@ -73,6 +73,7 @@ export interface FollowRes {
 export interface PostDetail {
     post: PostsType;
     comments: Comment[];
+    mosLikedComents : Comment;
 }
 
 export interface ResultSearch {

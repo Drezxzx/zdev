@@ -44,6 +44,9 @@ export const SectionProfile = ({
 
 
   const ButtonProfile = () => {
+
+    if(isMe === undefined) return
+    
     if (isMe) {
       return (
         <EditProfile user={user} />

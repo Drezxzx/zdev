@@ -7,8 +7,8 @@ export default class Coments {
         return data.comentarios;
     }
 
-    static async getDetailComents(post_id: string, username : string):Promise<PostDetail> {
-        const res = await fetch(`/api/posts?post_id=${post_id}&username=${username}`);
+    static async getDetailComents(post_id: string, username : string, elementsPerPage: string, page: string):Promise<PostDetail> {
+        const res = await fetch(`/api/posts?post_id=${post_id}&username=${username}&elementsPerPage=${elementsPerPage}&page=${page}`);
         const data = await res.json() as PostDetail;
         return data;
     }

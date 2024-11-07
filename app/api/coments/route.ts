@@ -24,22 +24,41 @@ export async function POST(req: Request) {
     
     const url = new URL(req.url)
     const insertLike = url.searchParams.get("insertLike") as string
+    console.log(insertLike)
     try {
-        if (username && username.length > 0) {
+        if (username && username.length > 0 && insertLike === null) {
             console.log({post_id, comment, username})
             const res = await createNewComent(post_id, comment, username)
             return Response.json(res, {status: 200});
         }
 
         if (insertLike && insertLike.length > 0) {
+            console.log({post_id, username})
             const res = await likeComent(post_id, username)
             return Response.json(res, {status: 200});
         }
 
     } catch (error) {
         console.log(error);
-        return new Response(JSON.stringify({ error: "Error al insertar comentario" }), { status: 500 });
+        return  Response.json({ error: "Error al insertar comentario" }), { status: 500 };
     }
+}
+async function likeComent (post_id: string, username: string) {
+    const res = await client.execute({
+        sql : "insert into comments_like_users (user_id, comment_id) VALUES ((SELECT id FROM users WHERE username = ?), ?);",
+        args : [username,post_id]
+    })
+
+    return res.rowsAffected > 0
+}
+
+async function unlikeComent (post_id: string, username: string) {
+    const res = await client.execute({
+        sql : "delete from comments_like_users where user_id = (SELECT id FROM users WHERE username = ?) and comment_id = ?;",
+        args : [username,post_id]
+    })
+
+    return res.rowsAffected > 0
 }
 
 export async function DELETE (req: Request) {
@@ -69,22 +88,4 @@ async function getNumberComents(postId: string) {
     })
 
     return numberComents
-}
-
-async function likeComent (post_id: string, username: string) {
-    const res = await client.execute({
-        sql : "insert into comments_like_users (user_id, comment_id) VALUES ((SELECT id FROM users WHERE username = ?), ?);",
-        args : [username,post_id]
-    })
-
-    return res.rowsAffected > 0
-}
-
-async function unlikeComent (post_id: string, username: string) {
-    const res = await client.execute({
-        sql : "delete from comments_like_users where user_id = (SELECT id FROM users WHERE username = ?) and comment_id = ?;",
-        args : [username,post_id]
-    })
-
-    return res.rowsAffected > 0
 }

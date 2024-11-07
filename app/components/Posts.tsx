@@ -15,7 +15,8 @@ import { PostsClass } from "../libs/Posts";
 import { toast } from "sonner";
 
 
-export default function Posts({ posts, setPosts, edit, isLoading, isProfile }: { posts: PostsType[], edit: boolean, isLoading: boolean, isProfile: boolean, setPosts: React.Dispatch<React.SetStateAction<PostsType[]>> }) {
+export default function Posts({ username, posts, setPosts, edit, isLoading, isProfile }
+    : { username: string | undefined, posts: PostsType[], edit: boolean, isLoading: boolean, isProfile: boolean, setPosts: React.Dispatch<React.SetStateAction<PostsType[]>> }) {
 
     const [page, setCurrentPage] = useState(0);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -28,32 +29,37 @@ export default function Posts({ posts, setPosts, edit, isLoading, isProfile }: {
     };
 
     useEffect(() => {
-      
         const handleScroll = () => {
             if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100 && !isLoadingMore && hasMore) {
                 setCurrentPage((prevPage) => prevPage + 1);
             }
         };
-
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isLoadingMore, hasMore]);
 
     useEffect(() => {
- 
+
         const fetchPosts = async () => {
+            let res: PostsType[] = [];
+
             setIsLoadingMore(true);
-            const res = await PostsClass.getPosts(elementsPerPage.toString(), page.toString());
+
+            if (username !== undefined) {
+                 res = await PostsClass.getPostByUsername(username, elementsPerPage.toString(), page.toString());
+            } else {
+                 res = await PostsClass.getPosts(elementsPerPage.toString(), page.toString());
+            }
 
             if (res.length < elementsPerPage) {
-                setHasMore(false); // Marca cuando no hay más publicaciones disponibles
+                setHasMore(false);
             }
 
             setPosts((prevPosts) => [...prevPosts, ...res]);
             setIsLoadingMore(false);
         };
 
-        if (hasMore && page > 1) {
+        if (hasMore && page >= 1) {
             fetchPosts();
         }
     }, [page, hasMore]);
@@ -63,20 +69,20 @@ export default function Posts({ posts, setPosts, edit, isLoading, isProfile }: {
 
         toast('¿Estás seguro que deseas eliminar este post?', {
             action: {
-              label: 'SI',
-              onClick: () => {
-                toast.promise(PostsClass.deletePost(post_id), {
-                    loading: 'Eliminado post...',
-                    success: (data) => {
-                        setPosts(posts.filter(post => post.id.toString() !== post_id))
-                        return `El post ha sido eliminado correctamente`;
-                    },
-                    error: 'Ha habido un error al eliminar el post',
-                });
-              }
+                label: 'SI',
+                onClick: () => {
+                    toast.promise(PostsClass.deletePost(post_id), {
+                        loading: 'Eliminado post...',
+                        success: (data) => {
+                            setPosts(posts.filter(post => post.id.toString() !== post_id))
+                            return `El post ha sido eliminado correctamente`;
+                        },
+                        error: 'Ha habido un error al eliminar el post',
+                    });
+                }
             },
-          })
-        
+        })
+
     }
 
     if (isLoading) {

@@ -76,7 +76,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
 
     return (
         <>
-            <button className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full " onClick={() => setIsHidden(false)}>
+            <button className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full " onClick={() => setIsHidden(false)}>
                 Editar perfil
                 <span><IconPencil  size={20} color="black"/></span>
             </button>

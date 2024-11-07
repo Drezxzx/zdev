@@ -1,36 +1,40 @@
 "use client";
 
 import CodeExample from "@/app/components/CodeExampler";
-import ComentsSection from "@/app/components/ComentsSection";
 import LikeButton from "@/app/components/LikeButton";
 import Coments from "@/app/libs/coments";
 import { PostsType, Comment } from "@/app/types/type";
 import { IconArrowBack, IconRosetteDiscountCheckFilled } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import SectionComents from "./Coments";
 import { useSession } from "next-auth/react";
+import { useUser } from "@/app/context/changeProfile";
 
 export default function DetailPost({ params }: { params: { post_id: string } }) {
     const [post, setPost] = useState<PostsType>()
     const [comments, setComments] = useState<Comment[]>([])
+    const {usernameContex} = useUser()
+    const elelementsPerPage = "10"
+    const page = "0"
     const { data: session } = useSession()
 
     useEffect(() => {
+        if(usernameContex.length === 0) return
 
-        if (session?.user?.username && session.user.username.length > 0) {
-            Coments.getDetailComents(params.post_id, session.user.username)
+        if (usernameContex && usernameContex.length > 0) {
+            Coments.getDetailComents(params.post_id, usernameContex, elelementsPerPage, page)
                 .then(data => {
                     setPost(data.post)
                     setComments(data.comments)
-                    console.log(data.comments)
                 }).catch(e => {
                     console.error(e)
                 })
         }
-    }, [session])
+    }, [usernameContex])
 
     const router = useRouter()
+
     const handleBack = () => {
         router.push("/home")
     }
@@ -43,9 +47,9 @@ export default function DetailPost({ params }: { params: { post_id: string } }) 
                 </button>
             </div>
             {post?.id &&
-                <div className="flex mt-24 lg:mt-0 flex-col gap-7 max-w-screen-md w-full items-center justify-center">
+                <div className="flex mt-24  flex-col gap-7 max-w-screen-md w-full items-center justify-center">
                     <article className="flex flex-col w-full items-center justify-center">
-                        <div className="flex w-full py-4 p-1 lg:p-0 rounded-lg bg-[#1B2730] gap-2 lg:gap-6 flex-row mb-5">
+                        <div className="flex w-full py-4 p-1  rounded-lg bg-[#1B2730] gap-2 lg:gap-6 flex-row mb-5">
                             <img className="lg:size-14 size-12 object-cover lg:ml-2 rounded-full" src={post?.profile_pic} alt={`imagen de perfil de ${post?.profile_pic} `} />
                             <div className="flex gap-2 lg:gap-3 flex-col w-[80%] justify-center  ">
                                 <div className=" gap-3 flex justify-between items-center">
@@ -63,7 +67,7 @@ export default function DetailPost({ params }: { params: { post_id: string } }) 
                                 <div className="flex w-full justify-around gap-4">
                                 </div>
 
-                                <SectionComents setComments={setComments} post_id={post?.id} post_likes={post?.likes} comments={comments} />
+                                <SectionComents  setComments={setComments} post_id={post?.id} post_likes={post?.likes} comments={comments} />
                             </div>
                         </div>
                     </article>

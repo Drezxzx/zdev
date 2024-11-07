@@ -1,10 +1,6 @@
 "use client";
 import {  FolloWer, FollowRes, LanguajeType, UpdateUserRes, User, type PostsType } from "../types/type";
-export async function getPostByUsername(username: string) {
-    const response = await fetch(`/api/posts?username=${username}`);
-    const data = await response.json();
-    return data as PostsType[];
-}
+
 
 export async function getUser(username: string) {
     const response = await fetch(`/api/users?username=${username}`);

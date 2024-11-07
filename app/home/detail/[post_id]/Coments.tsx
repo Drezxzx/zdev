@@ -1,30 +1,38 @@
 "use client"
-import LikeButton from "@/app/components/LikeButton"
 import Coments from "@/app/libs/coments"
 import { Comment } from "@/app/types/type"
-import { IconHeart, IconRosetteDiscountCheckFilled } from "@tabler/icons-react"
+import {  IconRosetteDiscountCheckFilled } from "@tabler/icons-react"
 import { useSession } from "next-auth/react"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { mirage } from "ldrs"
 import CommentButtonLike from "./CommentButtonLike"
 import { getUserByEmail } from "@/app/libs/user"
+import { useUser } from "@/app/context/changeProfile"
 mirage.register("my-mirage")
 
 export default function SectionComents({ comments, post_id, post_likes, setComments }: { comments: Comment[], post_id: number, post_likes: number, setComments: React.Dispatch<React.SetStateAction<Comment[]>> }) {
     const [comment, setComment] = useState("")
     const [username, setUsername] = useState("")
+    const {image} = useUser()
     const [comentsPost, setComentsPost] = useState<Comment[]>(comments)
     const [isLoading, setIsLoading] = useState(false)
     const { data: session } = useSession()
+    const [page, setCurrentPage] = useState(0);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const elementsPerPage = 5;
 
     useEffect(() => {
+        if(!session) return
+        
         getUserByEmail(session?.user?.email as string).then(res => {
             setUsername(res.username)
         })
     }, [session])
 
     let mostLikedComent = comentsPost.sort((a, b) => b.likes - a.likes)[0] 
+    
 
     
 
@@ -35,11 +43,10 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
     }
     const creaeteNewComent = async (): Promise<boolean> => {
         setIsLoading(true)
-        const profilePic = session?.user?.image as string
         const likes = 0
         const newComent = {
             created_at: new Date(),
-            profile_pic: profilePic,
+            profile_pic: image,
             id: post_id,
             comment: comment,
             likes: likes,
@@ -81,6 +88,37 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
         setComment("")
 
     }
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100 && !isLoadingMore && hasMore) {
+                setCurrentPage((prevPage) => prevPage + 1);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isLoadingMore, hasMore]);
+
+    useEffect(() => {
+
+        const fetchPosts = async () => {
+            setIsLoadingMore(true);
+
+            const res = await Coments.getDetailComents(post_id.toString(), username, elementsPerPage.toString(), page.toString());
+            
+
+            if (res.comments.length < elementsPerPage) {
+                setHasMore(false);
+            }
+
+            setComentsPost((prevPosts) => [...prevPosts, ...res.comments]);
+            setIsLoadingMore(false);
+        };
+
+        if (hasMore && page >= 1) {
+            fetchPosts();
+        }
+    }, [page, hasMore]);
     return (
         <section className="w-full flex flex-col justify-center items-center gap-3 p-1">
             <form className="w-full flex gap-2 justify-center">
@@ -134,6 +172,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
                     </center>
 
                 )}
+                {!hasMore && <p className="font-semibold">No hay más comentarios para cargar.</p>}
             </section>
 
 

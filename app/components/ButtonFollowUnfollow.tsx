@@ -13,10 +13,10 @@ export default function ButtonFollowUnfollow({
   setNumberFollowers: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const { data: session } = useSession();
-  const [isFollower, setIsFollower] = useState(false);
+  const [isFollower, setIsFollower] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("")
-  const [initialState, setInitialState] = useState<boolean>(false);
+  const [initialState, setInitialState] = useState<boolean | undefined>();
 
   useEffect(() => {
     getUserByEmail(session?.user.email as string).then(res => {
@@ -40,7 +40,7 @@ export default function ButtonFollowUnfollow({
   }, [username, followedUser]);
 
   const [optimisticIsFollower, setOptimisticIsFollower] = useOptimistic(
-    initialState,
+    initialState as boolean,
     (prevIsFollower: boolean, newState: boolean) => newState
   );
 
@@ -75,9 +75,9 @@ export default function ButtonFollowUnfollow({
   return (
     <>
       {
-        !isLoading && <button
+        !isLoading && initialState !== undefined && <button
           onClick={optimisticIsFollower ? handleUnFollow : handleFollow}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+          className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full "
         >
           {optimisticIsFollower ? "Dejar de seguir" : "Seguir"}
         </button>
