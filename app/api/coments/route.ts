@@ -38,6 +38,8 @@ export async function POST(req: Request) {
             return Response.json(res, {status: 200});
         }
 
+        return Response.json({ error: "Error al insertar comentario" }), { status: 500 };
+
     } catch (error) {
         console.log(error);
         return  Response.json({ error: "Error al insertar comentario" }), { status: 500 };
