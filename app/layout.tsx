@@ -8,7 +8,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "zdev",
+  title: "zdev - la red social de programadores",
   description: "ZDEV es la red social diseñada especialmente para programadores, donde el conocimiento y la creatividad tecnológica se encuentran.",
 };
 
