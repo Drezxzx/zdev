@@ -20,7 +20,7 @@ export default function Login() {
   
 
   return (
-    <main className="flex items-center lg:flow-row flex-col-reverse lg:gap-0 w-svw justify-center gap-6 h-svh">
+    <main className="flex items-center lg:flex-row flex-col-reverse lg:gap-0 w-svw justify-center gap-6 h-svh">
       <section className="lg:w-[50rem] w-full animate-fade-in-up  lg:animate-fade-in-right lg:h-svh h-auto lg:flex justify-center items-center">
         <img src="/destockpTransparent.png" alt="zdev app" />
       </section>
@@ -28,7 +28,7 @@ export default function Login() {
         <div className="flex lg:border-l-2 lg:border-0  lg:w-full w-[80%] md:w-[50%]  lg:rounded-none justify-center gap-4 h-fit p-2  border-slate-400/20 flex-col items-center ">
           <img src="/logo.jpeg" className="size-16" alt="zdev app" />
           <h1 className="text-2xl font-bold">Bienvenido a zdev</h1>
-          <p className="text-sm font-semibold text-slate-500/80">La red social de los desarrolladores</p>
+          <p className="text-sm block lg:w-[68%] w-full md:w-[81%] font-semibold text-slate-500/80">ZDEV es la red social diseñada especialmente para programadores, donde el conocimiento y la creatividad tecnológica se encuentran.</p>
 
           
             <Button onClick={() => signIn("github", { callbackUrl: "/handleSession" })}>Iniciar sesión con github <Github /></Button>
