@@ -5,9 +5,11 @@ import { type SuggestionTyoe, Suggestions } from "@/app/libs/suggestions"
 import { useSession } from "next-auth/react"
 import { getUserByEmail } from "../libs/user"
 import Link from "next/link"
+import SuggestionsSectionSkeleton from "./skeletons/SuggestionsSectionSkeleton"
 
 export default function SuggestionsSection() {
     const [suggestions, setSuggestions] = useState<SuggestionTyoe[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     const [email, setEmail] = useState<string>("")
     const { data: session } = useSession()
 
@@ -25,10 +27,14 @@ export default function SuggestionsSection() {
         if (email.length === 0) return
 
         Suggestions.getSuggestions({ email: email }).then(res => {
-            console.log({res})
             setSuggestions(res)
+            setIsLoading(false)
         })
     }, [email])
+
+    if (isLoading) {
+        return <SuggestionsSectionSkeleton/>
+    }
 
     return (
         <>

@@ -8,6 +8,8 @@ import { DataLanguage, DataUser, type PostsType } from "@/app/types/type";
 import { SectionProfile } from "@/app/components/SectionProfile";
 import React from "react";
 import { PostsClass } from "@/app/libs/Posts";
+import UserProfileSkeleton from "@/app/components/skeletons/UserProfileSkeleton";
+import PostsSkeleton from "@/app/components/skeletons/PostSkeletons";
 
 export default function Profile({ params }: { params: { username: string } }) {
   const [isMe, setIsMe] = useState<boolean | undefined>();
@@ -24,30 +26,25 @@ export default function Profile({ params }: { params: { username: string } }) {
 
   useEffect(() => {
     if (!session) return
-
     getUserByEmail(session.user.email as string).then(res => {
       setUsername(res.username)
     })
   }, [session]);
 
   useEffect(() => {
-    setIsLoading(true);
     if (username.length === 0) return
-    if(params.username.length === 0) return
-
+    if (params.username.length === 0) return
     PostsClass.getPostByUsername(params.username, elementsPerPage.toString(), page.toString()).then((data) => {
-      setIsLoading(false);
-      console.log(data)
       setPosts(data);
     });
 
     getUser(params.username).then((data) => {
-      if(data.data === undefined) return
-      if(params.username === undefined) return
+      if (data.data === undefined) return
+      if (params.username === undefined) return
 
       if (data.data.username === username) {
         setIsMe(true);
-      }else{
+      } else {
         setIsMe(false);
       }
       if (isChange) {
@@ -59,8 +56,16 @@ export default function Profile({ params }: { params: { username: string } }) {
       setIsLoading(false);
 
     });
-  }, [ username, isChange]);
+  }, [username, isChange]);
 
+  if (isLoading) {
+    return (
+      <main className="w-screen h-auto flex flex-col items-center justify-center">
+        <UserProfileSkeleton />
+        <PostsSkeleton isEdit={true} />
+      </main>
+    )
+  }
 
   return (
     <>
@@ -74,8 +79,8 @@ export default function Profile({ params }: { params: { username: string } }) {
             followers={followers}
           />
         )}
-        
-       {isMe !== undefined && posts.length > 0 && params.username.length > 0 && <Posts username={params.username} setPosts={setPosts} edit={isMe} isProfile={true} posts={posts} isLoading={isLoading} />}
+
+        {isMe !== undefined && posts.length > 0 && params.username.length > 0 && <Posts username={params.username} setPosts={setPosts} edit={isMe} isProfile={true} posts={posts} isLoading={isLoading} />}
       </main>
     </>
   );

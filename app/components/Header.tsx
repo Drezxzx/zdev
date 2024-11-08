@@ -10,9 +10,11 @@ import { getUserByEmail } from "../libs/user";
 import { useUser } from "../context/changeProfile";
 import { useProyects } from "../context/proyects";
 import FullScreenProyects from "./FullScreenProyects";
+import HeaderSkeleton from "./skeletons/HeaderSkeleton";
 
 export default function HeaderDesktop() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isloading, setIsloading] = useState(true);
   const { setImageContext, setNameContext, setEmailContex, setUsernameContex } = useUser();
   const { data: session } = useSession();
   const [username, setUsername] = useState("");
@@ -21,6 +23,7 @@ export default function HeaderDesktop() {
   const { setIsHiddenFullScreenProyects, isHiddenFullScreenProyects } = useProyects();
 
   useEffect(() => {
+    setIsloading(true);
     const body = document.querySelector('body');
     if (body) {
       body.style.overflowWrap = 'hidden';
@@ -39,6 +42,7 @@ export default function HeaderDesktop() {
         setEmailContex(res.email);
         setNameContext(res.name);
         setImage(res.profile_pic);
+        setIsloading(false);
       });
     }
   }, [isLoggedIn]);
@@ -54,11 +58,9 @@ export default function HeaderDesktop() {
   }, []);
 
   const UserInformation = () => {
-    if (!isLoggedIn) {
+    if (isloading) {
       return (
-        <div>
-          <li><a href="/login">Login</a></li>
-        </div>
+        <HeaderSkeleton />
       );
     } else {
       return (

@@ -13,7 +13,6 @@ export default function Home() {
 
   useEffect(() => {
     if (posts.length >= 0) {
-      setIsLoading(true);
       const page = 0
       const elementsPerPage = 5
       const res = PostsClass.getPosts(elementsPerPage.toString(), page.toString())

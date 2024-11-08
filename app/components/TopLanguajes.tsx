@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { getTopLanguajes, type TopLanguajesResponse } from "../actions/getTopLanguajes";
 import { languajes } from "../libs/languajes";
+import TopLanguagesSkeleton from "./skeletons/TopLanguagesSkeleton";
 
 export default  function TopLanguajes() {
     const [topLanguajes, setTopLanguajes] = useState<TopLanguajesResponse[]>([])
@@ -18,6 +19,10 @@ export default  function TopLanguajes() {
     const getImageLanguaje = (languajeName: string):string | undefined => {
         const languaje = languajes.find(lang => lang.name === languajeName);
         return languaje?.img;
+    }
+
+    if(isLoading){
+        return <TopLanguagesSkeleton/>
     }
 
     const trophies = ["1.", "2.", "3."]

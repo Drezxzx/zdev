@@ -9,23 +9,32 @@ import { type Proyects } from "../types/type";
 import CreateProyect from "./CreateProyect";
 import { ProyectsClass } from "../libs/proyects";
 import { useProyects } from "../context/proyects";
+import FullScreenProyectsSkeleton from "./skeletons/FullScreenProyectsSkeleton";
 
 
 
 export default function Proyects() {
     const [proyects, setProyects] = useState<Proyects[]>([])
+    const [isloading, setIsloading] = useState(true)
     const { usernameContex, email } = useUser();
     const { setIsHiddenFullScreenProyects,setisHiddenCreateProyect } = useProyects();
 
     useEffect(() => {
         if (email.length === 0) return
+        
         ProyectsClass.getProyects(email)
             .then(res => {
                 setProyects(res)
+                setIsloading(false)
             })
     }, [email]);
 
+    if (isloading) {
+        return <FullScreenProyectsSkeleton />
+    }
+
     return (
+        
         <section className="w-72 overflow-y-auto relative hidden lg:flex space-y-2 rounded-lg flex-col py-2 items-center bg-containers-rounded px-4 z-10 pb-28">
             <FullScreenProyects setProjects={setProyects} username={usernameContex} proyects={proyects} />
             <CreateProyect email={email}  setProjects={setProyects} />

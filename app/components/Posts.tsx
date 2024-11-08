@@ -90,8 +90,9 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
     }
 
     if (isLoading) {
-        return <PostsSkeleton />;
+        return <PostsSkeleton isEdit={edit} />;
     }
+
     return (
         <div className="flex flex-col gap-7 p-2 pb-4 lg:p-0 max-w-[657px] w-full items-center justify-center">
             {!isProfile && <CreatePost />}
