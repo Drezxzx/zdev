@@ -9,22 +9,26 @@ import { useRouter } from "next/navigation";
 import {  useEffect, useState } from "react";
 import SectionComents from "./Coments";
 import { useUser } from "@/app/context/changeProfile";
+import DetailPostSkeleton from "@/app/components/skeletons/DetailPostSkeleton";
 
 export default function DetailPost({ params }: { params: { post_id: string } }) {
     const [post, setPost] = useState<PostsType>()
     const [comments, setComments] = useState<Comment[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     const {usernameContex} = useUser()
     const elelementsPerPage = "10"
     const page = "0"
 
     useEffect(() => {
         if(usernameContex.length === 0) return
-
+        console.log(usernameContex)
         if (usernameContex && usernameContex.length > 0) {
             Coments.getDetailComents(params.post_id, usernameContex, elelementsPerPage, page)
                 .then(data => {
                     setPost(data.post)
                     setComments(data.comments)
+                    console.log({data})
+                    setIsLoading(false)
                 }).catch(e => {
                     console.error(e)
                 })
@@ -37,6 +41,12 @@ export default function DetailPost({ params }: { params: { post_id: string } }) 
         router.back()
     }
 
+    if (isLoading) {
+        return (
+            <DetailPostSkeleton />
+        )
+    }
+
     return (
         <main className="w-screen h-auto p-2 lg:p-0  flex flex-col items-center justify-center">
             <div className="w-fit left-2 z-[1000] hover:scale-105 transition-all flex fixed top-[5.8rem] lg:top-[1.6rem] lg:left-8 items-start">
@@ -45,7 +55,7 @@ export default function DetailPost({ params }: { params: { post_id: string } }) 
                 </button>
             </div>
             {post?.id &&
-                <div className="flex mt-24  flex-col gap-7 max-w-screen-md w-full items-center justify-center">
+                <div className="flex mt-24  flex-col gap-7 max-w-[657px] w-full items-center justify-center">
                     <article className="flex flex-col w-full items-center justify-center">
                         <div className="flex w-full py-4 p-1  rounded-lg bg-[#1B2730] gap-2 lg:gap-6 flex-row mb-5">
                             <img className="lg:size-14 size-12 object-cover lg:ml-2 rounded-full" src={post?.profile_pic} alt={`imagen de perfil de ${post?.profile_pic} `} />

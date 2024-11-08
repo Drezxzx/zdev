@@ -20,7 +20,7 @@ export async function POST(req: Request) {
         if (checkUser.rows[0].count as number > 0) {
             const emailRandomized = email.split("@")[0] + "@" + email.split("@")[1];
             username  = username  + "_" + emailRandomized;
-            username = username.slice(0, 15);
+            username = username.slice(0, 10);
         }
         
 
