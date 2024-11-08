@@ -36,7 +36,7 @@ export default function HandleSession() {
     .then((res) => {
       if (res.status === 250) {
         console.log("Usuario ya existente o error en la creación.");
-        router.push("/");
+        router.push("/home");
         setIsInserted(false); 
         return;
       }
@@ -51,7 +51,7 @@ export default function HandleSession() {
     })
     .catch((error) => console.error('Error:', error))
 
-  }, [session, isInserted]); // Añadido isInserted como dependencia
+  }, [session, isInserted]); 
 
   return (
     

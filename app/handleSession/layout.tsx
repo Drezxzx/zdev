@@ -7,7 +7,7 @@ import HeaderDesktop from "../components/Header";
 export default function HomeLayout({ children }: { children: React.ReactNode }) {
   return (
     <App>
-      <Toaster position="top-right" expand={true} richColors />
+      <Toaster position="top-right" expand={false} duration={2000} richColors />
       {children}
     </App>
   )

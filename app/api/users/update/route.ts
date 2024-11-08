@@ -9,9 +9,29 @@ export async function POST(req: Request) {
     const name = body.get("newName") as string;
     const email = body.get("email") as string;
     const username = body.get("newUsername") as string;
+    console.log(username)
    
     const newImg = img instanceof File ? await uploadImg(img as Blob) : img;
 
+    if(username.length > 0){
+        try {
+            const isExistinUserName = await client.execute({
+                sql: "SELECT COUNT(*) as count FROM users WHERE username = ? AND email <> ?;",
+                args: [username, email]
+            })
+
+            console.log(isExistinUserName.rows[0].count as number > 0)
+    
+            if (isExistinUserName.rows[0].count as number > 0) {
+                return Response.json({ error: `El nombre de usuario ${username} ya esta en uso`, success : false}, { status: 400 });
+            }
+        } catch (error) {
+            console.error(error)
+            return Response.json({ error: "Error al comprobar si el usuario existe", success : false}, { status: 500 });
+        }
+    
+    }
+    
     console.log(newImg)
 
     try {
@@ -23,7 +43,7 @@ export async function POST(req: Request) {
         });
         return update.rowsAffected > 0 ?
         Response.json({ success: true }) 
-        : Response.json({ error: "Error al actualizar el usuario" });
+        : Response.json({ error: "Error al actualizar el usuario" }, { status: 500 });
         
     } catch (error) {
         console.error("Error al actualizar el usuario:", error);

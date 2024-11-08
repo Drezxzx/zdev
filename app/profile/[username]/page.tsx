@@ -5,7 +5,6 @@ import { use, useEffect, useState } from "react";
 import Posts from "@/app/components/Posts";
 import { useChangeProfile } from "@/app/context/changeProfile"
 import { DataLanguage, DataUser, type PostsType } from "@/app/types/type";
-import HeaderDesktop from "@/app/components/Header";
 import { SectionProfile } from "@/app/components/SectionProfile";
 import React from "react";
 import { PostsClass } from "@/app/libs/Posts";
@@ -34,6 +33,7 @@ export default function Profile({ params }: { params: { username: string } }) {
   useEffect(() => {
     setIsLoading(true);
     if (username.length === 0) return
+    if(params.username.length === 0) return
 
     PostsClass.getPostByUsername(params.username, elementsPerPage.toString(), page.toString()).then((data) => {
       setIsLoading(false);
@@ -42,6 +42,9 @@ export default function Profile({ params }: { params: { username: string } }) {
     });
 
     getUser(params.username).then((data) => {
+      if(data.data === undefined) return
+      if(params.username === undefined) return
+
       if (data.data.username === username) {
         setIsMe(true);
       }else{

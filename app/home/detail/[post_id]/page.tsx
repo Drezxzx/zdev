@@ -4,11 +4,10 @@ import CodeExample from "@/app/components/CodeExampler";
 import LikeButton from "@/app/components/LikeButton";
 import Coments from "@/app/libs/coments";
 import { PostsType, Comment } from "@/app/types/type";
-import { IconArrowBack, IconRosetteDiscountCheckFilled } from "@tabler/icons-react";
+import {  IconArrowLeft, IconRosetteDiscountCheckFilled } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import SectionComents from "./Coments";
-import { useSession } from "next-auth/react";
 import { useUser } from "@/app/context/changeProfile";
 
 export default function DetailPost({ params }: { params: { post_id: string } }) {
@@ -17,7 +16,6 @@ export default function DetailPost({ params }: { params: { post_id: string } }) 
     const {usernameContex} = useUser()
     const elelementsPerPage = "10"
     const page = "0"
-    const { data: session } = useSession()
 
     useEffect(() => {
         if(usernameContex.length === 0) return
@@ -36,14 +34,14 @@ export default function DetailPost({ params }: { params: { post_id: string } }) 
     const router = useRouter()
 
     const handleBack = () => {
-        router.push("/home")
+        router.back()
     }
 
     return (
         <main className="w-screen h-auto p-2 lg:p-0  flex flex-col items-center justify-center">
-            <div className="w-full flex absolute top-[4.5rem] lg:top-0 items-start">
-                <button onClick={handleBack}>
-                    <IconArrowBack />
+            <div className="w-fit left-2 z-[1000] hover:scale-105 transition-all flex fixed top-[5.8rem] lg:top-[1.6rem] lg:left-8 items-start">
+                <button  onClick={handleBack}>
+                    <IconArrowLeft size={30} />
                 </button>
             </div>
             {post?.id &&

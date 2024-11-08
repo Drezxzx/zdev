@@ -7,6 +7,7 @@ import { useChangeProfile } from '@/app/context/changeProfile'
 import { Language, LanguajeType, resInsertLanguage } from "../types/type"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { insertLanguaje } from "../libs/user"
 
 export default function LanguajeSelector({ clasName, email, name, text, isEdit }: { clasName: string, email: string, name: string, text: string, isEdit: boolean }) {
     const { setChange } = useChangeProfile()
@@ -38,6 +39,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
         return selectedLanguajes.some(selected => selected.id === lang.id)
     }
 
+
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (!isChanged) {
             toast.warning("No has realizado ningun cambio")
@@ -48,29 +50,46 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
             toast.error("Selecciona al menos un lenguaje")
             return
         }
-        const res = await fetch("/api/languajes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email: session?.user.email as string,
-                language_id: selectedLanguajes.map(lang => lang.id)
-            })
-        })
+        toast.promise(
+            insertLanguaje(session?.user.email as string, selectedLanguajes.map(lang => lang.id)),
+            {
+                loading: 'Actualizando lenguajes...',
+                success: () => {
+                    if (!isEdit) {
+                        router.push("/home");
+                    }else{
+                        setChange(true);
+                    }
+                    
+                    return "Lenguajes actualizados correctamente";
+                },
+                error: "Error al actualizar los lenguajes"
+            }
+        );
+        
+        // const res = await fetch("/api/languajes", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({
+        //         email: session?.user.email as string,
+        //         language_id: selectedLanguajes.map(lang => lang.id)
+        //     })
+        // })
 
-        const resjson = await res.json() as resInsertLanguage
-        if (res.status !== 200) {
-            toast.error("Error al actualizar los lenguajes")
-            return
-        }
+        // const resjson = await res.json() as resInsertLanguage
+        // if (res.status !== 200) {
+        //     toast.error("Error al actualizar los lenguajes")
+        //     return
+        // }
 
-        if (resjson.data && !isEdit) {
-            router.push("/")
-        } else {
-            toast.success("Lenguajes actualizados")
-            setChange(true)
-        }
+        // if (resjson.data && !isEdit) {
+        //     router.push("/home")
+        // } else {
+        //     toast.success("Lenguajes actualizados")
+        //     setChange(true)
+        // }
     }
 
     const handleLanguage = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
@@ -117,7 +136,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
             <h1 className="text-3xl">Bienvenido {name} 👋</h1>
             <h2 className="text-xl">{text}</h2>
             <span className="text-sm text-slate-400/80">{selectedNumber}/{maxLanguajes} Lenguajes seleccionados</span>
-            <button onClick={handleClick} className="bg-blue-500 hover:saturate-50 transition-all hover:scale-105 text-white px-4 py-2 rounded-lg">Confirmar</button>
+            <button onClick={handleClick} className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full ">Confirmar</button>
             <section className="w-[80%] h-auto flex flex-col gap-4 border border-slate-50/40 bg-[#1B2730] rounded-lg p-4">
                 <input onChange={handelChange} type="text" name="search" placeholder="Buscar..." className="w-full p-2 border-2 rounded-lg border-gray-400 focus:outline-none bg-[#28343E] text-white placeholder-gray-400 resize-none overflow-hidden" />
 

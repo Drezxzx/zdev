@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { DataUser } from "../types/type";
 import { IconPencil, IconX } from "@tabler/icons-react";
 import { updateUser } from "../libs/user";
@@ -55,24 +55,33 @@ export default function EditProfile({ user }: { user: DataUser }) {
 
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
+    
         if (username.length === 0 || name.length === 0 || email.length === 0) {
             toast.error("Por favor, rellene todos los campos");
             return;
         }
-
-        const res = await updateUser({ newUsername: username, newName: name, image: image, email: email });
-
-        if (res.success) {
-            toast.success("Perfil actualizado");
-        }
-        setTimeout(() => {
-
-        }, 500);
-        setChange(true)
-        router.push(`/profile/${username}`)
-        setIsHidden(true);
-
+    
+        toast.promise(
+            new Promise(async (resolve, reject) => {
+                const res = await updateUser({ newUsername: username, newName: name, image: image, email: email });
+                
+                if (res?.error) {
+                    reject(res.error);
+                } else if (res?.success) {
+                    resolve("Perfil actualizado");
+                    setChange(true);
+                    router.push(`/profile/${username}`);
+                    setIsHidden(true);
+                }
+            }),
+            {
+                loading: 'Actualizando perfil...',
+                success: () => `Perfil actualizado 🎉`,
+                error: (error) => error || 'Nombre de usuario ya esta en uso'
+            }
+        );
     };
+    
 
     return (
         <>

@@ -3,9 +3,10 @@ import client from "@/app/conn/conn";
 export async function POST(req: Request) {
     const body = await req.json();
     console.log(body);
-    const { name, email, profile_pic, username } = body;
+    let { name, email, profile_pic, username } = body;
     console.log({ name, email, profile_pic, username });
     const query = "INSERT INTO users (name, email, profile_pic, created_at, updated_at, username) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?);";
+
 
     try {
         const check = await getUser(email);
@@ -13,6 +14,15 @@ export async function POST(req: Request) {
         if (check) {
             return Response.json({ error: "User already exists" }, { status: 250 });
         }
+
+        const checkUser = await client.execute({ sql: "SELECT COUNT(*) as count FROM users WHERE username = ? AND email <> ?;", args: [username, email] });
+        
+        if (checkUser.rows[0].count as number > 0) {
+            const emailRandomized = email.split("@")[0] + "@" + email.split("@")[1];
+            username  = username  + "_" + emailRandomized;
+            username = username.slice(0, 15);
+        }
+        
 
         const inser = await client.execute({ sql: query, args: [name, email, profile_pic, username] });
         console.log(inser);

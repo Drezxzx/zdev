@@ -95,11 +95,10 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
     return (
         <div className="flex flex-col gap-7 p-2 pb-4 lg:p-0 max-w-screen-md w-full items-center justify-center">
             {!isProfile && <CreatePost />}
-
             <article className="flex flex-col w-full items-center justify-center">
                 {posts.map((post, i) => (
                     <div className="post flex w-full relative py-4 p-1 lg:p-1 rounded-lg bg-[#1B2730] gap-2 lg:gap-6 flex-row mb-5" id={post.id.toString()} key={i}>
-                        {edit && <div id={post.id.toString()} onClick={handleDelete} className="p-1 cursor-pointer rounded-lg hover:saturate-50 hover:scale-105 bg-red-600 absolute top-2 right-2"><IconTrash size={20} /></div>}
+                        {edit && <div id={post.id.toString()} onClick={handleDelete} className="p-1 cursor-pointer rounded-lg hover:saturate-50 hover:scale-105 bg-red-600 absolute right-[-0.3rem] top-[-0.2rem] md:top-2 md:right-2 "><IconTrash size={20} /></div>}
                         <Link href={`/profile/${post.username}`}>
                             <img className="lg:size-14 size-12 object-cover lg:ml-2 rounded-full" src={post.profile_pic} alt={`imagen de perfil de ${post.profile_pic} `} /></Link>
                         <div className="flex gap-2 lg:gap-3 flex-col w-[80%] justify-center ">
