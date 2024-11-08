@@ -82,7 +82,7 @@ export default function HeaderDesktop() {
       <nav className="flex justify-between w-full items-center p-4 lg:p-0">
         <ul className="flex w-full justify-center items-center gap-x-4">
           <div
-            className={`transition-colors duration-500 ${isScrolled ? "lg:backdrop-blur-lg lg:bg-gray-800/80 rounded-b-md" : "bg-transparent"} lg:border-b transition-[border-color] lg:h-[78px] ${isScrolled ? "lg:border-gray-400/50" : "border-transparent"} flex w-full max-w-screen-md justify-center items-center gap-x-2 md:gap-x-4`}
+            className={`transition-colors duration-500 ${isScrolled ? "lg:backdrop-blur-lg lg:bg-gray-800/80 rounded-b-md" : "bg-transparent"} lg:border-b transition-[border-color] lg:h-[78px] ${isScrolled ? "lg:border-gray-400/50" : "border-transparent"} flex w-full max-w-[657px] justify-center items-center gap-x-2 md:gap-x-4`}
           >
             <li className="transition-all hover:scale-105 font-semibold flex gap-1 justify-center items-center bg-white p-2 rounded-full">
               <Link className="flex justify-center items-center gap-2" href={"/home"}>

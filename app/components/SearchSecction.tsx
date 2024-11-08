@@ -80,7 +80,7 @@ export default function SearchSection() {
                         className="w-screen h-screen fixed top-0 left-0 z-[100] flex items-center justify-center bg-[#1b27309c] animate-blurred-fade-in animate-duration-faster backdrop-blur-md"
                         style={{ transform: "translateX(-50%)", left: "50%" }}
                     >
-                        <div className="w-full max-w-[50%] p-3 lg:p-0 flex flex-col items-center gap-2">
+                        <div className="w-full lg:max-w-[50%] p-3 lg:p-0 flex flex-col items-center gap-2">
                             <form onSubmit={(e) => e.preventDefault()} className="w-full flex gap-2 items-center">
                                 <input
                                     ref={inputRef}
@@ -99,7 +99,7 @@ export default function SearchSection() {
                                         key={user.username}
                                         className="flex lg:w-[25rem] gap-1 items-center bg-[#26313a] rounded-md hover:bg-[#2f3b44] p-2 transition-all"
                                     >
-                                        <img src={user.profile_pic} alt="Imagen de usuario" className="size-14 rounded-full" />
+                                        <img src={user.profile_pic} alt="Imagen de usuario" className="size-14 object-cover rounded-full" />
                                         <div>
                                             <span className="text-base flex gap-2 items-center">
                                                 <NameResalted key={"asdasd"} name={user.username} />

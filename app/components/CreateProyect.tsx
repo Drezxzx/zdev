@@ -134,7 +134,7 @@ export default function CreateProyect({
                         </div>
                         <label htmlFor="preview" className="w-full flex bg-transparent h-40 md:h-80 border-slate-400/60 border-dashed border-2 flex-col items-center justify-center mt-2">
                             {imgPreview ? (
-                                <img className="md:size-80 size-60 max-h-60 md:max-h-80 object-contain " src={imgPreview} alt="Preview" />
+                                <img className="md:size-80 size-32 max-h-32 md:max-h-80 object-contain " src={imgPreview} alt="Preview" />
                             ) : (
                                 <span className="text-gray-500">Sube una imagen*</span>
                             )}

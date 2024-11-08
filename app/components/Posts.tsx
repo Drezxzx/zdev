@@ -93,7 +93,7 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
         return <PostsSkeleton />;
     }
     return (
-        <div className="flex flex-col gap-7 p-2 pb-4 lg:p-0 max-w-screen-md w-full items-center justify-center">
+        <div className="flex flex-col gap-7 p-2 pb-4 lg:p-0 max-w-[657px] w-full items-center justify-center">
             {!isProfile && <CreatePost />}
             <article className="flex flex-col w-full items-center justify-center">
                 {posts.map((post, i) => (
