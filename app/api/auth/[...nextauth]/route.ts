@@ -38,15 +38,15 @@ const handler = NextAuth({
         async jwt({ token, user }) {
             if (user) {
                 token.userId = user.id;
-                token.username = user.username; // Ahora debería estar disponible
-                token.name = user.name; // Nombre completo
+                token.username = user.username; 
+                token.name = user.name; 
             }
             return token;
         },
         async session({ session, token }) {
-            session.user.id = token.userId as string; // Agrega el ID al objeto de sesión
-            session.user.username = token.username as string; // Agrega el nombre de usuario a la sesión
-            session.user.name = token.name as string; // Agrega el nombre completo a la sesión
+            session.user.id = token.userId as string; 
+            session.user.username = token.username as string; 
+            session.user.name = token.name as string; 
             return session;
         },
     },

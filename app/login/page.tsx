@@ -20,12 +20,12 @@ export default function Login() {
   
 
   return (
-    <main className="flex items-center w-svw justify-center h-svh">
-      <section className="w-[50rem] hidden animate-fade-in-right h-svh lg:flex justify-center items-center">
+    <main className="flex items-center lg:flow-row flex-col-reverse lg:gap-0 w-svw justify-center gap-6 h-svh">
+      <section className="lg:w-[50rem] w-full animate-fade-in-up  lg:animate-fade-in-right lg:h-svh h-auto lg:flex justify-center items-center">
         <img src="/destockpTransparent.png" alt="zdev app" />
       </section>
-      <section className="flex animate-fade-in-left flex-col w-[50rem] h-svh justify-center items-center">
-        <div className="flex lg:border-l-2 lg:border-0 border-2  lg:w-full w-[80%] md:w-[50%] rounded-lg lg:rounded-none justify-center gap-4 h-1/2 p-2  border-slate-400/20 flex-col items-center ">
+      <section className="flex lg:animate-fade-in-left animate-fade-in-down flex-col lg:w-[50rem] w-full lg:h-svh h-auto justify-center items-center">
+        <div className="flex lg:border-l-2 lg:border-0  lg:w-full w-[80%] md:w-[50%]  lg:rounded-none justify-center gap-4 h-fit p-2  border-slate-400/20 flex-col items-center ">
           <img src="/logo.jpeg" className="size-16" alt="zdev app" />
           <h1 className="text-2xl font-bold">Bienvenido a zdev</h1>
           <p className="text-sm font-semibold text-slate-500/80">La red social de los desarrolladores</p>

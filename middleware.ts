@@ -1,5 +1,6 @@
-export { default } from "next-auth/middleware"
+export { default } from "next-auth/middleware";
 
-// export const config = { matcher: ["/((?!api/*|auth|login).*)"] }
-
-export const config = { matcher: ["/)"] }
+// Especifica únicamente las rutas que quieres proteger
+export const config = {
+    matcher: ["/home", "/profile"],
+};

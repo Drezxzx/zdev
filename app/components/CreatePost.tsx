@@ -146,7 +146,7 @@ export default function CreatePost() {
 
             {profile_pic.length > 0 && (
                 <img
-                    className="md:block hidden rounded-full w-14 h-14"
+                    className="md:block object-cover  hidden rounded-full w-14 h-14"
                     src={profile_pic}
                     alt="Imagen de usuario"
                 />
