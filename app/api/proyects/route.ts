@@ -6,7 +6,25 @@ import { Readable } from "stream"
 export async function GET(req : Request) {
     const url = new URL(req.url).searchParams
     const email = url.get("email")?.trim()
-    console.log(email)
+    const username = url.get("username")?.trim()
+     console.log(email, username)
+
+    if (username && username.length > 0) {
+        try {
+            const res = await client.execute({
+                sql :`SELECT id, nameProyect,gitRepository, previewLink, preview, description  FROM proyects
+                      WHERE idUser = (SELECT id FROM users WHERE username = ?)
+                      order by createAt DESC;`,
+                args : [username]
+            })
+
+            return Response.json(res.rows)
+            
+        } catch (error) {
+            console.log(error)
+            return Response.json({ error: "Ha habido un error" }, {status: 500})
+        }
+    }
 
     if (email && email.length > 0) {
         try {

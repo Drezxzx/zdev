@@ -41,8 +41,8 @@ export default function CreatePost() {
     }, [session])
 
     const handleClickLanguage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        const $selct = document.getElementById("id_language") as HTMLSelectElement
         e.preventDefault();
+        const $selct = document.getElementById("id_language") as HTMLSelectElement
         setpostMode({ ...postMode, code: !postMode.code })
         if (!postMode.code) {
             setIdLanguage("")
@@ -54,7 +54,14 @@ export default function CreatePost() {
     }
 
     const handleClickImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
         const $image = document.getElementById("imageLabel") as HTMLInputElement
+        if(postMode.image){
+           setpostMode({ ...postMode, image: false })
+           setImagePreview("")
+           setImage(null)
+            return
+        }
 
         if ($image) {
             $image.click()
@@ -62,7 +69,6 @@ export default function CreatePost() {
             setImagePreview("")
         }
 
-        e.preventDefault();
 
         setpostMode({ ...postMode, image: !postMode.image })
     }
@@ -122,22 +128,59 @@ export default function CreatePost() {
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
+        
         const formData = new FormData();
+        if(postMode.code && code.length === 0){
+            toast.error("El código no puede estar vacío")
+            return
+        }
+
+        if(postMode.image && image === null){
+            toast.error("Debes agregar una imagen")
+            return
+        }
+
+        if(postMode.text && content.length === 0){
+            toast.error("El contenido no puede estar vacío")
+            return
+        }
+
+        if(code.length === 0)setpostMode({ ...postMode, code: false })
+        if(image === null)setpostMode({ ...postMode, image: false })
+        if(content.length === 0)setpostMode({ ...postMode, text: false })
+
         formData.append("title", content);
-        if (postMode.code) { formData.append("code", code); }
+        if (postMode.code) { formData.append("code", code); formData.append("id_language", id_language); }
         if (postMode.image) { formData.append("file", image as File); }
         formData.append("author_email", author);
-        formData.append("id_language", id_language);
-    
-        toast.promise( PostsClass.createPost(formData), {
-            loading: 'Creando el post...',
-            success: (data) => {
-                setChangePost(!isChangePost)
-                return `El post ha sido creado èxitosamente`;
-                
-            },
-            error: "Error al crear el post",
-        });
+        
+        
+        toast.promise(
+            PostsClass.createPost(formData).then((data) => {
+                // Verificar si `data` indica éxito o error
+                if (!data.success) {  // Suponiendo que `data.success` indica si fue exitoso
+                    throw new Error("Error al crear el post");
+                }
+                // Si es exitoso, realiza las acciones necesarias
+                setChangePost(!isChangePost);
+                setCode("");
+                setContent("");
+                setIdLanguage("");
+                setImagePreview("");
+                setImage(null);
+                setpostMode({ code: false, image: false, text: false });
+                return "El post ha sido creado exitosamente";
+            }),
+            {
+                loading: 'Creando el post...',
+                success: (message) => message,  
+                error: (err) => {
+                    console.error(err);
+                    return `Error al crear el post`;
+                },
+            }
+        );
+        
 
     }
 
@@ -188,14 +231,14 @@ export default function CreatePost() {
                     </div>
 
 
-                    {/* Botones de acción */}
+                  
                     <div className="flex gap-1 justify-center items-center md:gap-2 md:justify-evenly">
-                        <button onClick={handleClickImage} className={`hover:bg-slate-200/50  transition-all border border-slate-200/45 rounded-full text-white px-4 py-2 flex gap-2 `}>
+                        <button onClick={handleClickImage} className={`hover:bg-slate-200/50 ${postMode.image ? "bg-slate-200/50" : ""}  transition-all border border-slate-200/45 rounded-full text-white px-4 py-2 flex gap-2 `}>
                             <IconPhotoFilled className="text-emerald-400" filter=" drop-shadow(0px 0px 5px #34d399)" />
                             <span>Image</span>
                         </button>
                         <button onClick={handleClickLanguage}
-                            className={` hover:bg-slate-200/50  transition-all 
+                            className={` hover:bg-slate-200/50 ${postMode.code ? "bg-slate-200/50" : ""}  transition-all
                           text-white px-4 py-2 border border-slate-200/45 rounded-full flex gap-2 `}>                    <IconCode className="text-blue-500" filter=" drop-shadow(0px 0px 5px #3b82f6)" />
                             <span>Code</span>
                         </button>

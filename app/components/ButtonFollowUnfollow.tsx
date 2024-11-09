@@ -14,33 +14,31 @@ export default function ButtonFollowUnfollow({
 }) {
   const { data: session } = useSession();
   const [isFollower, setIsFollower] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [username, setUsername] = useState("")
-  const [initialState, setInitialState] = useState<boolean | undefined>();
 
   useEffect(() => {
-    getUserByEmail(session?.user.email as string).then(res => {
-      setUsername(res.username)
-    })
-  }, [session])
+    const fetchUserData = async () => {
+      try {
+        const user = await getUserByEmail(session?.user.email as string);
+        setUsername(user.username);
 
-  useEffect(() => {
-    if (username.length === 0) return
-    setIsLoading(true);
-    checkIfFollower({ username: username, followedUser })
-      .then((data) => {
-        setIsFollower(data.follower);
-        setInitialState(data.follower);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setIsLoading(false);
-      });
-  }, [username, followedUser]);
+        if (user.username) {  
+          const followerData = await checkIfFollower({ username: user.username, followedUser });
+          setIsFollower(followerData.follower);
+        }
+      } catch (error) {
+        console.error("Error al cargar los datos del usuario:", error);
+      } finally {
+        setIsLoaded(true);
+      }
+    };
+
+    if (session?.user.email) fetchUserData();
+  }, [session, followedUser]);
 
   const [optimisticIsFollower, setOptimisticIsFollower] = useOptimistic(
-    initialState as boolean,
+    isFollower,
     (prevIsFollower: boolean, newState: boolean) => newState
   );
 
@@ -49,41 +47,36 @@ export default function ButtonFollowUnfollow({
     setNumberFollowers((prev) => prev + 1);
 
     try {
-      await followUser({ username: username, followedUser });
+      await followUser({ username, followedUser });
     } catch (error) {
-      // Si hay error, revertir la acción optimista
       setOptimisticIsFollower(false);
       setNumberFollowers((prev) => prev - 1);
-      console.error(error);
+      console.error("Error al seguir al usuario:", error);
     }
   };
 
   const handleUnFollow = async () => {
-    setOptimisticIsFollower(false); // Actualiza optimistamente a "no siguiendo"
+    setOptimisticIsFollower(false);
     setNumberFollowers((prev) => prev - 1);
 
     try {
-      await unFollowUser({ username: username, followedUser });
+      await unFollowUser({ username, followedUser });
     } catch (error) {
-      // Si hay error, revertir la acción optimista
       setOptimisticIsFollower(true);
       setNumberFollowers((prev) => prev + 1);
-      console.error(error);
+      console.error("Error al dejar de seguir al usuario:", error);
     }
   };
 
   return (
     <>
-      {
-        !isLoading && initialState !== undefined && <button
-          onClick={optimisticIsFollower ? handleUnFollow : handleFollow}
-          className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full "
-        >
-          {optimisticIsFollower ? "Dejar de seguir" : "Seguir"}
-        </button>
-      }
-
+      <button
+        onClick={optimisticIsFollower ? handleUnFollow : handleFollow}
+        disabled={!isLoaded}
+        className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full"
+      >
+        {optimisticIsFollower ? "Unfollow" : "Follow"}
+      </button>
     </>
-
   );
 }

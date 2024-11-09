@@ -6,6 +6,11 @@ export class ProyectsClass {
         return await res.json()
     }
 
+    static async getProyectsByUsername(username: string): Promise<Proyects[]> {
+        const res = await fetch(`/api/proyects?username=${username}`)
+        return await res.json()
+    }
+
     static async createProyect(data: FormData): Promise<boolean> {
 
         const res = await fetch("/api/proyects", {

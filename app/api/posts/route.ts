@@ -86,13 +86,6 @@ export async function POST(req: Request) {
         return Buffer.from(arrayBuffer);
     }
 
-    const checkEmail = await client.execute({
-        sql: `SELECT COUNT(*) as count FROM users WHERE email = ?;`,
-        args: [author_email]
-    })
-    console.log(checkEmail)
-    
-
 
     // Si se ha enviado un archivo, intentamos subirlo a Cloudinary
     if (file && typeof file === "object") {
@@ -134,9 +127,9 @@ export async function POST(req: Request) {
             : "INSERT INTO posts (title, code, id_language, created_at, updated_at, author_id) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = ?));";
 
         const args = imageUrl
-            ? [title !== undefined ? title : "", code !== null ? code : "", Number(id_language), imageUrl, author_email]
+            ? [title !== undefined ? title : "", code !== null ? code : "", id_language !== null ? Number(id_language) : 1000, imageUrl, author_email]
             
-            : [title !== undefined ? title : "", code !== null ? code : "", Number(id_language), author_email];
+            : [title !== undefined ? title : "", code !== null ? code : "", id_language !== null ? Number(id_language) : 1000, author_email];
 
             console.log(args)
 

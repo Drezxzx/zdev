@@ -23,6 +23,7 @@ const handler = NextAuth({
             profile(profile) {
                 return {
                     id: profile.sub, 
+                    google: true,
                     name: profile.name,
                     username: profile.email.split('@')[0],
                     email: profile.email,

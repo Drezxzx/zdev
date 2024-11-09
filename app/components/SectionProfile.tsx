@@ -6,6 +6,7 @@ import { useChangeProfile } from "@/app/context/changeProfile"
 import { IconRosetteDiscountCheckFilled } from "@tabler/icons-react";
 import EditProfile from "./EditProfile";
 import { useEffect } from "react";
+import ProyectsUser from "./ProyectsUser";
 
 export const SectionProfile = ({
   user,
@@ -21,10 +22,10 @@ export const SectionProfile = ({
   setFollowers: React.Dispatch<React.SetStateAction<number>>;
 }) => {
 
-  const {setChange} = useChangeProfile()
+  const { setChange } = useChangeProfile()
 
   useEffect(() => {
-    setChange(false)  
+    setChange(false)
   }, [])
 
 
@@ -45,8 +46,8 @@ export const SectionProfile = ({
 
   const ButtonProfile = () => {
 
-    if(isMe === undefined) return
-    
+    if (isMe === undefined) return
+
     if (isMe) {
       return (
         <EditProfile user={user} />
@@ -54,11 +55,16 @@ export const SectionProfile = ({
     }
 
     return (
-      <ButtonFollowUnfollow
-        followedUser={user.username}
-        followers={user.followers}
-        setNumberFollowers={setFollowers}
-      />
+      
+        <ButtonFollowUnfollow
+          followedUser={user.username}
+          followers={user.followers}
+          setNumberFollowers={setFollowers}
+        />
+
+        
+      
+
     );
   };
 
@@ -90,7 +96,10 @@ export const SectionProfile = ({
                   <h2>{user.followed}</h2>
                 </div>
               </div>
+              <div className="flex gap-3 w-full items-start">
               <ButtonProfile />
+              <ProyectsUser isMe={isMe} username={user.username} />
+              </div>
             </div>
           </section>
         </article>

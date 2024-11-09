@@ -86,12 +86,12 @@ export default function EditProfile({ user }: { user: DataUser }) {
     return (
         <>
             <button className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full " onClick={() => setIsHidden(false)}>
-                Editar perfil
+                Editar 
                 <span><IconPencil  size={20} color="black"/></span>
             </button>
 
             {!isHidden &&
-                <section className={`${isHidden ? "hidden" : "flex"} bg-[#31404c94] lg:justify-center items-center fixed inset-0 z-[70] flex-col p-2 lg:p-0 lg:flex-row overflow-y-auto overflow-x-hidden lg:overflow-hidden backdrop-blur-lg w-svw h-svh flex animate-blurred-fade-in animate-duration-faster gap-3 `}>
+                <section className={`${isHidden ? "hidden" : "flex"} bg-transparent lg:justify-center items-center fixed inset-0 z-[70] flex-col p-2 lg:p-0 lg:flex-row overflow-y-auto overflow-x-hidden lg:overflow-hidden backdrop-blur-lg w-svw h-svh flex animate-blurred-fade-in animate-duration-faster gap-3 `}>
                     <form className="flex lg:h-[716px] lg:w-[596px] lg:m-w-[596px] relative h-fit w-full gap-2 lg:gap-4 justify-center flex-col p-2 lg:p-0 bg-slate-800 border border-slate-50/40 items-center  rounded-md" >
                         <div className="w-full flex absolute top-2 left-[6.5rem] justify-center lg:ml-40 ml-[5rem] items-center">
                             <IconX className="cursor-pointer hover:scale-105 transition-all" onClick={() => setIsHidden(true)} size={25} color="white" />

@@ -5,14 +5,14 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const DetailPostSkeleton = () => {
   return (
     <SkeletonTheme baseColor="#1f2a37" highlightColor="#374151">
-      <main className="w-screen h-auto p-2 lg:p-0 flex flex-col items-center justify-center">
+      <main className="w-full max-w-[657px] flex flex-col gap-4 p-2 lg:p-0 lg:flex-row">
         <div className="w-fit left-2 z-[1000] hover:scale-105 transition-all flex fixed top-[5.8rem] lg:top-[1.6rem] lg:left-8 items-start">
           <button>
             <IconArrowLeft size={30} />
           </button>
         </div>
 
-        <div className="flex mt-24 flex-col gap-7 max-w-[657px] w-full items-center justify-center">
+        <div className="flex mt-24 flex-col gap-7  w-full items-center justify-center">
           <article className="flex flex-col w-full items-center justify-center">
             <div className="flex w-full py-4 p-1 rounded-lg bg-[#1B2730] gap-2 lg:gap-6 flex-row mb-5">
               <Skeleton circle width={50} height={50} />

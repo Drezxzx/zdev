@@ -23,7 +23,7 @@ export default function HeaderDesktop() {
   const { setIsHiddenFullScreenProyects, isHiddenFullScreenProyects } = useProyects();
 
   useEffect(() => {
-    setIsloading(true);
+    
     const body = document.querySelector('body');
     if (body) {
       body.style.overflowWrap = 'hidden';
