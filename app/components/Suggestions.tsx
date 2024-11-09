@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react"
 import { getUserByEmail } from "../libs/user"
 import Link from "next/link"
 import SuggestionsSectionSkeleton from "./skeletons/SuggestionsSectionSkeleton"
+import { IconRosetteDiscountCheckFilled } from "@tabler/icons-react"
 
 export default function SuggestionsSection() {
     const [suggestions, setSuggestions] = useState<SuggestionTyoe[]>([])
@@ -46,7 +47,7 @@ export default function SuggestionsSection() {
                         <Link href={`/profile/${sug.username}`} key={sug.username} className="flex w-full hover:underline items-center gap-1 justify-start">
                             <img className="size-14 rounded-full object-contain" src={sug.profile_pic} alt={`imagen de ${sug.name}`} />
                             <div className="flex items-center flex-col gap-2"> 
-                                <h3 className="text-base font-medium text-[#7B8A9E]">{sug.username}</h3></div>
+                                <h3 className="text-base font-medium text-[#7B8A9E]">{sug.username} {Boolean(sug.is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}</h3></div>
 
                         </Link>
                     ))}

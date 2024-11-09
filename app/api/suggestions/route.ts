@@ -7,7 +7,7 @@ export async function GET(req: Request) {
 
     try {
         const res = await client.execute({
-            sql : `  SELECT u.name, u.username, u.profile_pic, u.id
+            sql : `  SELECT u.name, u.username, u.profile_pic, u.id, u.is_verified
                     FROM users_languages as ul
                     INNER JOIN users as u ON u.id = ul.user_id
                     LEFT JOIN  follow_users as fu ON fu.user_id = u.id

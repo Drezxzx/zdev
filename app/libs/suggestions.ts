@@ -4,6 +4,7 @@ export interface SuggestionTyoe {
     name: string;
     username: string;
     profile_pic: string;
+    is_verified: boolean;
 }
 
 export class Suggestions {
