@@ -7,19 +7,19 @@ export async function GET(req: Request) {
 
     try {
         const res = await client.execute({
-            sql : ` SELECT u.name, u.username, u.profile_pic, u.id
+            sql : `  SELECT u.name, u.username, u.profile_pic, u.id
                     FROM users_languages as ul
                     INNER JOIN users as u ON u.id = ul.user_id
-                    INNER JOIN follow_users as fu ON fu.user_id = u.id
+                    LEFT JOIN  follow_users as fu ON fu.user_id = u.id
                     WHERE ul.language_id IN
                         (
                         SELECT ul1.language_id 
                         FROM users
                         INNER JOIN users_languages as ul1 ON ul1.user_id = users.id
-                        WHERE users.email = ?
+                        WHERE users.email = 'andres250197@hotmail.com'
                         )
-                    AND u.email <> ?
-                    AND u.id NOT IN (SELECT followed_user_id FROM follow_users WHERE user_id = (SELECT id FROM users WHERE email = ?))
+                    AND u.email <> 'andres250197@hotmail.com'
+                    AND u.id NOT IN (SELECT user_id FROM follow_users WHERE user_id = (SELECT id FROM users WHERE email = 'andres250197@hotmail.com'))
                     GROUP BY u.id
                     ORDER BY u.is_verified DESC
                     LIMIT 5;
