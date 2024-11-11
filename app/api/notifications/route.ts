@@ -49,20 +49,20 @@ export async function POST(req: Request) {
 // Suponiendo que tienes un objeto clients donde guardas los escritores para cada usuario
 let clients: Record<string, WritableStreamDefaultWriter[]> = {};
 
-export function addClient(userId: string, writer: WritableStreamDefaultWriter) {
+ function addClient(userId: string, writer: WritableStreamDefaultWriter) {
   if (!clients[userId]) {
     clients[userId] = [];
   }
   clients[userId].push(writer);
 }
 
-export function removeClient(userId: string, writer: WritableStreamDefaultWriter) {
+ function removeClient(userId: string, writer: WritableStreamDefaultWriter) {
   if (clients[userId]) {
     clients[userId] = clients[userId].filter(client => client !== writer);
   }
 }
 
-export function sendNotification(userId: string, message: string) {
+ function sendNotification(userId: string, message: string) {
   const userClients = clients[userId];
   
   if (userClients && userClients.length > 0) {
