@@ -3,7 +3,13 @@ import client from '@/app/conn/conn';
 
 export async function GET(req: Request) {
   const { readable, writable } = new TransformStream();
-  const writer = writable.getWriter();
+const writer = writable.getWriter();
+
+// Inicia el stream con "keep-alive"
+setInterval(() => {
+  writer.write(`data: ping\n\n`);
+}, 20000); // Envía un "ping" cada 20 segundos
+
   
   const url = new URL(req.url);
   const userId = url.searchParams.get('userId');
@@ -13,6 +19,7 @@ export async function GET(req: Request) {
   }
 
   const headers = new Headers();
+  
   headers.set('Content-Type', 'text/event-stream');
   headers.set('Cache-Control', 'no-cache');
   headers.set('Connection', 'keep-alive');

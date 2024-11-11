@@ -1,0 +1,8 @@
+{
+    "functions": {
+      "api/notifications": {
+        "runtime": "edge"
+      }
+    }
+  }
+  
