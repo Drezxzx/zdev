@@ -11,6 +11,7 @@ import { useUser } from "../context/changeProfile";
 import { useProyects } from "../context/proyects";
 import FullScreenProyects from "./FullScreenProyects";
 import HeaderSkeleton from "./skeletons/HeaderSkeleton";
+import NotificationComponent from "./Notificacionts";
 
 export default function HeaderDesktop() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -81,6 +82,7 @@ export default function HeaderDesktop() {
 
   return (
     <header className={`w-screen p-2 lg:p-0 z-[51] fixed h-24 lg:h-20 transition-all duration-300 ${isScrolled ? "backdrop-blur-lg bg-gray-800/70 lg:backdrop-blur-none lg:bg-transparent" : "bg-transparent"}`}>
+     {session?.user && <NotificationComponent userId={session.user.email as string} />}
       <nav className="flex justify-between w-full items-center p-4 lg:p-0">
         <ul className="flex w-full justify-center items-center gap-x-4">
           <div
