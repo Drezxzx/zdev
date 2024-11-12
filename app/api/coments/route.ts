@@ -1,6 +1,6 @@
 import client from "@/app/conn/conn";
 import { NextResponse } from 'next/server';
-import { createNotification } from "../notifications/route";
+import { createNotification } from "../notifications/controler";
 
 export async function GET(req: Request) {
     const url = new URL(req.url);

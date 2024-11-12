@@ -1,6 +1,6 @@
 import { sendNotification } from "@/app/clients";
 import client from "@/app/conn/conn";
-import { createNotification } from "@/app/api/notifications/route";
+import { createNotification } from "@/app/api/notifications/controler";
 
 export async function POST(req: Request) {
     const body = await req.json();
