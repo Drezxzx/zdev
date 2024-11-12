@@ -5,7 +5,8 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const DetailPostSkeleton = () => {
   return (
     <SkeletonTheme baseColor="#1f2a37" highlightColor="#374151">
-      <main className="w-full max-w-[657px] flex flex-col gap-4 p-2 lg:p-0 lg:flex-row">
+      <main className='w-screen h-auto p-2 lg:p-0  flex flex-col items-center justify-center'>
+      <article className="w-full max-w-[657px] flex flex-col gap-4 p-2 lg:p-0 lg:flex-row">
         <div className="w-fit left-2 z-[1000] hover:scale-105 transition-all flex fixed top-[5.8rem] lg:top-[1.6rem] lg:left-8 items-start">
           <button>
             <IconArrowLeft size={30} />
@@ -32,6 +33,8 @@ const DetailPostSkeleton = () => {
             </div>
           </article>
         </div>
+      </article>
+
       </main>
     </SkeletonTheme>
   );

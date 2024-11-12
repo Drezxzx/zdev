@@ -72,7 +72,7 @@ export async function POST(req: Request) {
                 console.log(userNotificed.rows[0].email, userCreatorNotification.rows[0].email)
 
                 if (userNotificed.rows[0].email !== userCreatorNotification.rows[0].email) {
-                    await createNotification({checkIfIsTheSame : false, userEmail : userNotificed.rows[0].email as string, message : `${userCreatorNotification.rows[0].username} ha dado like a tu comentado`, idPost : userNotificed.rows[0].post_id as string, idType : "1", idProfile : ""});
+                    await createNotification({checkIfIsTheSame : false, userEmail : userNotificed.rows[0].email as string, message : `${userCreatorNotification.rows[0].username} ha dado like a tu comentario`, idPost : userNotificed.rows[0].post_id as string, idType : "1", idProfile : ""});
                 }
             }
             
