@@ -77,7 +77,7 @@ export default function SearchSection() {
             {isVisible && (
                 <section className="w-[40%] flex gap-2 items-center flex-col justify-center">
                     <section
-                        className="w-screen h-screen fixed top-0 left-0 z-[100] flex items-center justify-center bg-[#1b27309c] animate-blurred-fade-in animate-duration-faster backdrop-blur-md"
+                        className="w-screen h-screen fixed top-0 left-0 z-[100] flex items-center justify-center bg-[#1B27309c] animate-blurred-fade-in animate-duration-faster backdrop-blur-md"
                         style={{ transform: "translateX(-50%)", left: "50%" }}
                     >
                         <div className="w-full lg:max-w-[50%] p-3 lg:p-0 flex flex-col items-center gap-2">

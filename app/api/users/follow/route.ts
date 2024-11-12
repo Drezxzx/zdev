@@ -1,6 +1,6 @@
 import { sendNotification } from "@/app/clients";
 import client from "@/app/conn/conn";
-import createNotification from "../../notifications/createNotification";
+import { createNotification } from "@/app/api/notifications/route";
 
 export async function POST(req: Request) {
     const body = await req.json();
@@ -21,11 +21,15 @@ export async function POST(req: Request) {
                 args: [username]
             });
 
-            createNotification(followedUserNotification.rows[0].email as string , 
-                JSON.stringify({message : `el usuario ${followUserNotification.rows[0].username} te ha seguido`,
-                    id_follower : followUserNotification.rows[0].username,
-                    type : "follow"
-                }));
+            // createNotification(followedUserNotification.rows[0].email as string , 
+            //     JSON.stringify({message : `el usuario ${followUserNotification.rows[0].username} te ha seguido`,
+            //         id_follower : followUserNotification.rows[0].username,
+            //         type : "follow"
+            //     }));
+            const res = await createNotification({checkIfIsTheSame : true, userEmail: followedUserNotification.rows[0].email as string, idPost : "", message : `${followUserNotification.rows[0].username} te ha seguido`, idType : "2", idProfile : followUserNotification.rows[0].username as string });
+
+            console.log(res);
+            
         }
         return new Response(JSON.stringify({ success: true }), { status: 200 });
     }

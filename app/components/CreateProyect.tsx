@@ -53,7 +53,12 @@ export default function CreateProyect({
         if (newProject.previewLink.length === 0 ){
             const lableImg = document.querySelector('label[for="preview"]')
             lableImg?.classList.add("border-red-500")
-            toast.warning(`Debes agregar una imagen de preview`)
+            toast.warning(`Debes agregar una imagen de preview`,  {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
             setTimeout(() => {
                 lableImg?.classList.remove("border-red-500")
             }, 2000);
@@ -68,7 +73,12 @@ export default function CreateProyect({
         fomrData.append("preview", fileImg as Blob);
         fomrData.append("email", email);
         setProjects((prevProjects) => [newProject, ...prevProjects]);
-        toast.success(`EL proyecto ${newProject.nameProyect} ha sido creado con éxito`)
+        toast.success(`EL proyecto ${newProject.nameProyect} ha sido creado con éxito`, {
+            style : {
+                backgroundColor : "#1B2730",
+                color : "#C7D6E6"
+            }
+        })
         setisHiddenCreateProyect(true);
         setProjectData({ nameProyect: "", description: "", gitRepository: "", previewLink: "" });
         setImgPreview("");

@@ -131,17 +131,32 @@ export default function CreatePost() {
         
         const formData = new FormData();
         if(postMode.code && code.length === 0){
-            toast.error("El código no puede estar vacío")
+            toast.error("El código no puede estar vacío", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
             return
         }
 
         if(postMode.image && image === null){
-            toast.error("Debes agregar una imagen")
+            toast.error("Debes agregar una imagen", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
             return
         }
 
         if(postMode.text && content.length === 0){
-            toast.error("El contenido no puede estar vacío")
+            toast.error("El contenido no puede estar vacío", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
             return
         }
 
@@ -173,6 +188,10 @@ export default function CreatePost() {
             }),
             {
                 loading: 'Creando el post...',
+                style : {
+                    background: "#1B2730",
+                    color: "#C7D6E6",
+                },
                 success: (message) => message,  
                 error: (err) => {
                     console.error(err);

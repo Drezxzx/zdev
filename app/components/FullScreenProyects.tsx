@@ -9,27 +9,32 @@ import { ProyectsClass } from "../libs/proyects";
 import { useProyects } from "../context/proyects";
 
 
-export default function FullScreenProyects({ username, proyects, setProjects }: { username: string, proyects: Proyects[], setProjects : React.Dispatch<React.SetStateAction<Proyects[]>>  }) {
-    
+export default function FullScreenProyects({ username, proyects, setProjects }: { username: string, proyects: Proyects[], setProjects: React.Dispatch<React.SetStateAction<Proyects[]>> }) {
+
     const { isHiddenFullScreenProyects, setIsHiddenFullScreenProyects, setisHiddenCreateProyect } = useProyects();
-    
+
     const handleClick = () => {
         setIsHiddenFullScreenProyects(!isHiddenFullScreenProyects);
     };
 
-    const handleDelete = (e : React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
+    const handleDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const elemnt = e.currentTarget
         const nameProyect = proyects.filter(pro => pro.id.toString() === elemnt.id)[0].nameProyect
-        toast.warning(`¿Esta seguro que quiere eliminar el proyecto ${nameProyect}?`, {
+        toast(`¿Esta seguro que quiere eliminar el proyecto ${nameProyect}?`, {
+            style: {
+                backgroundColor: "#1B2730",
+                color: "#C7D6E6"
+            }
+            ,
             action: {
-              label: 'SI',
-              onClick: () => {
-                setProjects(proyects.filter(pro => pro.id.toString() !== elemnt.id))
-                toast.success(`${nameProyect} fue eliminado correctamente`)
-                ProyectsClass.deleteProyect(elemnt.id.toString())
-              }
-            },
-          })
+                label: 'SI',
+                onClick: () => {
+                    setProjects(proyects.filter(pro => pro.id.toString() !== elemnt.id))
+                    toast.success(`${nameProyect} fue eliminado correctamente`)
+                    ProyectsClass.deleteProyect(elemnt.id.toString())
+                }
+            } 
+        })
     }
 
     useEffect(() => {
@@ -48,10 +53,10 @@ export default function FullScreenProyects({ username, proyects, setProjects }: 
                     <button onClick={() => { setisHiddenCreateProyect(false) }} className="text-sm hover:scale-105 text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full">Crear proyecto</button>
                 </h1>
                 <div className="z-[1000] overflow-x-hidden w-fit max-[550px]:w-fit min-h-[90%] grid lg:grid-cols-2 p-2 overflow-auto gap-4">
-                    { proyects.length > 0 ? 
+                    {proyects.length > 0 ?
                         proyects.map(proyect =>
-                            <div key={proyect.id}  className="flex relative h-fit bg-containers-rounded flex-col border border-slate-700/55 rounded-lg p-4 gap-3 items-start">
-                                <div id={proyect.id} onClick={handleDelete} className="p-1 cursor-pointer rounded-lg hover:saturate-50 hover:scale-105 bg-red-600 absolute top-2 right-2"><IconTrash  size={20}/></div>
+                            <div key={proyect.id} className="flex relative h-fit bg-containers-rounded flex-col border border-slate-700/55 rounded-lg p-4 gap-3 items-start">
+                                <div id={proyect.id} onClick={handleDelete} className="p-1 cursor-pointer rounded-lg hover:saturate-50 hover:scale-105 bg-red-600 absolute top-2 right-2"><IconTrash size={20} /></div>
                                 <h2 className="text-xl font-bold">{proyect.nameProyect}</h2>
                                 <p className="text-sm text-slate-400/90 hyphens-auto break-words  max-h-24 overflow-y-auto whitespace-normal leading-tight">
                                     {proyect.description}
@@ -65,7 +70,7 @@ export default function FullScreenProyects({ username, proyects, setProjects }: 
                                 </div>
 
                             </div>
-                        ):
+                        ) :
                         <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">No hay proyectos</span>
                     }
                 </div>

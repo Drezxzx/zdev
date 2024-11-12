@@ -57,11 +57,21 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
         try {
             const res = await Coments.createComent(post_id.toString(), comment, username)
             if (!res) {
-                toast.error("Error al crear el comentario")
+                toast.error("Error al crear el comentario", {
+                    style : {
+                        backgroundColor : "#1B2730",
+                        color : "#C7D6E6"
+                    }
+                })
                 setIsLoading(false)
                 return false
             }
-            toast.success("Comentario creado")
+            toast.success("Comentario creado", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
             setIsLoading(false)
             setComentsPost([newComent, ...comentsPost])
             return true
@@ -75,7 +85,12 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
     const hanldeSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (comment.length === 0) {
-            toast.error("Escribe un comentario")
+            toast.error("Escribe un comentario", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
             return
         }
         const prevComents = comment

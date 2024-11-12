@@ -1,6 +1,6 @@
 import { sendNotification } from "@/app/clients";
 import client from "@/app/conn/conn";
-import createNotification from "../notifications/createNotification";
+import {createNotification} from '@/app/api/notifications/route'
 
 export async function GET(req: Request) {
     const url = new URL(req.url);
@@ -52,11 +52,14 @@ export async function POST(req: Request) {
 
             console.log(userNotificed.email, email);
             if (userNotificed.email !== email) {
-                createNotification(userNotificed.email as string , 
-                    JSON.stringify({message : `${userCreatorNotification.username} ha dado like a tu post`,
-                        id_post : post_id,
-                        type : "like"
-                    }));
+                // createNotification(userNotificed.email as string , 
+                //     JSON.stringify({message : `${userCreatorNotification.username} ha dado like a tu post`,
+                //         id_post : post_id,
+                //         type : "like"
+                //     }));
+              const res =  await createNotification({checkIfIsTheSame : true, userEmail : userNotificed.email as string, message : `${userCreatorNotification.username} ha dado like a tu post`, idPost : post_id as string, idType : "1", idProfile : ""});
+
+              console.log(res);
             }
         }
 

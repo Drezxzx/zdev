@@ -1,7 +1,7 @@
 export interface PostsType {
     code: string;
     image: string;
-    is_verified : boolean;
+    is_verified: boolean;
     title: string;
     name: string;
     language: string;
@@ -9,6 +9,17 @@ export interface PostsType {
     username: string;
     id: number;
     profile_pic: string;
+}
+
+export interface NotificationsType {
+    id:           number;
+    user_id:      number;
+    notification: string;
+    created_at:   string;
+    idType:       number;
+    idPost:       number;
+    idProfile:    string;
+    viewed:       number;
 }
 
 export interface UpdateUserRes {
@@ -41,7 +52,7 @@ export interface DataUser {
     name: string;
     email: string;
     created_at: Date;
-    is_verified : boolean;
+    is_verified: boolean;
     updated_at: Date;
     profile_pic: string;
     followed: number;
@@ -53,12 +64,12 @@ export interface LanguajeType {
 }
 
 export interface Proyects {
-    id : string,
-    nameProyect : string,
-    gitRepository : string,
-    previewLink : string,
-    preview : string,
-    description : string
+    id: string,
+    nameProyect: string,
+    gitRepository: string,
+    previewLink: string,
+    preview: string,
+    description: string
 }
 
 export interface DataLanguage {
@@ -73,7 +84,7 @@ export interface FollowRes {
 export interface PostDetail {
     post: PostsType;
     comments: Comment[];
-    mosLikedComents : Comment;
+    mosLikedComents: Comment;
 }
 
 export interface ResultSearch {
@@ -86,7 +97,7 @@ export interface ResultSearch {
 export interface Comment {
     created_at: Date;
     profile_pic: string;
-    is_verified : boolean;
+    is_verified: boolean;
     id: number;
     comment: string;
     likes: number;

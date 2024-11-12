@@ -42,18 +42,32 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
 
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (!isChanged) {
-            toast.warning("No has realizado ningun cambio")
+            toast.warning("No has realizado ningun cambio", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
             return
         }
         e.preventDefault();
         if (selectedLanguajes.length === 0) {
-            toast.error("Selecciona al menos un lenguaje")
+            toast.error("Selecciona al menos un lenguaje", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
             return
         }
         toast.promise(
             insertLanguaje(session?.user.email as string, selectedLanguajes.map(lang => lang.id)),
             {
                 loading: 'Actualizando lenguajes...',
+                style : {
+                    background: "#1B2730",
+                    color: "#C7D6E6",
+                },
                 success: () => {
                     if (!isEdit) {
                         router.push("/home");
@@ -113,7 +127,12 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
                     return newSelected
                 })
             } else {
-                toast.warning("No puedes seleccionar más de 6 lenguajes")
+                toast.warning("No puedes seleccionar más de 6 lenguajes", {
+                    style : {
+                        backgroundColor : "#1B2730",
+                        color : "#C7D6E6"
+                    }
+                })
             }
         }
     }

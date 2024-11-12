@@ -1,7 +1,7 @@
 "use client"
 /* eslint-disable @next/next/no-img-element */
 ;
-import { IconBellFilled, IconCode, IconHomeFilled, IconLogout, IconMessageFilled } from "@tabler/icons-react";
+import { IconBellFilled, IconCode, IconExclamationCircleFilled, IconHomeFilled, IconLogout } from "@tabler/icons-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -9,13 +9,14 @@ import SearchSecction from "./SearchSecction";
 import { getUserByEmail } from "../libs/user";
 import { useUser } from "../context/changeProfile";
 import { useProyects } from "../context/proyects";
-import FullScreenProyects from "./FullScreenProyects";
 import HeaderSkeleton from "./skeletons/HeaderSkeleton";
-import NotificationComponent from "./Notificacionts";
+import NotificationComponentToast from "./Notificacionts";
+import { useNotifications } from "../context/notifications";
 
 export default function HeaderDesktop() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isloading, setIsloading] = useState(true);
+  const {setIsHiddenFullScreenNotifications, setThereAreNewNotifications, thereAreNewNotifications} = useNotifications()
   const { setImageContext, setNameContext, setEmailContex, setUsernameContex } = useUser();
   const { data: session } = useSession();
   const [username, setUsername] = useState("");
@@ -44,6 +45,8 @@ export default function HeaderDesktop() {
         setNameContext(res.name);
         setImage(res.profile_pic);
         setIsloading(false);
+        console.log(thereAreNewNotifications);
+        
       });
     }
   }, [isLoggedIn]);
@@ -57,6 +60,13 @@ export default function HeaderDesktop() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const NotificationExclamation = () : JSX.Element  => {
+    if(!thereAreNewNotifications) return <span className="hidden"></span>
+    return (
+      <span className="absolute bottom-0 right-0 animate-pulse" ><IconExclamationCircleFilled  size={18} color="red"/></span>
+    )
+  }
 
   const UserInformation = () => {
     if (isloading) {
@@ -82,7 +92,7 @@ export default function HeaderDesktop() {
 
   return (
     <header className={`w-screen p-2 lg:p-0 z-[51] fixed h-24 lg:h-20 transition-all duration-300 ${isScrolled ? "backdrop-blur-lg bg-gray-800/70 lg:backdrop-blur-none lg:bg-transparent" : "bg-transparent"}`}>
-     {session?.user && <NotificationComponent userId={session.user.email as string} />}
+     {session?.user && <NotificationComponentToast userId={session.user.email as string} />}
       <nav className="flex justify-between w-full items-center p-4 lg:p-0">
         <ul className="flex w-full justify-center items-center gap-x-4">
           <div
@@ -94,7 +104,10 @@ export default function HeaderDesktop() {
                 <span className="text-black text-xs">Home</span>
               </Link>
             </li>
-            <li className="cursor-pointer transition-all hover:bg-[#1B2730] p-2 rounded-xl"><IconBellFilled color="#C7D6E6" size={25} /></li>
+            <li className="cursor-pointer relative transition-all hover:bg-[#1B2730] p-2 rounded-xl" onClick={()=>{setIsHiddenFullScreenNotifications(false); setThereAreNewNotifications(false)}}>
+             <NotificationExclamation/>
+              <IconBellFilled color="#C7D6E6" size={25} />
+              </li>
             <SearchSecction />
             <li onClick={()=>{setIsHiddenFullScreenProyects(false)}} className="cursor-pointer transition-all hover:bg-[#1B2730] p-2 rounded-xl"><span><IconCode color="#C7D6E6" size={25} /></span></li>
             <UserInformation />

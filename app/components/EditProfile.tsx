@@ -31,19 +31,34 @@ export default function EditProfile({ user }: { user: DataUser }) {
             }
         } else if (id === "username") {
             if (e.target.value.length > 15) {
-                toast.info("El nombre de usuario no puede tener mas de 15 caracteres")
+                toast.info("El nombre de usuario no puede tener mas de 15 caracteres", {
+                    style : {
+                        backgroundColor : "#1B2730",
+                        color : "#C7D6E6"
+                    }
+                })
                 e.target.value = e.target.value.substring(0, 15)
                 return
             }
             if (e.target.value.includes(" ")) {
-                toast.info("El nombre de usuario no puede contener espacios")
+                toast.info("El nombre de usuario no puede contener espacios", {
+                    style : {
+                        backgroundColor : "#1B2730",
+                        color : "#C7D6E6"
+                    }
+                })
                 e.target.value = e.target.value.replaceAll(" ", "")
                 return
             }
             setUsername(e.target.value);
         } else if (id === "name") {
             if (e.target.value.length > 30) {
-                toast.info("El nombre no puede tener mas de 15 caracteres")
+                toast.info("El nombre no puede tener mas de 15 caracteres", {
+                    style : {
+                        backgroundColor : "#1B2730",
+                        color : "#C7D6E6"
+                    }
+                })
                 e.target.value = e.target.value.substring(0, 30)
                 return
             }
@@ -57,7 +72,12 @@ export default function EditProfile({ user }: { user: DataUser }) {
         e.preventDefault();
     
         if (username.length === 0 || name.length === 0 || email.length === 0) {
-            toast.error("Por favor, rellene todos los campos");
+            toast.error("Por favor, rellene todos los campos", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            });
             return;
         }
     
@@ -75,6 +95,10 @@ export default function EditProfile({ user }: { user: DataUser }) {
                 }
             }),
             {
+                style : {
+                    background: "#1B2730",
+                    color: "#C7D6E6",
+                },
                 loading: 'Actualizando perfil...',
                 success: () => `Perfil actualizado 🎉`,
                 error: (error) => error || 'Nombre de usuario ya esta en uso'

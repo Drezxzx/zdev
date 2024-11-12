@@ -72,11 +72,19 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
         const post_id = e.currentTarget.id
 
         toast('¿Estás seguro que deseas eliminar este post?', {
+            style : {
+                backgroundColor : "#1B2730",
+                color : "#C7D6E6"
+            },
             action: {
                 label: 'SI',
                 onClick: () => {
                     toast.promise(PostsClass.deletePost(post_id), {
                         loading: 'Eliminado post...',
+                        style : {
+                            background: "#1B2730",
+                            color: "#C7D6E6",
+                        },
                         success: (data) => {
                             setPosts(posts.filter(post => post.id.toString() !== post_id))
                             return `El post ha sido eliminado correctamente`;
