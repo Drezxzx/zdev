@@ -97,13 +97,14 @@ function gestUser(username: string) {
                     users.is_verified,
                     users.profile_pic AS profile_pic,
                     (SELECT COUNT(user_id) FROM follow_users WHERE user_id = (SELECT id FROM users WHERE username = ?)) AS followed,
-                    (SELECT COUNT(followed_user_id) FROM follow_users WHERE followed_user_id = (SELECT id FROM users WHERE username = ?)) AS followers 
+                    (SELECT COUNT(followed_user_id) FROM follow_users WHERE followed_user_id = (SELECT id FROM users WHERE username = ?)) AS followers,
+                    (SELECT count(*) from posts WHERE author_id = (SELECT id FROM users WHERE username = ?)) AS posts
                 FROM 
                     users 
                 WHERE 
                     users.username = ?
             `,
-                args: [username, username, username]
+                args: [username, username, username, username]
             });
 
             console.log(users.rows);

@@ -61,6 +61,7 @@ export interface DataUser {
     is_verified: boolean;
     updated_at: Date;
     profile_pic: string;
+    posts : number ;
     followed: number;
     followers: number;
     username: string;

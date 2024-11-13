@@ -95,6 +95,10 @@ export const SectionProfile = ({
                   <h2>Followed</h2>
                   <h2>{user.followed}</h2>
                 </div>
+                <div className="flex gap-3 text-sm flex-col items-start">
+                  <h2>Posts</h2>
+                  <h2>{user.posts}</h2>
+                </div>
               </div>
               <div className="flex gap-3 w-full items-start">
               <ButtonProfile />

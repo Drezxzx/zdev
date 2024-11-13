@@ -13,13 +13,15 @@ import { languajes } from "../libs/languajes";
 import { useEffect, useState } from "react";
 import { PostsClass } from "../libs/Posts";
 import { toast } from "sonner";
+import { useChangeProfile } from "../context/changeProfile";
 
 
 
 
 export default function Posts({ username, posts, setPosts, edit, isLoading, isProfile }
     : { username: string | undefined, posts: PostsType[], edit: boolean, isLoading: boolean, isProfile: boolean, setPosts: React.Dispatch<React.SetStateAction<PostsType[]>> }) {
-
+    
+    const {setChange} = useChangeProfile()
     const [page, setCurrentPage] = useState(0);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -87,6 +89,7 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
                         },
                         success: (data) => {
                             setPosts(posts.filter(post => post.id.toString() !== post_id))
+                            setChange(true)
                             return `The post has been deleted successfully`;
                         },
                         error: 'There was an error deleting the post',
