@@ -67,7 +67,7 @@ export default function LikeButton({ idPost, actualLikes, col }: { idPost: numbe
                         usersLiked.map((user, i) => {
                             if (i >= 3) return null
                             return (
-                                <img src={user.profile_pic} alt="Imagen de usuario" className="size-5 object-contain rounded-full" />
+                                <img key={i} src={user.profile_pic} alt="Imagen de usuario" className="size-5 object-contain rounded-full" />
                             )
                         })
                     }</div>}

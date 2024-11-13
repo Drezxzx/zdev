@@ -85,7 +85,7 @@ export default function FullScreenNotifications({ userEmail, notifications, setN
 
     return (
         <Portal>
-            <section className="w-svw overflow-x-hidden flex-col  lg:px-5 px-2 gap-4 py-2 h-svh fixed top-0 left-0 z-[1000] flex items-center justify-center bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
+            <section className="w-screen overflow-x-hidden flex-col  lg:px-5 px-2 gap-4 py-2 h-screen fixed top-0 left-0 z-[1000] flex items-center justify-center bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
                 <div className="w-full h-fit flex justify-center items-center flex-col gap-5">
                     <span className="absolute top-2 cursor-pointer right-2 hover:scale-105 transition-all" onClick={() => { setIsHiddenFullScreenNotifications(true) }}><IconX size={25} /></span>
 
@@ -101,7 +101,7 @@ export default function FullScreenNotifications({ userEmail, notifications, setN
                             <CreateLiNotification setIsHiddenFullScreenNotifications={setIsHiddenFullScreenNotifications} key={i} i={i} notificationUnique={notification} router={router} />
                         ))}
 
-                        {hasMore && <button className="w-full disabled:saturate-50" disabled={isLoadingMore} onClick={loadMoreNotifications}>{!isLoadingMore ? "Ver más" : "Cargando..."}</button>}
+                        {hasMore && <button className="w-full disabled:saturate-50" disabled={isLoadingMore} onClick={loadMoreNotifications}>{!isLoadingMore ? "View more" : "Loading..."}</button>}
 
                         {notifications.length === 0 && <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">There are no notifications</span>}
                     </ul>
