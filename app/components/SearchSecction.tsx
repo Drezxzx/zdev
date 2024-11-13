@@ -95,7 +95,7 @@ export default function SearchSection() {
                             <div className="flex flex-col lg:w-full lg:items-center gap-2 h-[25rem] overflow-y-auto">
                                 {results.map(user => (
                                     <Link
-                                        href={`/profile/${user.username}`}
+                                        href={`/home/profile/${user.username}`}
                                         key={user.username}
                                         className="flex lg:w-[25rem] gap-1 items-center bg-[#26313a] rounded-md hover:bg-[#2f3b44] p-2 transition-all"
                                     >

@@ -71,25 +71,25 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
     const handleDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const post_id = e.currentTarget.id
 
-        toast('¿Estás seguro que deseas eliminar este post?', {
+        toast('Are you sure you want to delete this post?', {
             style : {
                 backgroundColor : "#1B2730",
                 color : "#C7D6E6"
             },
             action: {
-                label: 'SI',
+                label: 'YES',
                 onClick: () => {
                     toast.promise(PostsClass.deletePost(post_id), {
-                        loading: 'Eliminado post...',
+                        loading: 'Deleting post...',
                         style : {
                             background: "#1B2730",
                             color: "#C7D6E6",
                         },
                         success: (data) => {
                             setPosts(posts.filter(post => post.id.toString() !== post_id))
-                            return `El post ha sido eliminado correctamente`;
+                            return `The post has been deleted successfully`;
                         },
-                        error: 'Ha habido un error al eliminar el post',
+                        error: 'There was an error deleting the post',
                     });
                 }
             },
@@ -108,11 +108,11 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
                 {posts.map((post, i) => (
                     <div className="post flex w-full relative py-4 p-1 lg:p-1 rounded-lg bg-[#1B2730] gap-2 lg:gap-6 flex-row mb-5" id={post.id.toString()} key={i}>
                         {edit && <div id={post.id.toString()} onClick={handleDelete} className="p-1 cursor-pointer rounded-lg hover:saturate-50 hover:scale-105 bg-red-600 absolute right-[-0.3rem] top-[-0.2rem] md:top-2 md:right-2 "><IconTrash size={20} /></div>}
-                        <Link href={`/profile/${post.username}`}>
+                        <Link href={`/home/profile/${post.username}`}>
                             <img className="lg:size-14 size-12 object-cover lg:ml-2 rounded-full" src={post.profile_pic} alt={`imagen de perfil de ${post.profile_pic} `} /></Link>
                         <div className="flex gap-2 lg:gap-3 flex-col w-[80%] justify-center ">
                             <div className="w-full flex justify-between" >
-                                <Link className="flex flex-col  justify-start items-start w-fit hover:underline" href={`/profile/${post.username}`}>
+                                <Link className="flex flex-col  justify-start items-start w-fit hover:underline" href={`/home/profile/${post.username}`}>
                                     <h1 className="text-white flex items-center justify-center gap-2 font-semibold text-lg">{post.name} {Boolean(post.is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />} </h1>
                                     <h2 className="text-slate-400/80 text-sm">@{post.username}</h2>
                                 </Link>
@@ -135,7 +135,7 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
 
                 ))}
                 
-                {!hasMore && <p className="font-semibold">No hay más publicaciones para cargar.</p>}
+                {!hasMore && <p className="font-semibold">There are no more posts to upload.</p>}
             </article>
         </div>
     )

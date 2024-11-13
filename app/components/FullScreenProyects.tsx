@@ -20,17 +20,17 @@ export default function FullScreenProyects({ username, proyects, setProjects }: 
     const handleDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const elemnt = e.currentTarget
         const nameProyect = proyects.filter(pro => pro.id.toString() === elemnt.id)[0].nameProyect
-        toast(`¿Esta seguro que quiere eliminar el proyecto ${nameProyect}?`, {
+        toast(`Are you sure you want to delete the project ${nameProyect}?`, {
             style: {
                 backgroundColor: "#1B2730",
                 color: "#C7D6E6"
             }
             ,
             action: {
-                label: 'SI',
+                label: 'YES',
                 onClick: () => {
                     setProjects(proyects.filter(pro => pro.id.toString() !== elemnt.id))
-                    toast.success(`${nameProyect} fue eliminado correctamente`)
+                    toast.success(`${nameProyect} has been deleted successfully`)
                     ProyectsClass.deleteProyect(elemnt.id.toString())
                 }
             } 
@@ -49,8 +49,8 @@ export default function FullScreenProyects({ username, proyects, setProjects }: 
             <section className="w-svw overflow-x-hidden  flex-col lg:px-5 px-2 py-2 h-svh fixed top-0 left-0 z-[1000] flex items-center justify-center bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
                 <h1 className="md:text-2xl text-base p-2 items-center flex justify-between w-svw md:w-full font-bold">
                     <span className="cursor-pointer hover:scale-105 " onClick={handleClick}><IconX /></span>
-                    Proyectos de {username}
-                    <button onClick={() => { setisHiddenCreateProyect(false) }} className="text-sm hover:scale-105 text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full">Crear proyecto</button>
+                    Projects of {username}
+                    <button onClick={() => { setisHiddenCreateProyect(false) }} className="text-sm hover:scale-105 text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full">Create project</button>
                 </h1>
                 <div className="z-[1000] overflow-x-hidden w-fit max-[550px]:w-fit min-h-[90%] grid lg:grid-cols-2 p-2 overflow-auto gap-4">
                     {proyects.length > 0 ?
@@ -71,7 +71,7 @@ export default function FullScreenProyects({ username, proyects, setProjects }: 
 
                             </div>
                         ) :
-                        <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">No hay proyectos</span>
+                        <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">There are no projects</span>
                     }
                 </div>
             </section>

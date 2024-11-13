@@ -47,17 +47,17 @@ export default function FullScreenNotifications({ userEmail, notifications, setN
     }
 
     const handleDeleteAll = async () => {
-        toast('¿Estás seguro que deseas eliminar todas las notificaciones?', {
+        toast('Are you sure you want to delete all notifications?', {
             action: {
-                label: 'SI',
+                label: 'YES',
                 onClick: () => {
                     toast.promise(handleDeleteAll(), {
-                        loading: 'Eliminando...',
+                        loading: 'Deleting...',
                         success: (data) => {
                             setNotifications([])
-                            return `Todas las notificaciones han sido eliminadas correctamente`;
+                            return `All notifications have been deleted successfully`;
                         },
-                        error: 'Ha habido un error al eliminar las notificaciones',
+                        error: 'There was an error deleting notifications',
                         style: {
                             background: "#1B2730",
                             color: "#C7D6E6",
@@ -90,10 +90,10 @@ export default function FullScreenNotifications({ userEmail, notifications, setN
                     <span className="absolute top-2 cursor-pointer right-2 hover:scale-105 transition-all" onClick={() => { setIsHiddenFullScreenNotifications(true) }}><IconX size={25} /></span>
 
                     <h1 className="text-2xl flex gap-x-24 justify-between  items-center font-bold text-center">
-                        Notificaciones
+                        Notifications
                         <span className="px-1 py-1 cursor-pointer rounded-lg flex gap-1 items-center text-sm bg-red-600" onClick={handleDeleteAll}>
                             <IconTrash size={20} color="#C7D6E6" />
-                            vaciar
+                            clear
                         </span>
                     </h1>
                     <ul id="notifications" className="flex relative bg-containers-rounded md:w-1/2 max-h-[22rem] h-[22rem] w-full  lg:max-w-1/2 lg:w-[30%] border border-slate-400/60 rounded-lg flex-col gap-4 p-2 overflow-y-scroll  items-center">
@@ -103,7 +103,7 @@ export default function FullScreenNotifications({ userEmail, notifications, setN
 
                         {hasMore && <button className="w-full disabled:saturate-50" disabled={isLoadingMore} onClick={loadMoreNotifications}>{!isLoadingMore ? "Ver más" : "Cargando..."}</button>}
 
-                        {notifications.length === 0 && <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">No hay notificaciones</span>}
+                        {notifications.length === 0 && <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">There are no notifications</span>}
                     </ul>
 
                 </div>
@@ -118,14 +118,14 @@ function CreateLiNotification({ notificationUnique, i, router, setIsHiddenFullSc
         return (
             <li key={i} className={`flex ${Boolean(notificationUnique.viewed) ? "" : "bg-red-500/60"} p-1 rounded-lg gap-2 font-base font-semibold items-center justify-between w-full`}>
                 <h1 className="text-sm font-semibold flex gap-2 items-center justify-start">{children}</h1>
-                <button className="text-sm py-1 px-4 rounded-full bg-white text-black font-semibold" onClick={() => { router.push(route); setIsHiddenFullScreenNotifications(true) }}>Ver</button>
+                <button className="text-sm py-1 px-4 rounded-full bg-white text-black font-semibold" onClick={() => { router.push(route); setIsHiddenFullScreenNotifications(true) }}>View</button>
             </li>
         );
     };
 
     if (notificationUnique.idType === 2) {
         return (
-            <Li route={`/profile/${notificationUnique.idProfile}`}>
+            <Li route={`/home/profile/${notificationUnique.idProfile}`}>
                 <IconUserPlus size={20} color="green" />
                 {notificationUnique.notification}
             </Li>

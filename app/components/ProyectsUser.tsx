@@ -29,7 +29,7 @@ export default function ProyectsUser({ isMe, username }: { isMe: boolean, userna
                 className='text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full'
                 onClick={() => { setIsHiddenFullScreenProyects(false) }}
             >
-                Proyectos <span><IconCode size={20} color="black" /></span>
+                Projects <span><IconCode size={20} color="black" /></span>
             </button>
         );
     }
@@ -50,7 +50,7 @@ export default function ProyectsUser({ isMe, username }: { isMe: boolean, userna
                 onClick={() => setShowFullScreen(true)}
                 disabled={!isLoading}  
             >
-                {!isLoading ? 'Cargando...' : 'Proyectos'} <span><IconCode size={20} color="black" /></span>
+                {!isLoading ? 'Loading...' : 'Projects'} <span><IconCode size={20} color="black" /></span>
             </button>
         </>
     );

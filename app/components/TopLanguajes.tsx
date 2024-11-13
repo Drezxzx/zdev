@@ -29,7 +29,7 @@ export default  function TopLanguajes() {
     return (
         !isLoading && 
         <section className="flex h-fit w-72 py-4 flex-col gap-4 fixed bg-containers-rounded rounded-lg  p-2 items-center justify-start">
-            <h1 className="text-2xl font-bold">Top de lenguajes 🏅</h1>
+            <h1 className="text-2xl font-bold">Top Languages 🏅</h1>
             {
                 topLanguajes.map((lang, i) =>
                     <div className="flex gap-2 flex-row w-full  items-center justify-between" key={lang.name}>

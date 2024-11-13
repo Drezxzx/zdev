@@ -87,12 +87,12 @@ export const SectionProfile = ({
             <div className="flex gap-3 flex-col">
               {/* description <p className="text-sm">https://github.com/Drezxzx</p> */}
               <div className="flex gap-3 ">
-                <div className="flex gap-3 flex-col items-start">
-                  <h2>Seguidores</h2>
+                <div className="flex gap-3 flex-col text-sm items-start">
+                  <h2>Followers</h2>
                   <h2 id="followers">{followers}</h2>
                 </div>
-                <div className="flex gap-3 flex-col items-start">
-                  <h2>Seguidos</h2>
+                <div className="flex gap-3 text-sm flex-col items-start">
+                  <h2>Followed</h2>
                   <h2>{user.followed}</h2>
                 </div>
               </div>
@@ -105,7 +105,7 @@ export const SectionProfile = ({
         </article>
       </article>
       <article className="bg-[#1B2730] p-1 lg:p-0  rounded-lg md:w-[40%]">
-        <h1 className="text-center my-1 font-bold">Lenguajes Favoritos</h1>
+        <h1 className="text-center my-1 font-bold">Favorite languages</h1>
         <div className=" grid grid-cols-2 p-2 gap-2 w-full h-auto ">
           {languajes.map((lang) => {
             return (

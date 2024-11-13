@@ -3,9 +3,17 @@ import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Like from "../libs/like";
+import { userComents } from "../types/type";
+import FullScreenCode from "./FullScreenCode";
+import FullScreenLikes from "./FullScreenLikes";
+import { useUser } from "../context/changeProfile";
 
-export default function LikeButton({ idPost, actualLikes, col }: { idPost: number, actualLikes: number, col : undefined | boolean }) {
+export default function LikeButton({ idPost, actualLikes, col }: { idPost: number, actualLikes: number, col: undefined | boolean }) {
     const [likes, setLikes] = useState(actualLikes);
+    const [page, setPage] = useState<number>(0)
+    const [isHidden, setIsHidden] = useState(true);
+    const {image, usernameContex, email} = useUser();
+    const [usersLiked, setUsersLiked] = useState<userComents[]>([]);
     const [isLiked, setIsLiked] = useState(false);
     const { data: session } = useSession();
 
@@ -15,8 +23,15 @@ export default function LikeButton({ idPost, actualLikes, col }: { idPost: numbe
                 .then((res) => {
                     setIsLiked(res);
                 });
+
+            Like.getLikesPerUser(idPost.toString(), session?.user.email as string, page)
+                .then((res) => {
+                    setUsersLiked(res);
+                });
         }
     }, [session, idPost]);
+
+
 
     // Componente del botón basado en el estado isLiked
     const Button = () => {
@@ -26,37 +41,52 @@ export default function LikeButton({ idPost, actualLikes, col }: { idPost: numbe
     // Manejo del clic del botón
     const handleClick = async () => {
         // Cambiar estado de likes optimistamente
+        const newUserLike = {username : usernameContex, profile_pic : image}
         if (isLiked) {
             setLikes(likes - 1);
             setIsLiked(false);
+            setUsersLiked(usersLiked.filter(user => user.username !== usernameContex));
             // Aquí puedes realizar la llamada a la API para "desmarcar" el like
             await Like.unlikePost(idPost.toString(), session?.user.email as string);
         } else {
             setLikes(likes + 1);
+            setUsersLiked([ newUserLike, ...usersLiked]);
             setIsLiked(true);
             // Aquí puedes realizar la llamada a la API para "marcar" el like
             await Like.likePost(idPost.toString(), session?.user.email as string);
         }
     };
 
-   if (col) {
+    if (col) {
+        return (
+            <div className="flex gap-3 flex-col justify-center items-center">
+                <FullScreenLikes isHidden={isHidden} page={page} id_post={idPost} email={email} setPage={setPage} setIsHidden={setIsHidden} usersLiked={usersLiked} setUsersLiked={setUsersLiked} />
+                <div onClick={()=>setIsHidden(false)} className="flex gap-1 hover:underline cursor-pointer">
+                    <h2 className="text-slate-400/80">{likes} likes</h2>
+                    {usersLiked.length > 0 && <div className="flex gap-[0]">{
+                        usersLiked.map((user, i) => {
+                            if (i >= 3) return null
+                            return (
+                                <img src={user.profile_pic} alt="Imagen de usuario" className="size-5 object-contain rounded-full" />
+                            )
+                        })
+                    }</div>}
+                </div>
+
+                <button onClick={handleClick}>
+                    <Button />
+                </button>
+
+            </div>
+        );
+    }
+
     return (
-        <div className="flex gap-3 flex-col justify-center items-center">
+        <div className="flex gap-3 justify-center items-center">
             <h2 className="text-slate-400/80">{likes} likes</h2>
             <button onClick={handleClick}>
                 <Button />
             </button>
-            
         </div>
     );
-   } 
-
-   return (
-    <div className="flex gap-3 justify-center items-center">
-        <h2 className="text-slate-400/80">{likes} likes</h2>
-        <button onClick={handleClick}>
-            <Button />
-        </button>
-    </div>
-);
 }

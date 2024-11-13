@@ -76,7 +76,7 @@ export default function HeaderDesktop() {
     } else {
       return (
         <div className="flex lg:bg-[#1B2730] bg-transparent py-1 px-2 w-fit  justify-center rounded-xl items-center gap-x-4">
-          <Link className="flex justify-center items-center gap-x-2 hover:underline" href="/profile/[username]" as={`/profile/${username}`}>
+          <Link className="flex justify-center items-center gap-x-2 hover:underline" href="/home/profile/[username]" as={`/home/profile/${username}`}>
             <img className="hidden lg:block size-8 lg:size-8 rounded-full object-cover" src={image} alt="Imagen de usario" />
             <span id="username" className="text-base text-balance">{username}</span>
           </Link>

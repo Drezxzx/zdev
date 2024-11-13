@@ -39,11 +39,11 @@ export default function Proyects() {
             <FullScreenProyects setProjects={setProyects} username={usernameContex} proyects={proyects} />
             <CreateProyect email={email}  setProjects={setProyects} />
 
-            <h1 className="text-2xl flex justify-center items-center gap-2 font-bold">Proyectos <span><IconCode /></span></h1>
+            <h1 className="text-2xl flex justify-center items-center gap-2 font-bold">projects <span><IconCode /></span></h1>
 
             <div className="flex gap-4">
-                {proyects.length > 0 && <button onClick={() => { setIsHiddenFullScreenProyects(false) }} className="text-sm hover:scale-105 text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full">Ver todos</button>}
-                {proyects.length < 8 && <button onClick={() => { setisHiddenCreateProyect(false) }} className="text-sm hover:scale-105 text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full">Crear proyecto</button>}
+                {proyects.length > 0 && <button onClick={() => { setIsHiddenFullScreenProyects(false) }} className="text-sm hover:scale-105 text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full">See all</button>}
+                {proyects.length < 8 && <button onClick={() => { setisHiddenCreateProyect(false) }} className="text-sm hover:scale-105 text-black font-semibold py-1 px-4 bg-[#FFF] rounded-full">Create </button>}
             </div>
 
             <div className="flex flex-col space-y-1 justify-center items-center">
@@ -63,7 +63,7 @@ export default function Proyects() {
                         <img src={projects.preview} alt="Preview" className="rounded-lg size-60 object-contain" />
                     </div>
                 )) : 
-                <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">No hay proyectos</span>
+                <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">There are no projects</span>
                 }
             </div>
         </section>

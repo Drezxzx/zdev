@@ -31,7 +31,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
             }
         } else if (id === "username") {
             if (e.target.value.length > 15) {
-                toast.info("El nombre de usuario no puede tener mas de 15 caracteres", {
+                toast.info("The username cannot have more than 15 characters", {
                     style : {
                         backgroundColor : "#1B2730",
                         color : "#C7D6E6"
@@ -41,7 +41,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
                 return
             }
             if (e.target.value.includes(" ")) {
-                toast.info("El nombre de usuario no puede contener espacios", {
+                toast.info("The username cannot contain spaces", {
                     style : {
                         backgroundColor : "#1B2730",
                         color : "#C7D6E6"
@@ -53,7 +53,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
             setUsername(e.target.value);
         } else if (id === "name") {
             if (e.target.value.length > 30) {
-                toast.info("El nombre no puede tener mas de 15 caracteres", {
+                toast.info("The name cannot have more than 15 characters", {
                     style : {
                         backgroundColor : "#1B2730",
                         color : "#C7D6E6"
@@ -72,7 +72,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
         e.preventDefault();
     
         if (username.length === 0 || name.length === 0 || email.length === 0) {
-            toast.error("Por favor, rellene todos los campos", {
+            toast.error("Please, fill in all the fields", {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -88,9 +88,9 @@ export default function EditProfile({ user }: { user: DataUser }) {
                 if (res?.error) {
                     reject(res.error);
                 } else if (res?.success) {
-                    resolve("Perfil actualizado");
+                    resolve("Profile updated");
                     setChange(true);
-                    router.push(`/profile/${username}`);
+                    router.push(`/home/profile/${username}`);
                     setIsHidden(true);
                 }
             }),
@@ -99,9 +99,9 @@ export default function EditProfile({ user }: { user: DataUser }) {
                     background: "#1B2730",
                     color: "#C7D6E6",
                 },
-                loading: 'Actualizando perfil...',
-                success: () => `Perfil actualizado 🎉`,
-                error: (error) => error || 'Nombre de usuario ya esta en uso'
+                loading: 'Updating profile...',
+                success: () => `Profile updated 🎉`,
+                error: (error) => error || 'Username already in use'
             }
         );
     };
@@ -110,7 +110,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
     return (
         <>
             <button className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full " onClick={() => setIsHidden(false)}>
-                Editar 
+                Edit 
                 <span><IconPencil  size={20} color="black"/></span>
             </button>
 
@@ -120,21 +120,21 @@ export default function EditProfile({ user }: { user: DataUser }) {
                         <div className="w-full flex absolute top-2 left-[6.5rem] justify-center lg:ml-40 ml-[5rem] items-center">
                             <IconX className="cursor-pointer hover:scale-105 transition-all" onClick={() => setIsHidden(true)} size={25} color="white" />
                         </div>
-                        <h1 className="text-white text-2xl font-bold">Editar perfil</h1>
+                        <h1 className="text-white text-2xl font-bold">Edit profile</h1>
                         <label className="relative" htmlFor="image">
                             <input onChange={handleChange}  type="file" className="hidden" id="image" accept="image/*" />
                             <img src={imagePreview} alt="Imagen de perfil" className="size-24 object-cover rounded-full" />
                             <IconPencil className="absolute inset-0 bg-white rounded-full p-1" size={25} color="black" />
                         </label>
                         <label className="flex justify-center flex-col w-[70%] items-center">
-                            <span>Nombre</span>
+                            <span>Name</span>
                             <input id="name" onChange={handleChange} type="text" className="w-full rounded-md p-2 bg-[#1B2730] border border-white/10 text-white font-semibold text-base" defaultValue={user.name} />
                         </label>
                         <label className="flex  justify-center w-[70%] flex-col items-center">
                             <span>Username</span>
                             <input id="username" onChange={handleChange} type="text" className="w-full rounded-md p-2 bg-[#1B2730] border border-white/10 text-white font-semibold text-base" defaultValue={user.username} />
                         </label>
-                        <button onClick={handleClick} className="py-2 px-3 bg-emerald-600 mt-2 text-white font-semibold rounded-md">Confirmar cambios</button>
+                        <button onClick={handleClick} className="py-2 px-3 bg-emerald-600 mt-2 text-white font-semibold rounded-md">Confirm</button>
                     </form>
                     <LanguajeSelector isEdit={true} name={user.name} text="Edita tus tenguajes" email={user.username as string} clasName="lg:w-[596px] p-2 lg:p-0  lg:m-w-[596px]  lg:h-[716px] flex flex-col gap-2 bg-slate-800 border border-slate-50/40 justify-center items-center bg-[#1B2730] rounded-lg " />
                 </section>}

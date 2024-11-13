@@ -131,7 +131,7 @@ export default function CreatePost() {
         
         const formData = new FormData();
         if(postMode.code && code.length === 0){
-            toast.error("El código no puede estar vacío", {
+            toast.error("The code cannot be empty", {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -141,7 +141,7 @@ export default function CreatePost() {
         }
 
         if(postMode.image && image === null){
-            toast.error("Debes agregar una imagen", {
+            toast.error("You must add an image", {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -151,7 +151,7 @@ export default function CreatePost() {
         }
 
         if(postMode.text && content.length === 0){
-            toast.error("El contenido no puede estar vacío", {
+            toast.error("The content cannot be empty", {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -174,7 +174,7 @@ export default function CreatePost() {
             PostsClass.createPost(formData).then((data) => {
                 // Verificar si `data` indica éxito o error
                 if (!data.success) {  // Suponiendo que `data.success` indica si fue exitoso
-                    throw new Error("Error al crear el post");
+                    throw new Error("Error creating post");
                 }
                 // Si es exitoso, realiza las acciones necesarias
                 setChangePost(!isChangePost);
@@ -184,10 +184,10 @@ export default function CreatePost() {
                 setImagePreview("");
                 setImage(null);
                 setpostMode({ code: false, image: false, text: false });
-                return "El post ha sido creado exitosamente";
+                return "The post has been created successfully";
             }),
             {
-                loading: 'Creando el post...',
+                loading: 'Creating the post...',
                 style : {
                     background: "#1B2730",
                     color: "#C7D6E6",
@@ -195,7 +195,7 @@ export default function CreatePost() {
                 success: (message) => message,  
                 error: (err) => {
                     console.error(err);
-                    return `Error al crear el post`;
+                    return `Error creating the post`;
                 },
             }
         );
@@ -223,7 +223,7 @@ export default function CreatePost() {
                         id="post"
                         rows={1}
                         maxLength={500}
-                        placeholder={`¿En que estás pensando?`}
+                        placeholder={`What are you thinking about?`}
                     />
                     {postMode.code &&
                         <div className="flex gap-2 justify-evenly">

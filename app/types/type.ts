@@ -11,6 +11,11 @@ export interface PostsType {
     profile_pic: string;
 }
 
+export interface userComents {
+    username : string;
+    profile_pic: string;
+} 
+
 export interface NotificationsType {
     id:           number;
     user_id:      number;

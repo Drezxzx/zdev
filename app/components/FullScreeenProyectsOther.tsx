@@ -26,7 +26,7 @@ export default function FullScreenOtherUserProyects({ username, proyects, isHidd
             <section className="w-screen overflow-x-hidden flex-col lg:px-5 px-2 py-2 h-screen fixed top-0 left-0 z-[1000] flex items-center justify-center bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
                 <h1 className="md:text-2xl text-base p-2 items-center flex justify-between w-full md:w-full font-bold">
                     <span className="cursor-pointer hover:scale-105 " onClick={handleClick}><IconX /></span>
-                    Proyectos de {username}
+                    Projects of {username}
                 </h1>
                 <div className="z-[1000] overflow-x-hidden w-full max-[550px]:w-full min-h-[90%] grid lg:grid-cols-2 p-2 overflow-auto gap-4">
                     { proyects.length > 0 ? 
@@ -46,7 +46,7 @@ export default function FullScreenOtherUserProyects({ username, proyects, isHidd
                             </div>
                         )
                     :
-                        <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">No hay proyectos</span>
+                        <span className="text-center text-sm text-slate-400/90 mt-10 font-semibold">There are no projects</span>
                     }
                 </div>
             </section>

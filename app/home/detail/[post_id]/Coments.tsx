@@ -9,6 +9,7 @@ import { mirage } from "ldrs"
 import CommentButtonLike from "./CommentButtonLike"
 import { getUserByEmail } from "@/app/libs/user"
 import { useUser } from "@/app/context/changeProfile"
+import Link from "next/link"
 mirage.register("my-mirage")
 
 export default function SectionComents({ comments, post_id, post_likes, setComments }: { comments: Comment[], post_id: number, post_likes: number, setComments: React.Dispatch<React.SetStateAction<Comment[]>> }) {
@@ -57,7 +58,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
         try {
             const res = await Coments.createComent(post_id.toString(), comment, username)
             if (!res) {
-                toast.error("Error al crear el comentario", {
+                toast.error("Error creating the comment", {
                     style : {
                         backgroundColor : "#1B2730",
                         color : "#C7D6E6"
@@ -66,7 +67,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
                 setIsLoading(false)
                 return false
             }
-            toast.success("Comentario creado", {
+            toast.success("Comment created", {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -85,7 +86,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
     const hanldeSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (comment.length === 0) {
-            toast.error("Escribe un comentario", {
+            toast.error("Write a comment", {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -142,7 +143,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
                     name="comment"
                     value={comment}
                     id="comment"
-                    placeholder="comentario..."
+                    placeholder="comment..."
                     rows={1}
                     maxLength={150}
                     className="w-full p-2 border-2 rounded-lg border-gray-400 focus:outline-none bg-[#28343E] text-white placeholder-gray-400  resize-none overflow-hidden"
@@ -162,7 +163,7 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
                         <article key={index} className="w-full flex flex-col gap-1">
                             {
                                 mostLikedComent.likes > 0 && comment.id === mostLikedComent.id &&
-                                <span className={"text-[12px] text-white/70"}>Comentario más popular 🏆</span>
+                                <span className={"text-[12px] text-white/70"}>Most popular comment 🏆</span>
                             }
                             <article key={index} className={`${mostLikedComent.likes > 0 && comment.id === mostLikedComent.id ? " bg-[#ffd90036] border-[#ffd900a5] border" : "bg-[#162028]"} w-full rounded-lg px-3 py-5  flex gap-2 justify-center`}>
 
@@ -170,9 +171,12 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
 
                                 <div className="flex  justify-between w-full gap-3">
                                     <div className="flex items-start flex-col gap-1">
+                                    <Link href={`/home/profile/${comment.username}`}  className="flex hover:underline items-start flex-col gap-1">
                                         <h2 className="text-white flex justify-center items-center gap-1 font-semibold text-base">{comment.username} {Boolean(comment.is_verified ) && <IconRosetteDiscountCheckFilled  size={20} color="#1DA1F3" />}</h2>
+                                    </Link>
                                         <p className="text-white text-sm">{comment.comment}</p>
                                     </div>
+                                    
                                     <div>
                                        <CommentButtonLike liked={comment.liked} comentId={comment.id} initialLikes={comment.likes} />
                                     </div>
@@ -183,11 +187,11 @@ export default function SectionComents({ comments, post_id, post_likes, setComme
                     ))
                 ) : (
                     <center>
-                        <p className="text-slate-500/80  m-3 text-xl font-bold">No hay comentarios</p>
+                        <p className="text-slate-500/80  m-3 text-xl font-bold">There are no comments</p>
                     </center>
 
                 )}
-                {!hasMore && <p className="font-semibold">No hay más comentarios para cargar.</p>}
+                {!hasMore && <p className="font-semibold">There are no more comments to upload.</p>}
             </section>
 
 

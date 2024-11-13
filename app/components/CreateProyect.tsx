@@ -53,7 +53,7 @@ export default function CreateProyect({
         if (newProject.previewLink.length === 0 ){
             const lableImg = document.querySelector('label[for="preview"]')
             lableImg?.classList.add("border-red-500")
-            toast.warning(`Debes agregar una imagen de preview`,  {
+            toast.warning(`You must add a preview image`,  {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -73,7 +73,7 @@ export default function CreateProyect({
         fomrData.append("preview", fileImg as Blob);
         fomrData.append("email", email);
         setProjects((prevProjects) => [newProject, ...prevProjects]);
-        toast.success(`EL proyecto ${newProject.nameProyect} ha sido creado con éxito`, {
+        toast.success(`The project ${newProject.nameProyect} has been created successfully`, {
             style : {
                 backgroundColor : "#1B2730",
                 color : "#C7D6E6"
@@ -90,11 +90,11 @@ export default function CreateProyect({
         <Portal>
             {!isHiddenCreateProyect && (
                 <section className="w-screen flex-col gap-3 md:gap-5 px-5 py-2 md:py-0 h-screen fixed top-0 left-0 z-[1500] flex items-center justify-start bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
-                    <h1 className="text-2xl flex justify-center items-center gap-2 font-bold">Crear un proyecto</h1>
+                    <h1 className="text-2xl flex justify-center items-center gap-2 font-bold">Create a project</h1>
                     <form onSubmit={handleSubmit} className="flex relative flex-col gap-4 items-center justify-center bg-containers-rounded p-6 rounded-lg shadow-md"> 
                         <div className="absolute right-2 top-2" ><IconX onClick={()=> setisHiddenCreateProyect(true)} className="text-2xl cursor-pointer hover:scale-105" /></div>
                         <label htmlFor="nameProyect" className="w-full">
-                            Nombre del proyecto*
+                            Project name*
                             <input
                                 className="w-full p-2 focus:outline-none mt-1 bg-transparent border-slate-400/60 text-white border rounded"
                                 type="text"
@@ -107,7 +107,7 @@ export default function CreateProyect({
                             />
                         </label>
                         <label htmlFor="description" className="w-full">
-                            Descripción del proyecto*
+                            Description of the project*
                             <textarea
                                 className="w-full p-2 mt-1 bg-transparent focus:outline-none border-slate-400/60 text-white border rounded"
                                 name="description"
@@ -146,7 +146,7 @@ export default function CreateProyect({
                             {imgPreview ? (
                                 <img className="md:size-80 size-32 max-h-32 md:max-h-80 object-contain " src={imgPreview} alt="Preview" />
                             ) : (
-                                <span className="text-gray-500">Sube una imagen*</span>
+                                <span className="text-gray-500">Upload an image*</span>
                             )}
                             <input
                                 className="hidden"
@@ -158,7 +158,7 @@ export default function CreateProyect({
                             />
                         </label>
                         <button className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full ">
-                            Crear
+                            Create
                         </button>
                     </form>
                 </section>

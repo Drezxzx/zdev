@@ -5,7 +5,26 @@ import {createNotification} from '@/app/api/notifications/controler'
 export async function GET(req: Request) {
     const url = new URL(req.url);
     const post_id = url.searchParams.get("post_id");
+    const userLiked = url.searchParams.get("userLiked");
+    const page = url.searchParams.get("page")
+    const pageNumber = Number(page)
     const email = url.searchParams.get("email");
+
+    if (userLiked && userLiked.length > 0) {
+        const res = await client.execute({
+            sql : `SELECT u.username, u.profile_pic
+                    FROM users_likes as ul
+                    INNER JOIN users as u ON u.id = ul.user_id
+                    WHERE ul.post_id = ?
+                    LIMIT 10 OFFSET ?
+            ` ,
+            args : [post_id, pageNumber*10]
+        })
+
+        return Response.json(res.rows, { status: 200 });
+    }
+
+
     try {
         const posts = await client.execute({ sql: "SELECT COUNT(*) as likes FROM users_likes WHERE post_id = ? and user_id = (SELECT id FROM users WHERE email = ?)", args: [post_id, email] });
         const likes = posts.rows[0].likes as number;
@@ -52,11 +71,6 @@ export async function POST(req: Request) {
 
             console.log(userNotificed.email, email);
             if (userNotificed.email !== email) {
-                // createNotification(userNotificed.email as string , 
-                //     JSON.stringify({message : `${userCreatorNotification.username} ha dado like a tu post`,
-                //         id_post : post_id,
-                //         type : "like"
-                //     }));
               const res =  await createNotification({checkIfIsTheSame : true, userEmail : userNotificed.email as string, message : `${userCreatorNotification.username} ha dado like a tu post`, idPost : post_id as string, idType : "1", idProfile : ""});
 
               console.log(res);

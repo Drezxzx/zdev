@@ -42,7 +42,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
 
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (!isChanged) {
-            toast.warning("No has realizado ningun cambio", {
+            toast.warning("You have not made any changes", {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -52,7 +52,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
         }
         e.preventDefault();
         if (selectedLanguajes.length === 0) {
-            toast.error("Selecciona al menos un lenguaje", {
+            toast.error("Select at least one language", {
                 style : {
                     backgroundColor : "#1B2730",
                     color : "#C7D6E6"
@@ -63,7 +63,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
         toast.promise(
             insertLanguaje(session?.user.email as string, selectedLanguajes.map(lang => lang.id)),
             {
-                loading: 'Actualizando lenguajes...',
+                loading: 'Updating languages...',
                 style : {
                     background: "#1B2730",
                     color: "#C7D6E6",
@@ -75,9 +75,9 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
                         setChange(true);
                     }
                     
-                    return "Lenguajes actualizados correctamente";
+                    return "Languages updated successfully";
                 },
-                error: "Error al actualizar los lenguajes"
+                error: "Error updating languages"
             }
         );
         
@@ -127,7 +127,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
                     return newSelected
                 })
             } else {
-                toast.warning("No puedes seleccionar más de 6 lenguajes", {
+                toast.warning("You cannot select more than 6 languages", {
                     style : {
                         backgroundColor : "#1B2730",
                         color : "#C7D6E6"
@@ -152,12 +152,12 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
 
     return (
         <main className={clasName}>
-            <h1 className="text-3xl">Bienvenido {name} 👋</h1>
+            <h1 className="text-3xl">Welcome {name} 👋</h1>
             <h2 className="text-xl">{text}</h2>
-            <span className="text-sm text-slate-400/80">{selectedNumber}/{maxLanguajes} Lenguajes seleccionados</span>
-            <button onClick={handleClick} className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full ">Confirmar</button>
+            <span className="text-sm text-slate-400/80">{selectedNumber}/{maxLanguajes} Selected Languages</span>
+            <button onClick={handleClick} className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full ">Confirm</button>
             <section className="w-[80%] h-auto flex flex-col gap-4 border border-slate-50/40 bg-[#1B2730] rounded-lg p-4">
-                <input onChange={handelChange} type="text" name="search" placeholder="Buscar..." className="w-full p-2 border-2 rounded-lg border-gray-400 focus:outline-none bg-[#28343E] text-white placeholder-gray-400 resize-none overflow-hidden" />
+                <input onChange={handelChange} type="text" name="search" placeholder="Search..." className="w-full p-2 border-2 rounded-lg border-gray-400 focus:outline-none bg-[#28343E] text-white placeholder-gray-400 resize-none overflow-hidden" />
 
                 <div className="w-full h-auto">
                     <ul className="grid grid-cols-4 gap-4">

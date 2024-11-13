@@ -2,28 +2,33 @@ export async function createNotification({ userEmail, message, idPost, idProfile
 
     idPost === "" ? "0" : idPost
     idProfile === "" ? "0" : idProfile
-  
-    const res = await fetch("https://zdev.es/api/notifications", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        checkIfIsTheSame,
-        userEmail,
-        message,
-        idType,
-        idPost,
-        idProfile,
-      }),
-    });
-  
-    return res.ok ? true : false;
+  try {
+    const res = await fetch("http://localhost:3000/api/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          checkIfIsTheSame,
+          userEmail,
+          message,
+          idType,
+          idPost,
+          idProfile,
+        }),
+      });
+    
+      return res.ok ? true : false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+   
   }
   
   export async function updateNotificacion({pageNumber, userEmail}: {pageNumber : number, userEmail : string }) {
     try {
-      const res = await fetch("https://zdev.es/api/notifications", {
+      const res = await fetch("http://localhost:3000/api/notifications", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
