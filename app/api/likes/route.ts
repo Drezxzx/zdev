@@ -75,7 +75,7 @@ export async function POST(req: Request) {
 
             console.log(userNotificed.email, email);
             if (userNotificed.email !== email) {
-              const res =  await createNotification({checkIfIsTheSame : true, userEmail : userNotificed.email as string, message : `${userCreatorNotification.username} ha dado like a tu post`, idPost : post_id as string, idType : "1", idProfile : ""});
+              const res =  await createNotification({checkIfIsTheSame : true, userEmail : userNotificed.email as string, message : `${userCreatorNotification.username} has liked your post`, idPost : post_id as string, idType : "1", idProfile : ""});
 
               console.log(res);
             }

@@ -26,7 +26,7 @@ export async function POST(req: Request) {
             //         id_follower : followUserNotification.rows[0].username,
             //         type : "follow"
             //     }));
-            const res = await createNotification({checkIfIsTheSame : true, userEmail: followedUserNotification.rows[0].email as string, idPost : "", message : `${followUserNotification.rows[0].username} te ha seguido`, idType : "2", idProfile : followUserNotification.rows[0].username as string });
+            const res = await createNotification({checkIfIsTheSame : true, userEmail: followedUserNotification.rows[0].email as string, idPost : "", message : `${followUserNotification.rows[0].username} has followed you`, idType : "2", idProfile : followUserNotification.rows[0].username as string });
 
             console.log(res);
             
