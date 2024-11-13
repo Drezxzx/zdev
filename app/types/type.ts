@@ -14,6 +14,7 @@ export interface PostsType {
 export interface userComents {
     username : string;
     profile_pic: string;
+    is_verified: number;
 } 
 
 export interface NotificationsType {

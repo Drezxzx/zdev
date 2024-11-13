@@ -1,4 +1,4 @@
-import { IconX } from "@tabler/icons-react";
+import { IconRosetteDiscountCheckFilled, IconX } from "@tabler/icons-react";
 import Portal from "./Portal";
 import { useUser } from "../context/changeProfile";
 import Link from "next/link";
@@ -50,21 +50,22 @@ export default function FullScreenLikes({ isHidden, setIsHidden, usersLiked, set
                     <IconX size={25} />
                 </span>
                 <h1 className="text-2xl font-bold">Likes</h1>
-                <div className="flex flex-col gap-4 overflow-y-auto max-h-[28rem] h-[28rem] py-2 px-2 bg-containers-rounded border border-slate-400/60 lg:w-1/4 w-[70%] rounded-md">
+                <div id="likesDiv" className="flex flex-col gap-4  overflow-y-auto max-h-[28rem] md:w-[40%] h-[28rem] py-2 px-2 bg-containers-rounded border border-slate-400/60 lg:w-1/4 w-[70%] rounded-md">
                     {usersLiked.map((user, i) => (
-                        <Link href={`/home/profile/${user.username}`} key={i} className="flex cursor-pointer hover:underline gap-2 items-center">
+                        <Link href={`/home/profile/${user.username}`}  key={i} className="flex cursor-pointer hover:underline gap-2 items-center">
                             <img src={user.profile_pic} alt="Imagen de usuario" className="size-10 object-contain rounded-full" />
                             <h2 className="text-slate-400/80 hover:text-slate-200">{user.username}</h2>
+                            {Boolean(user.is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}
                         </Link>
                     ))}
 
                     {hasMore && (
-                        <button className="w-full disabled:saturate-50" disabled={isLoadingMore} onClick={loadMoreUsersLikes}>
+                        <button className="w-full text-base text-slate-200/80 disabled:saturate-50" disabled={isLoadingMore} onClick={loadMoreUsersLikes}>
                             {!isLoadingMore ? "View more" : "Loading..."}
                         </button>
                     )}
 
-                    {!hasMore && <p className="font-semibold text-center">There are no more likes to upload.</p>}
+                    {!hasMore && <p className="font-semibold text-sm text-slate-500/60 text-center">There are no more likes to upload.</p>}
                 </div>
             </section>
         </Portal>

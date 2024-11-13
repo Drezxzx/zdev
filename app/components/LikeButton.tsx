@@ -12,7 +12,7 @@ export default function LikeButton({ idPost, actualLikes, col }: { idPost: numbe
     const [likes, setLikes] = useState(actualLikes);
     const [page, setPage] = useState<number>(0)
     const [isHidden, setIsHidden] = useState(true);
-    const {image, usernameContex, email} = useUser();
+    const {image, usernameContex, email, is_verified} = useUser();
     const [usersLiked, setUsersLiked] = useState<userComents[]>([]);
     const [isLiked, setIsLiked] = useState(false);
     const { data: session } = useSession();
@@ -41,7 +41,7 @@ export default function LikeButton({ idPost, actualLikes, col }: { idPost: numbe
     // Manejo del clic del botón
     const handleClick = async () => {
         // Cambiar estado de likes optimistamente
-        const newUserLike = {username : usernameContex, profile_pic : image}
+        const newUserLike = {username : usernameContex, profile_pic : image, is_verified}
         if (isLiked) {
             setLikes(likes - 1);
             setIsLiked(false);

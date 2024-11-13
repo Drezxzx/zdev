@@ -12,11 +12,15 @@ export async function GET(req: Request) {
 
     if (userLiked && userLiked.length > 0) {
         const res = await client.execute({
-            sql : `SELECT u.username, u.profile_pic
-                    FROM users_likes as ul
-                    INNER JOIN users as u ON u.id = ul.user_id
-                    WHERE ul.post_id = ?
-                    LIMIT 10 OFFSET ?
+            sql : `SELECT u.username, u.profile_pic, u.is_verified
+                    FROM users AS u
+                    WHERE u.id IN (
+                        SELECT ul.user_id
+                        FROM users_likes AS ul
+                        WHERE ul.post_id = ?
+                        LIMIT 10 OFFSET ?
+                    )
+                    ORDER BY u.is_verified DESC;
             ` ,
             args : [post_id, pageNumber*10]
         })

@@ -1,7 +1,7 @@
 "use client"
 /* eslint-disable @next/next/no-img-element */
 ;
-import { IconBellFilled, IconCode, IconExclamationCircleFilled, IconHomeFilled, IconLogout } from "@tabler/icons-react";
+import { IconBellFilled, IconCode, IconExclamationCircleFilled, IconHomeFilled, IconLogout, IconRosetteDiscountCheckFilled } from "@tabler/icons-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -17,9 +17,10 @@ export default function HeaderDesktop() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isloading, setIsloading] = useState(true);
   const {setIsHiddenFullScreenNotifications, setThereAreNewNotifications, thereAreNewNotifications} = useNotifications()
-  const { setImageContext, setNameContext, setEmailContex, setUsernameContex } = useUser();
+  const { setImageContext, setNameContext, setEmailContex, setUsernameContex, setIs_verified} = useUser();
   const { data: session } = useSession();
   const [username, setUsername] = useState("");
+  const [is_verified, setIs_verifiedHeader] = useState(0);
   const [image, setImage] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const { setIsHiddenFullScreenProyects, isHiddenFullScreenProyects } = useProyects();
@@ -38,14 +39,17 @@ export default function HeaderDesktop() {
   useEffect(() => {
     if (isLoggedIn) {
       getUserByEmail(session?.user.email as string).then((res) => {
+        console.log(res)
         setUsername(res.username);
+        setIs_verified(res.is_verified);
+        setIs_verifiedHeader(res.is_verified);
         setUsernameContex(res.username);
         setImageContext(res.profile_pic);
         setEmailContex(res.email);
         setNameContext(res.name);
         setImage(res.profile_pic);
         setIsloading(false);
-        console.log(thereAreNewNotifications);
+        
         
       });
     }
@@ -68,6 +72,7 @@ export default function HeaderDesktop() {
     )
   }
 
+  console.log(is_verified)
   const UserInformation = () => {
     if (isloading) {
       return (
@@ -79,6 +84,7 @@ export default function HeaderDesktop() {
           <Link className="flex justify-center items-center gap-x-2 hover:underline" href="/home/profile/[username]" as={`/home/profile/${username}`}>
             <img className="hidden lg:block size-8 lg:size-8 rounded-full object-cover" src={image} alt="Imagen de usario" />
             <span id="username" className="text-base text-balance">{username}</span>
+            {is_verified !== undefined && Boolean(is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}
           </Link>
 
           <div className="border-l-2 flex justify-end pl-2 items-center border-slate-500/80 h-[80%]">

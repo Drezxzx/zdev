@@ -6,7 +6,7 @@ export async function GET(req:Request) {
 
     try {
         const res = await client.execute({
-            sql: `SELECT users.name, users.email, users.created_at, users.updated_at, users.username, users.profile_pic as profile_pic FROM users WHERE users.email = ?;`,
+            sql: `SELECT users.name, users.email,users.is_verified, users.created_at, users.updated_at, users.username, users.profile_pic as profile_pic FROM users WHERE users.email = ?;`,
             args: [email]
         })  
         return Response.json(res.rows);

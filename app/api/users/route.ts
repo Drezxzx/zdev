@@ -36,8 +36,7 @@ export async function POST(req: Request) {
 
 
 async function getUser(email: string) {
-    const users = await client.execute({ sql: "SELECT users.name, users.email, users.created_at, users.updated_at, users.profile_pic as profile_pic FROM users WHERE users.email = ?;", args: [email] });
-    console.log(users.rows);
+    const users = await client.execute({ sql: "SELECT users.name, users.email, users.created_at, users.updated_at, users.profile_pic as profile_pic, users.is_verified FROM users WHERE users.email = ?;", args: [email] });
     return users.rows[0] ? true : false;
 }
 
