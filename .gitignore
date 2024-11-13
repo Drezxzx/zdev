@@ -54,3 +54,6 @@ zdev.session.sql
 seed.sql
 
 .vscode
+app/api/notifications/controler.ts
+app/api/notifications/controler.ts
+app/conn/conn.ts
