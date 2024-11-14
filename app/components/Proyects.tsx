@@ -35,7 +35,7 @@ export default function Proyects() {
 
     return (
         
-        <section className="w-72 overflow-y-auto relative hidden lg:flex space-y-2 rounded-lg flex-col py-2 items-center bg-containers-rounded px-4 z-10 pb-[4.5rem]">
+        <section className="w-72 overflow-y-auto relative hidden lg:flex space-y-2 rounded-lg flex-col py-2 items-center bg-containers-rounded px-4 z-10 pb-[3.5rem]">
             <FullScreenProyects setProjects={setProyects} username={usernameContex} proyects={proyects} />
             <CreateProyect email={email}  setProjects={setProyects} />
 
