@@ -2,7 +2,6 @@ import client from "@/app/conn/conn";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    console.log("kjsdkjansdkjasbdadbamsndbasd asdbamnsdbamsndas")
     try {
         const res = await client.execute(`
             SELECT l.name, COUNT(ul.language_id) as numberLenguajes

@@ -77,15 +77,16 @@ export const SectionProfile = ({
           alt={`imagen de perfil de ${user.username}`}
         />
         <article className="flex-col ">
-          <div className="flex flex-col m-1 items-start gap-2">
-            <h1 className="text-2xl font-bold gap-2 flex justify-center items-center ">{user.name} {Boolean(user.is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}</h1>
-            <span className="text-base text-slate-400/85">
+          <div className="flex justify-start m-1 items-center gap-2">
+            <h1 className="text-2xl font-bold gap-2 flex justify-center items-center ">{user.name}</h1>
+            <span className="text-sm text-slate-400/85">
               @{user.username}
             </span>
+            {Boolean(user.is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}
           </div>
           <section className="flex gap-3 flex-col ">
             <div className="flex gap-3 flex-col">
-              {/* description <p className="text-sm">https://github.com/Drezxzx</p> */}
+              <p className="text-base text-slate-400/85">holas holas holas holas holas holas holas holas holas holas</p>
               <div className="flex gap-3 ">
                 <div className="flex gap-3 flex-col text-sm items-start">
                   <h2>Followers</h2>

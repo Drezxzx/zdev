@@ -17,13 +17,14 @@ export default function FullScreenNotifications({ userEmail, notifications, setN
     const router = useRouter();
 
     useEffect(() => {
+        if (isHiddenFullScreenNotifications) return;
         const body = document.querySelector('body');
         if (body) body.style.overflow = 'hidden';
         if (notifications.length < elementsPerPage) setHasMore(false);
         return () => {
             if (body) body.style.overflow = 'auto';
         };
-    }, []);
+    }, [isHiddenFullScreenNotifications]);
 
     useEffect(() => {
         if (isHiddenFullScreenNotifications) return;
