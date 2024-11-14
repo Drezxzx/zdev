@@ -22,7 +22,7 @@ export async function GET(req: Request) {
                     AND u.id NOT IN (SELECT followed_user_id FROM follow_users WHERE user_id = (SELECT id FROM users WHERE email = ?))
                     GROUP BY u.id
                     ORDER BY u.is_verified DESC
-                    LIMIT 5;
+                    LIMIT 3;
                      `,
                     args: [email, email, email]
         })
