@@ -46,7 +46,7 @@ export default function FullScreenLikes({ isHidden, setIsHidden, usersLiked, set
     return (
         <Portal>
             <section className="w-screen overflow-x-hidden flex-col lg:px-5 px-2 gap-4 py-2 h-screen fixed top-0 left-0 z-[1000] flex items-center justify-center bg-transparent animate-blurred-fade-in animate-duration-faster backdrop-blur-md">
-                <span className="absolute top-2 cursor-pointer right-2 hover:scale-105 transition-all" onClick={() => setIsHidden(true)}>
+                <span className="absolute top-2 cursor-pointer right-4 hover:scale-105 transition-all" onClick={() => setIsHidden(true)}>
                     <IconX size={25} />
                 </span>
                 <h1 className="text-2xl font-bold">Likes</h1>

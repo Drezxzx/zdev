@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { PostsClass } from "../libs/Posts";
 import { toast } from "sonner";
 import { useChangeProfile } from "../context/changeProfile";
+import FullScreenImage from "./FullScreenImage";
 
 
 
@@ -23,6 +24,7 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
     
     const {setChange} = useChangeProfile()
     const [page, setCurrentPage] = useState(0);
+    const [isHiddenImg, setIsHiddenImg] = useState(false);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const elementsPerPage = 5;
@@ -125,7 +127,7 @@ export default function Posts({ username, posts, setPosts, edit, isLoading, isPr
                             <h2 className="w-full break-words  ">{post.title}</h2>
                             {post.code && post.code.length > 0 && <CodeExample language={post.language} codeString={post.code} />}
                             <div className=" w-full flex justify-center items-center">
-                                {post.image && <img className="w-[30rem] rounded-md h-[30rem] object-contain" src={post.image} alt="Imagen de un post" />}
+                                {post.image &&<FullScreenImage image={post.image}  />}
                             </div>
 
                             <div className="flex w-full justify-around gap-4">

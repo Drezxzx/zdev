@@ -4,7 +4,7 @@ import { DataUser } from "../types/type";
 import { IconPencil, IconX } from "@tabler/icons-react";
 import { updateUser } from "../libs/user";
 import { toast } from "sonner";
-import { useChangeProfile } from '@/app/context/changeProfile'
+import { useChangeProfile, useUser } from '@/app/context/changeProfile'
 import { useRouter } from "next/navigation";
 import LanguajeSelector from "./LanguajeSelector";
 
@@ -14,6 +14,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
     console.log("isChange", isChange)
     const [isHidden, setIsHidden] = useState(true);
     const [image, setImage] = useState<File | string>(user.profile_pic);
+    const {setUsernameContex} = useUser();
     const [imagePreview, setImagePreview] = useState(user.profile_pic);
     const [username, setUsername] = useState(user.username);
     const [name, setName] = useState(user.name);
@@ -89,6 +90,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
                     reject(res.error);
                 } else if (res?.success) {
                     resolve("Profile updated");
+                    setUsernameContex(username);
                     setChange(true);
                     router.push(`/home/profile/${username}`);
                     setIsHidden(true);

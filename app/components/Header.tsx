@@ -17,11 +17,8 @@ export default function HeaderDesktop() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isloading, setIsloading] = useState(true);
   const {setIsHiddenFullScreenNotifications, setThereAreNewNotifications, thereAreNewNotifications} = useNotifications()
-  const { setImageContext, setNameContext, setEmailContex, setUsernameContex, setIs_verified} = useUser();
+  const { setImageContext, setNameContext, setEmailContex, setUsernameContex, setIs_verified, usernameContex, is_verified, image} = useUser();
   const { data: session } = useSession();
-  const [username, setUsername] = useState("");
-  const [is_verified, setIs_verifiedHeader] = useState(0);
-  const [image, setImage] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const { setIsHiddenFullScreenProyects, isHiddenFullScreenProyects } = useProyects();
 
@@ -39,15 +36,11 @@ export default function HeaderDesktop() {
   useEffect(() => {
     if (isLoggedIn) {
       getUserByEmail(session?.user.email as string).then((res) => {
-        console.log(res)
-        setUsername(res.username);
         setIs_verified(res.is_verified);
-        setIs_verifiedHeader(res.is_verified);
         setUsernameContex(res.username);
         setImageContext(res.profile_pic);
         setEmailContex(res.email);
         setNameContext(res.name);
-        setImage(res.profile_pic);
         setIsloading(false);
         
         
@@ -81,9 +74,9 @@ export default function HeaderDesktop() {
     } else {
       return (
         <div className="flex lg:bg-[#1B2730] bg-transparent py-1 px-2 w-fit  justify-center rounded-xl items-center gap-x-4">
-          <Link className="flex justify-center items-center gap-x-2 hover:underline" href="/home/profile/[username]" as={`/home/profile/${username}`}>
+          <Link className="flex justify-center items-center gap-x-2 hover:underline" href="/home/profile/[username]" as={`/home/profile/${usernameContex}`}>
             <img className="hidden lg:block size-8 lg:size-8 rounded-full object-cover" src={image} alt="Imagen de usario" />
-            <span id="username" className="text-base text-balance">{username}</span>
+            <span id="username" className="text-base text-balance">{usernameContex}</span>
             {is_verified !== undefined && Boolean(is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}
           </Link>
 
