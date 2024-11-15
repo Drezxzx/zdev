@@ -8,20 +8,19 @@ export async function POST(req: Request) {
     const img = body.get("image") as File | string;
     const name = body.get("newName") as string;
     const email = body.get("email") as string;
-    const username = body.get("newUsername") as string;
-    console.log(username)
-   
+    const description = body.get("description") as string | null;
+    const username = body.get("newUsername") as string;   
     const newImg = img instanceof File ? await uploadImg(img as Blob) : img;
-
+    
     if(username.length > 0){
         try {
             const isExistinUserName = await client.execute({
                 sql: "SELECT COUNT(*) as count FROM users WHERE username = ? AND email <> ?;",
                 args: [username, email]
             })
-
+            
             console.log(isExistinUserName.rows[0].count as number > 0)
-    
+            
             if (isExistinUserName.rows[0].count as number > 0) {
                 return Response.json({ error: `El nombre de usuario ${username} ya esta en uso`, success : false}, { status: 400 });
             }
@@ -29,14 +28,14 @@ export async function POST(req: Request) {
             console.error(error)
             return Response.json({ error: "Error al comprobar si el usuario existe", success : false}, { status: 500 });
         }
-    
+        
     }
     
-    console.log(newImg)
-
+    console.log({img, name, email, description, username})
+    console.log(`UPDATE users SET name = ${name}, username = ${username}, profile_pic = ${newImg}, description = ${description} WHERE email = ${email}`)
     try {
-        const updateSql = `UPDATE users SET name = ?, username = ?, profile_pic = ? WHERE email = ?`;
-        const args = [name, username, newImg, email];
+        const updateSql = `UPDATE users SET name = ?, username = ?, profile_pic = ?, description = ? WHERE email = ?`;
+        const args = [name, username, newImg, description, email];
         const update = await client.execute({
             sql: updateSql,
             args: args,

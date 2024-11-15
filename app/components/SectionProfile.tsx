@@ -86,17 +86,17 @@ export const SectionProfile = ({
           </div>
           <section className="flex gap-3 flex-col ">
             <div className="flex gap-3 flex-col">
-              <p className="text-base text-slate-400/85">holas holas holas holas holas holas holas holas holas holas</p>
+              <p className="text-base text-slate-400">{user.description}</p>
               <div className="flex gap-3 ">
-                <div className="flex gap-3 flex-col text-sm items-start">
+                <div className="flex gap-3 flex-col text-sm items-center justify-center">
                   <h2>Followers</h2>
                   <h2 id="followers">{followers}</h2>
                 </div>
-                <div className="flex gap-3 text-sm flex-col items-start">
+                <div className="flex gap-3 text-sm flex-col justify-center items-center">
                   <h2>Followed</h2>
                   <h2>{user.followed}</h2>
                 </div>
-                <div className="flex gap-3 text-sm flex-col items-start">
+                <div className="flex gap-3 text-sm flex-col justify-center items-center">
                   <h2>Posts</h2>
                   <h2>{user.posts}</h2>
                 </div>

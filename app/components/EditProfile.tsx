@@ -19,7 +19,25 @@ export default function EditProfile({ user }: { user: DataUser }) {
     const [username, setUsername] = useState(user.username);
     const [name, setName] = useState(user.name);
     const [email, setEmail] = useState(user.email);
+    const [description, setDescription] = useState(user.description);
 
+
+    const handleChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const id = e.target.id;
+        if(e.target.value.length > 30){
+            toast.info("The description cannot have more than 30 characters", {
+                style : {
+                    backgroundColor : "#1B2730",
+                    color : "#C7D6E6"
+                }
+            })
+            e.target.value = e.target.value.substring(0, 20)
+            return
+        }
+        if (id === "Descrption") {
+            setDescription(e.target.value);
+        }
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const id = e.target.id;
@@ -53,14 +71,14 @@ export default function EditProfile({ user }: { user: DataUser }) {
             }
             setUsername(e.target.value);
         } else if (id === "name") {
-            if (e.target.value.length > 30) {
+            if (e.target.value.length > 15) {
                 toast.info("The name cannot have more than 15 characters", {
                     style : {
                         backgroundColor : "#1B2730",
                         color : "#C7D6E6"
                     }
                 })
-                e.target.value = e.target.value.substring(0, 30)
+                e.target.value = e.target.value.substring(0, 15)
                 return
             }
             setName(e.target.value);
@@ -84,7 +102,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
     
         toast.promise(
             new Promise(async (resolve, reject) => {
-                const res = await updateUser({ newUsername: username, newName: name, image: image, email: email });
+                const res = await updateUser({ newUsername: username, newName: name, image: image, email: email, description });
                 
                 if (res?.error) {
                     reject(res.error);
@@ -118,7 +136,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
 
             {!isHidden &&
                 <section className={`${isHidden ? "hidden" : "flex"} bg-transparent lg:justify-center items-center fixed inset-0 z-[70] flex-col p-2 lg:p-0 lg:flex-row overflow-y-auto overflow-x-hidden lg:overflow-hidden backdrop-blur-lg w-svw h-svh flex animate-blurred-fade-in animate-duration-faster gap-3 `}>
-                    <form className="flex lg:h-[716px] lg:w-[596px] lg:m-w-[596px] relative h-fit w-full gap-2 lg:gap-4 justify-center flex-col p-2 lg:p-0 bg-slate-800 border border-slate-50/40 items-center  rounded-md" >
+                    <form className="flex lg:h-[716px] lg:w-[596px] lg:m-w-[596px] md:w-[64%] relative h-fit w-full gap-2 lg:gap-4 justify-center flex-col p-2 lg:p-0 bg-slate-800 border border-slate-50/40 items-center  rounded-md" >
                         <div className="w-full flex absolute top-2 left-[6.5rem] justify-center lg:ml-40 ml-[5rem] items-center">
                             <IconX className="cursor-pointer hover:scale-105 transition-all" onClick={() => setIsHidden(true)} size={25} color="white" />
                         </div>
@@ -135,6 +153,11 @@ export default function EditProfile({ user }: { user: DataUser }) {
                         <label className="flex  justify-center w-[70%] flex-col items-center">
                             <span>Username</span>
                             <input id="username" onChange={handleChange} type="text" className="w-full rounded-md p-2 bg-[#1B2730] border border-white/10 text-white font-semibold text-base" defaultValue={user.username} />
+                        </label>
+
+                        <label className="flex  justify-center w-[70%] flex-col items-center">
+                            <span>Descrption</span>
+                            <textarea id="Descrption" onChange={handleChangeDescription}  className="w-full rounded-md p-2 bg-[#1B2730] border border-white/10 text-white font-semibold text-base" defaultValue={user.description} />
                         </label>
                         <button onClick={handleClick} className="py-2 px-3 bg-emerald-600 mt-2 text-white font-semibold rounded-md">Confirm</button>
                     </form>

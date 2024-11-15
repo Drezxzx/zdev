@@ -48,12 +48,13 @@ export async function unFollowUser({username, followedUser}: {username: string |
     return await res.json() as FollowRes;  
 }
 
-export async function updateUser ({newUsername, newName, image, email}: {newUsername: string, newName: string, image: string | File, email: string}) {
+export async function updateUser ({newUsername, newName, image, email, description}: {description : string | null ,newUsername: string, newName: string, image: string | File, email: string}) {
     const formData = new FormData();
     formData.append("newUsername", newUsername);
     formData.append("newName", newName);
     formData.append("image", image as File);
     formData.append("email", email);
+    formData.append("description", description as string);
 
     try{
         const res = await fetch(`/api/users/update`, {

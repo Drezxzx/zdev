@@ -93,6 +93,7 @@ function gestUser(username: string) {
                     users.email, 
                     users.username,
                     users.created_at, 
+                    users.description,
                     users.updated_at, 
                     users.is_verified,
                     users.profile_pic AS profile_pic,

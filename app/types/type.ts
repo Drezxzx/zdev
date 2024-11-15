@@ -56,6 +56,7 @@ export interface User {
 }
 export interface DataUser {
     name: string;
+    description: string;
     email: string;
     created_at: Date;
     is_verified: boolean;

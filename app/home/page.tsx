@@ -18,6 +18,7 @@ export default function Home() {
       const res = PostsClass.getPosts(elementsPerPage.toString(), page.toString())
      
       res.then((data) => {
+        console.log({data})
           setPosts(data);
           setIsLoading(false)
         })
