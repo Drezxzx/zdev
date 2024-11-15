@@ -36,7 +36,7 @@ export default function HandleSession() {
     .then((res) => {
       if (res.status === 250) {
         console.log("Usuario ya existente o error en la creación.");
-        router.push("/home");
+        // router.push("/home");
         setIsInserted(false); 
         return;
       }
@@ -55,8 +55,8 @@ export default function HandleSession() {
 
   return (
     
-    isInserted &&
-    <LanguajeSelector isEdit={false} name={session?.user?.name as string} text="Selecciona tus lenguage favorito" clasName="h-[98rem] w-screen max-h-screen flex-col gap-6 flex justify-center items-center" email={session?.user?.email as string}/>
+    !isInserted &&
+    <LanguajeSelector isEdit={false} name={session?.user?.name as string} text="Selecciona tus lenguage favorito" clasName=" w-screen max-h-screen h-screen flex-col gap-2 mt-6  flex   items-center" email={session?.user?.email as string}/>
     
   ); 
 }

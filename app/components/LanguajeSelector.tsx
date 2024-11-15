@@ -156,7 +156,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
             <h2 className="text-xl">{text}</h2>
             <span className="text-sm text-slate-400/80">{selectedNumber}/{maxLanguajes} Selected Languages</span>
             <button onClick={handleClick} className="text-sm hover:scale-105 flex gap-1 justify-center items-center text-black font-semibold py-2 px-4 bg-[#FFF] rounded-full ">Confirm</button>
-            <section className="w-[80%] h-auto flex flex-col gap-4 border border-slate-50/40 bg-[#1B2730] rounded-lg p-4">
+            <section className="w-[80%] h-auto  flex  flex-col gap-4 border border-slate-50/40 bg-[#1B2730] rounded-lg p-4">
                 <input onChange={handelChange} type="text" name="search" placeholder="Search..." className="w-full p-2 border-2 rounded-lg border-gray-400 focus:outline-none bg-[#28343E] text-white placeholder-gray-400 resize-none overflow-hidden" />
 
                 <div className="w-full h-auto">
