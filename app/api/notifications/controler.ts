@@ -3,7 +3,7 @@ export async function createNotification({ userEmail, message, idPost, idProfile
     idPost === "" ? "0" : idPost
     idProfile === "" ? "0" : idProfile
   try {
-    const res = await fetch("https://zdev.es/api/notifications", {
+    const res = await fetch("http://localhost:3000/api/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export async function createNotification({ userEmail, message, idPost, idProfile
   
   export async function updateNotificacion({pageNumber, userEmail}: {pageNumber : number, userEmail : string }) {
     try {
-      const res = await fetch("https://zdev.es/api/notifications", {
+      const res = await fetch("http://localhost:3000/api/notifications", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

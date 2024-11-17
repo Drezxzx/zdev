@@ -54,6 +54,17 @@ export interface User {
     data: DataUser;
     languages: DataLanguage[];
 }
+
+export interface FollowData {
+    followed : FollowType[];    
+    followers : FollowType[];
+}
+interface FollowType {
+    username : string ;
+    profile_pic : string;
+    is_verified : number;
+}
+
 export interface DataUser {
     name: string;
     description: string;

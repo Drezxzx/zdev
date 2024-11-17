@@ -1,5 +1,5 @@
 "use client";
-import {  FolloWer, FollowRes, LanguajeType, resInsertLanguage, UpdateUserRes, User, type PostsType } from "../types/type";
+import {  FollowData, FolloWer, FollowRes, LanguajeType, resInsertLanguage, UpdateUserRes, User, type PostsType } from "../types/type";
 
 
 export async function getUser(username: string) {
@@ -89,4 +89,15 @@ export async function insertLanguaje(email: string, languages_id: number[]) {
         })
     });
     return await res.json() as resInsertLanguage
+}
+
+export async function getFollowersFollowed({username, page} : {username : string, page : number}): Promise<FollowData>{
+    try{
+        const res = await fetch(`/api/users/follow?username=${username}&page=${page}`)
+        const resJson = await res.json()
+        return resJson as FollowData
+    }catch(error){
+        console.error(error)
+        return {followers: [], followed: []}
+    }
 }

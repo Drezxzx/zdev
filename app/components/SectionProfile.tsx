@@ -5,8 +5,9 @@ import ButtonFollowUnfollow from "./ButtonFollowUnfollow";
 import { useChangeProfile } from "@/app/context/changeProfile"
 import { IconRosetteDiscountCheckFilled } from "@tabler/icons-react";
 import EditProfile from "./EditProfile";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ProyectsUser from "./ProyectsUser";
+import FullScreenFollowersFollowed from "./FullScreenFollowersFollowed";
 
 export const SectionProfile = ({
   user,
@@ -21,7 +22,7 @@ export const SectionProfile = ({
   followers: number;
   setFollowers: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-
+  const [isHiddenFollowers, setIsHiddenFollowers] = useState(true)
   const { setChange } = useChangeProfile()
 
   useEffect(() => {
@@ -42,6 +43,16 @@ export const SectionProfile = ({
       />
     );
   };
+
+  const DivProfile = ({children, className}: {children : React.ReactNode, className : string | undefined}) => {
+
+    className = className !== undefined ? className :"flex  text-sm flex-col  hover:text-white/40 cursor-pointer justify-center items-center"
+    return(
+      <div onClick={() => setIsHiddenFollowers(false)} className={className}>
+        {children}
+      </div>
+    )
+  }
 
 
   const ButtonProfile = () => {
@@ -70,6 +81,7 @@ export const SectionProfile = ({
 
   return (
     <section className="flex  lg:mb-5 p-2 lg:p-0  mt-24 w-full flex-col md:flex-row lg:flex-row h-auto gap-3 lg:gap-x-5 rounded-lg  max-w-[657px]">
+      <FullScreenFollowersFollowed isHidden={isHiddenFollowers} setIsHidden={setIsHiddenFollowers} username={user.username} />
       <article className="flex gap-3 md:w-[60%] p-5 rounded-lg bg-[#1B2730]  items-start">
         <img
           className="size-24 ml-2 rounded-full object-cover"
@@ -82,24 +94,24 @@ export const SectionProfile = ({
             <span className="text-sm text-slate-400/85">
               @{user.username}
             </span>
-            {Boolean(user.is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}
+            {Boolean(user.is_verified) && <IconRosetteDiscountCheckFilled size={30} color="#1DA1F3" />}
           </div>
           <section className="flex gap-3 flex-col ">
             <div className="flex gap-3 flex-col">
               <p className="text-base text-slate-400">{user.description}</p>
               <div className="flex gap-3 ">
-                <div className="flex gap-3 flex-col text-sm items-center justify-center">
+                <DivProfile className={undefined} >
                   <h2>Followers</h2>
                   <h2 id="followers">{followers}</h2>
-                </div>
-                <div className="flex gap-3 text-sm flex-col justify-center items-center">
+                </DivProfile>
+                <DivProfile className="flex px-1  hover:text-white/40 hover:cursor-pointer border-white/10 border-x-2 text-sm flex-col justify-center items-center">
                   <h2>Followed</h2>
                   <h2>{user.followed}</h2>
-                </div>
-                <div className="flex gap-3 text-sm flex-col justify-center items-center">
+                </DivProfile>
+                <DivProfile className={undefined}>
                   <h2>Posts</h2>
                   <h2>{user.posts}</h2>
-                </div>
+                </DivProfile>
               </div>
               <div className="flex gap-3 w-full items-start">
               <ButtonProfile />
