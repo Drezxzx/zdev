@@ -17,7 +17,7 @@ export default function LanguajeSelector({ clasName, email, name, text, isEdit }
     const [selectedNumber, setSelectedNumber] = useState<number>(0)
     const { data: session } = useSession()
     const router = useRouter()
-    const initialLanguages = languajes.filter((lang, i) => i <= 15 && lang.id !== 2000)
+    const initialLanguages = languajes.filter((lang, i) => i <= 12 && lang.id !== 2000)
     const [filteredLanguages, setFilteredLanguages] = useState(initialLanguages)
     const [selectedLanguajes, setSelectedLanguajes] = useState<Language[]>([])
 

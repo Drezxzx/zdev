@@ -24,6 +24,7 @@ export const SectionProfile = ({
 }) => {
   const [isHiddenFollowers, setIsHiddenFollowers] = useState(true)
   const { setChange } = useChangeProfile()
+  const [isInFollowers, setIsInFollowers] = useState(true); // true = Followers, false = Followed
 
   useEffect(() => {
     setChange(false)
@@ -44,11 +45,20 @@ export const SectionProfile = ({
     );
   };
 
-  const DivProfile = ({children, className}: {children : React.ReactNode, className : string | undefined}) => {
+  
+
+  const DivProfile = ({children, className, id}: {children : React.ReactNode, className : string | undefined, id : string}) => {
+    
+    const handlerClick = () => {
+      if (id === "followers") setIsInFollowers(true)
+      else if (id === "followed") setIsInFollowers(false)
+      
+        setIsHiddenFollowers(false)
+    }
 
     className = className !== undefined ? className :"flex  text-sm flex-col  hover:text-white/40 cursor-pointer justify-center items-center"
     return(
-      <div onClick={() => setIsHiddenFollowers(false)} className={className}>
+      <div id={id} onClick={handlerClick} className={className}>
         {children}
       </div>
     )
@@ -81,7 +91,7 @@ export const SectionProfile = ({
 
   return (
     <section className="flex  lg:mb-5 p-2 lg:p-0  mt-24 w-full flex-col md:flex-row lg:flex-row h-auto gap-3 lg:gap-x-5 rounded-lg  max-w-[657px]">
-      <FullScreenFollowersFollowed isHidden={isHiddenFollowers} setIsHidden={setIsHiddenFollowers} username={user.username} />
+      <FullScreenFollowersFollowed isInFollowers={isInFollowers} setIsInFollowers={setIsInFollowers} isHidden={isHiddenFollowers} setIsHidden={setIsHiddenFollowers} username={user.username} />
       <article className="flex gap-3 md:w-[60%] p-5 rounded-lg bg-[#1B2730]  items-start">
         <img
           className="size-24 ml-2 rounded-full object-cover"
@@ -100,15 +110,15 @@ export const SectionProfile = ({
             <div className="flex gap-3 flex-col">
               <p className="text-base text-slate-400">{user.description}</p>
               <div className="flex gap-3 ">
-                <DivProfile className={undefined} >
+                <DivProfile id="followers" className={undefined} >
                   <h2>Followers</h2>
                   <h2 id="followers">{followers}</h2>
                 </DivProfile>
-                <DivProfile className="flex px-1  hover:text-white/40 hover:cursor-pointer border-white/10 border-x-2 text-sm flex-col justify-center items-center">
+                <DivProfile className="flex px-1  hover:text-white/40 hover:cursor-pointer border-white/10 border-x-2 text-sm flex-col justify-center items-center" id="followed">
                   <h2>Followed</h2>
                   <h2>{user.followed}</h2>
                 </DivProfile>
-                <DivProfile className={undefined}>
+                <DivProfile id="posts" className={undefined}>
                   <h2>Posts</h2>
                   <h2>{user.posts}</h2>
                 </DivProfile>

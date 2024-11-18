@@ -92,10 +92,10 @@ export default function FullScreenNotifications({ userEmail, notifications, setN
 
                     <h1 className="text-2xl flex gap-x-24 justify-between  items-center font-bold text-center">
                         Notifications
-                        <span className="px-1 py-1 cursor-pointer rounded-lg flex gap-1 items-center text-sm bg-red-600" onClick={handleDeleteAll}>
+                        {notifications.length > 1 && <span className="px-1 py-1 cursor-pointer rounded-lg flex gap-1 items-center text-sm bg-red-600" onClick={handleDeleteAll}>
                             <IconTrash size={20} color="#C7D6E6" />
                             clear
-                        </span>
+                        </span>}
                     </h1>
                     <ul id="notifications" className="flex relative bg-containers-rounded md:w-1/2 max-h-[22rem] h-[22rem] w-full  lg:max-w-1/2 lg:w-[30%] border border-slate-400/60 rounded-lg flex-col gap-4 p-2 overflow-y-scroll  items-center">
                         {notifications.length > 0 && notifications.map((notification, i) => (

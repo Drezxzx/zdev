@@ -7,14 +7,13 @@ import { FollowData } from "../types/type";
 import Link from "next/link";
 import { IconRosetteDiscountCheckFilled, IconX } from "@tabler/icons-react";
 
-export default function FullScreenFollowersFollowed({ username, isHidden, setIsHidden }: { username: string, isHidden : boolean, setIsHidden: React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function FullScreenFollowersFollowed({ username, isHidden, setIsHidden, isInFollowers, setIsInFollowers }: { username: string, isHidden : boolean, setIsHidden: React.Dispatch<React.SetStateAction<boolean>>, isInFollowers: boolean, setIsInFollowers: React.Dispatch<React.SetStateAction<boolean>>}) {
     const [page, setPage] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
-    const [hasMoreFollowers, setHasMoreFollowers] = useState(true);
-    const [hasMoreFollowed, setHasMoreFollowed] = useState(true);
+    const [hasMoreFollowers, setHasMoreFollowers] = useState(false);
+    const [hasMoreFollowed, setHasMoreFollowed] = useState(false);
     const [followers, setFollowers] = useState<FollowData["followers"]>([]);
     const [followed, setFollowed] = useState<FollowData["followed"]>([]);
-    const [isInFollowers, setIsInFollowers] = useState(true); // true = Followers, false = Followed
     const elementsPerPage = 1;
 
     useEffect(() => {
@@ -36,9 +35,9 @@ export default function FullScreenFollowersFollowed({ username, isHidden, setIsH
             if (res) {
                 console.log(res, page)
                     setFollowers((prev) => [...prev, ...res.followers]);
-                    if (res.followers.length < elementsPerPage) setHasMoreFollowers(false);
+                    if (res.followers.length === elementsPerPage) setHasMoreFollowers(true);
                     setFollowed((prev) => [...prev, ...res.followed]);
-                    if (res.followed.length < elementsPerPage) setHasMoreFollowed(false);
+                    if (res.followed.length === elementsPerPage) setHasMoreFollowed(true);
             }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -58,7 +57,8 @@ export default function FullScreenFollowersFollowed({ username, isHidden, setIsH
     const RenderFollowersFollowed = () => {
         const dataToRender = isInFollowers ? followers : followed;
         const hasMore = isInFollowers ? hasMoreFollowers : hasMoreFollowed;
-
+        console.log(hasMore);
+        
         return (
             <>
                 {dataToRender.length > 0 ? (
