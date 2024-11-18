@@ -11,7 +11,6 @@ import LanguajeSelector from "./LanguajeSelector";
 export default function EditProfile({ user }: { user: DataUser }) {
     const router = useRouter()
     const { setChange, isChange } = useChangeProfile()
-    console.log("isChange", isChange)
     const [isHidden, setIsHidden] = useState(true);
     const [image, setImage] = useState<File | string>(user.profile_pic);
     const {setUsernameContex} = useUser();
@@ -24,7 +23,7 @@ export default function EditProfile({ user }: { user: DataUser }) {
 
     const handleChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const id = e.target.id;
-        if(e.target.value.length > 30){
+        if(e.target.value.length > 55){
             toast.info("The description cannot have more than 30 characters", {
                 style : {
                     backgroundColor : "#1B2730",
