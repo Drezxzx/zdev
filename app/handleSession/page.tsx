@@ -55,7 +55,7 @@ export default function HandleSession() {
 
   return (
     
-    // isInserted &&
+     isInserted &&
     <LanguajeSelector isEdit={false} name={session?.user?.name as string} text="Selecciona tus lenguage favorito" clasName=" w-screen max-h-screen h-screen flex-col gap-2 mt-6  flex   items-center" email={session?.user?.email as string}/>
     
   ); 
