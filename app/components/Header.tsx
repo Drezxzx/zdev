@@ -71,7 +71,6 @@ export default function HeaderDesktop() {
       return (
         <div className="border-l-2 flex justify-end pl-2 items-center border-slate-500/80 h-[80%]">
           <HeaderSkeleton />
-        <li title="Cerrar sesión" className="cursor-pointer hover:scale-105 transition-all" onClick={() => { signOut({ callbackUrl: "/" }) }}><IconLogout size={25} color="#C7D6E6" /></li>
       </div>
       );
     } else {
