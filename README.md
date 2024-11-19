@@ -16,13 +16,4 @@
 - **Authentication**: NextAuth with providers like GitHub, Google, and LinkedIn.
 - **Styling**: Tailwind CSS for a modern and responsive design.
 
-## 📂 Project Structure
-```bash
-zdev/
-├── public/             # Static and public files
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/          # Application routes
-│   ├── api/            # API endpoints
-│   ├── hooks/          # Custom hooks
-└── README.md           # Project documentation
+
