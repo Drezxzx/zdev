@@ -94,6 +94,7 @@ export const SectionProfile = ({
       <FullScreenFollowersFollowed isInFollowers={isInFollowers} setIsInFollowers={setIsInFollowers} isHidden={isHiddenFollowers} setIsHidden={setIsHiddenFollowers} username={user.username} />
       <article className="flex gap-3 md:w-[60%] p-5 rounded-lg bg-[#1B2730]  items-start">
         <div className="w-24 h-24 rounded-full overflow-hidden">
+          
           <img
             className="h-full w-full object-cover"
             src={user.profile_pic as string}
