@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Like from "../libs/like";
 import { userComents } from "../types/type";
-import FullScreenCode from "./FullScreenCode";
 import FullScreenLikes from "./FullScreenLikes";
 import { useUser } from "../context/changeProfile";
 

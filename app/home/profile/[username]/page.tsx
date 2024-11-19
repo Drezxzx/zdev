@@ -1,9 +1,9 @@
 "use client";
 import { getUser, getUserByEmail } from "@/app/libs/user";
 import { useSession } from "next-auth/react";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Posts from "@/app/components/Posts";
-import { useChangeProfile } from "@/app/context/changeProfile"
+import { useChangeProfile, useUser } from "@/app/context/changeProfile"
 import { DataLanguage, DataUser, type PostsType } from "@/app/types/type";
 import { SectionProfile } from "@/app/components/SectionProfile";
 import React from "react";

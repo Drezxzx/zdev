@@ -101,3 +101,16 @@ export async function getFollowersFollowed({username, page} : {username : string
         return {followers: [], followed: []}
     }
 }
+
+export async function userPresentation (username: string) {
+    const res = await fetch(`/api/users/firsTimeLogin?username=${username}`)
+    return await res.json() as boolean
+}
+
+export async function createPresentation({data} : {data : FormData}) {
+    const res = await fetch(`/api/users/firsTimeLogin`, {
+        method: "POST",
+        body: data
+    });
+    return await res.json() as boolean
+}

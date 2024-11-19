@@ -25,7 +25,9 @@ export async function POST(req: Request) {
         
 
         const inser = await client.execute({ sql: query, args: [name, email, profile_pic, username] });
-        console.log(inser);
+
+        await client.execute({ sql: "INSERT INTO users_presentation (idUser) VALUES ((SELECT id FROM users WHERE username = ?));", args: [username] });
+        
         return Response.json({ success: inser.rowsAffected > 0 ? true : false });
     } catch (error) {
         console.error(error);
