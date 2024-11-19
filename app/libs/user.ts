@@ -114,3 +114,10 @@ export async function createPresentation({data} : {data : FormData}) {
     });
     return await res.json() as boolean
 }
+
+export async function deletePresentation({username} : {username : string}) {
+    const res = await fetch(`/api/users/firsTimeLogin?username=${username}`, {
+        method: "DELETE"
+    });
+    return await res.json() as boolean
+}

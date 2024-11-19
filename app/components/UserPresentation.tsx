@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import { languajes } from "../libs/languajes";
-import { Language } from "../types/type";
-import { useUser } from "../context/changeProfile";
+import { useChangeProfile, useUser } from "../context/changeProfile";
 import Portal from "./Portal";
 import { IconX } from "@tabler/icons-react";
-import { createPresentation, userPresentation } from "../libs/user";
+import { createPresentation, deletePresentation, userPresentation } from "../libs/user";
 import { toast } from "sonner";
-import { PostsClass } from "../libs/Posts";
 
 export default function UserPresentation() {
     const { email, usernameContex } = useUser();
+    const {isChangePost, setChangePost} = useChangeProfile();
     const [isHidden, setIsHidden] = useState(true);
     const [description, setDescription] = useState("");
     const [needPresentation, setNeedPresentation] = useState(false);
@@ -19,7 +17,6 @@ export default function UserPresentation() {
 
         userPresentation(usernameContex).then(res => {
             setNeedPresentation(res)
-            console.log(res)
             setIsHidden(false)
         })
 
@@ -49,7 +46,30 @@ export default function UserPresentation() {
                 background: "#1B2730",
                 color: "#C7D6E6",
             },
-            success: () => "Presentation created 🎉",
+            success: () => {
+                setIsHidden(true)
+                setChangePost(!isChangePost)
+                return("Presentation created 🎉")
+            },
+            error: (error) => error 
+        })
+        
+    }
+
+    const handLerDelete = async () => {
+
+        toast.promise(deletePresentation({username : usernameContex}), {
+            loading : 'Deleting the presentation...',
+            style : {
+                background: "#1B2730",
+                color: "#C7D6E6",
+            },
+            success: () => {
+                setIsHidden(true)
+                setChangePost(!isChangePost)
+                return("This messeage wont be shown again")
+            
+            },
             error: (error) => error 
         })
         
@@ -62,7 +82,8 @@ export default function UserPresentation() {
                         <IconX className="cursor-pointer absolute top-2 right-2 hover:scale-105 transition-all" onClick={() => setIsHidden(true)} size={25} color="white" />
                     <div className="flex  justify-center gap-4 items-center w-[70%] h-full flex-col">
                     <h1 className="md:text-2xl text-xl  font-bold">Welcome <span className="text-emerald-600">{usernameContex}</span> 👋🏻</h1>
-                        <p className="text-sm text-slate-400/90">Add a description of yourself and introduce yourself to the community.</p>
+                        <p className="text-sm text-slate-400/90">Add a description of yourself and introduce yourself to the community, you can change your description at any time in your profile.</p>
+                        <p onClick={handLerDelete} className="text-xs hover:underline cursor-pointer text-slate-400/80">Don´t show this message again.</p>
                         <form className="flex w-full h-[50%] items-center justify-start flex-col gap-2" >
                             <textarea className="w-full h-[50%] p-2 bg-[#1B2730] border resize-none focus:outline-none border-white/10 text-white font-semibold text-base" name="description" onChange={(e)=>setDescription(e.target.value)} maxLength={55} rows={50}  placeholder="Write your description" />
                             <button className="py-2 px-3 hover:scale-105 hover:saturate-50 transition-all bg-emerald-600 mt-2 text-white font-semibold rounded-md" onClick={handLerSubmit}>Confirm</button>

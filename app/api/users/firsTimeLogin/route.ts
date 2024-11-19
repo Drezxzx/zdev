@@ -30,19 +30,19 @@ export async function POST(req: Request) {
         {
           "id": 1,
           "name": "python",
-          "helloWorld": "print('HI zdev')"
+          "helloWorld": "print('Hi zdev')"
         },
         {
           "id": 2,
           "name": "javascript",
-          "helloWorld": "console.log('HI zdev')"
+          "helloWorld": "console.log('Hi zdev')"
         },
         {
           "id": 3,
           "name": "java",
           "helloWorld": `public class Main {
           public static void main(String[] args) {
-              System.out.println("HI zdev");
+              System.out.println("Hi zdev");
           }
         }`
         },
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       using namespace std;
       
       int main() {
-          cout << "HI zdev" << endl;
+          cout << "Hi zdev" << endl;
           return 0;
       }`
         },
@@ -64,20 +64,20 @@ export async function POST(req: Request) {
       
       class Program {
           static void Main() {
-              Console.WriteLine("HI zdev");
+              Console.WriteLine("Hi zdev");
           }
       }`
         },
         {
           "id": 6,
           "name": "ruby",
-          "helloWorld": `puts 'HI zdev'`
+          "helloWorld": `puts 'Hi zdev'`
         },
         {
           "id": 7,
           "name": "php",
           "helloWorld": `<?php
-      echo 'HI zdev';
+      echo 'Hi zdev';
       ?>`
         },
         {
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
           "name": "swift",
           "helloWorld": `import Foundation
       
-      print("HI zdev")`
+      print("Hi zdev")`
         },
         {
           "id": 9,
@@ -95,20 +95,20 @@ export async function POST(req: Request) {
       import "fmt"
       
       func main() {
-          fmt.Println("HI zdev")
+          fmt.Println("Hi zdev")
       }`
         },
         {
           "id": 10,
           "name": "kotlin",
           "helloWorld": `fun main() {
-          println("HI zdev")
+          println("Hi zdev")
         }`
         },
         {
           "id": 12,
           "name": "typescript",
-          "helloWorld": `console.log('HI zdev')`
+          "helloWorld": `console.log('Hi zdev')`
         }
       ];
       
@@ -155,6 +155,26 @@ export async function POST(req: Request) {
                 return NextResponse.json(false, { status: 200 });
             }
         }
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+        });
+    }
+}
+
+export async function DELETE(req: Request) {
+    const url = new URL(req.url);
+    const username = url.searchParams.get("username");
+
+    try {
+        const res = await client.execute({
+            sql: `DELETE FROM users_presentation WHERE idUser = (SELECT id FROM users WHERE username = ?)`,
+            args: [username]
+        })
+
+        return NextResponse.json(res.rowsAffected > 0, { status: 200 });
     } catch (error) {
         console.error(error);
         return NextResponse.json({
