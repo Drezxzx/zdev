@@ -100,7 +100,6 @@ export default function CreateProyect({
                                 type="text"
                                 maxLength={20}
                                 name="nameProyect"
-                                placeholder="Nombre del proyecto"
                                 required
                                 value={projectData.nameProyect}
                                 onChange={handleInputChange}
@@ -112,7 +111,6 @@ export default function CreateProyect({
                                 className="w-full p-2 mt-1 bg-transparent focus:outline-none border-slate-400/60 text-white border rounded"
                                 name="description"
                                 maxLength={150}
-                                placeholder="Descripción del proyecto"
                                 value={projectData.description}
                                 onChange={handleInputChange}
                                 required
@@ -125,7 +123,7 @@ export default function CreateProyect({
                                 className="w-full focus:outline-none p-2 mt-1 bg-transparent border-slate-400/60 text-white border rounded"
                                 type="url"
                                 name="gitRepository"
-                                placeholder="URL del repositorio"
+                                placeholder="URL of the repository"
                                 value={projectData.gitRepository}
                                 onChange={handleInputChange}
                                 />
@@ -136,7 +134,7 @@ export default function CreateProyect({
                                     className="w-full p-2 mt-1 focus:outline-none bg-transparent border-slate-400/60 text-white border rounded"
                                     type="url"
                                     name="previewLink"
-                                    placeholder="URL de la demo"
+                                    placeholder="URL to preview"
                                     value={projectData.previewLink}
                                     onChange={handleInputChange}
                                 />
