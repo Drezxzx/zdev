@@ -45,19 +45,19 @@ export const SectionProfile = ({
     );
   };
 
-  
 
-  const DivProfile = ({children, className, id}: {children : React.ReactNode, className : string | undefined, id : string}) => {
-    
+
+  const DivProfile = ({ children, className, id }: { children: React.ReactNode, className: string | undefined, id: string }) => {
+
     const handlerClick = () => {
       if (id === "followers") setIsInFollowers(true)
       else if (id === "followed") setIsInFollowers(false)
-      
-        setIsHiddenFollowers(false)
+
+      setIsHiddenFollowers(false)
     }
 
-    className = className !== undefined ? className :"flex  text-sm flex-col  hover:text-white/40 cursor-pointer justify-center items-center"
-    return(
+    className = className !== undefined ? className : "flex  text-sm flex-col  hover:text-white/40 cursor-pointer justify-center items-center"
+    return (
       <div id={id} onClick={handlerClick} className={className}>
         {children}
       </div>
@@ -76,15 +76,15 @@ export const SectionProfile = ({
     }
 
     return (
-      
-        <ButtonFollowUnfollow
-          followedUser={user.username}
-          followers={user.followers}
-          setNumberFollowers={setFollowers}
-        />
 
-        
-      
+      <ButtonFollowUnfollow
+        followedUser={user.username}
+        followers={user.followers}
+        setNumberFollowers={setFollowers}
+      />
+
+
+
 
     );
   };
@@ -93,11 +93,14 @@ export const SectionProfile = ({
     <section className="flex  lg:mb-5 p-2 lg:p-0  mt-24 w-full flex-col md:flex-row lg:flex-row h-auto gap-3 lg:gap-x-5 rounded-lg  max-w-[657px]">
       <FullScreenFollowersFollowed isInFollowers={isInFollowers} setIsInFollowers={setIsInFollowers} isHidden={isHiddenFollowers} setIsHidden={setIsHiddenFollowers} username={user.username} />
       <article className="flex gap-3 md:w-[60%] p-5 rounded-lg bg-[#1B2730]  items-start">
-        <img
-          className="size-24 ml-2 rounded-full object-cover"
-          src={user.profile_pic as string}
-          alt={`imagen de perfil de ${user.username}`}
-        />
+        <div className="w-24 h-24 rounded-full overflow-hidden">
+          <img
+            className="h-full w-full object-cover"
+            src={user.profile_pic as string}
+            alt={`imagen de perfil de ${user.username}`}
+          />
+        </div>
+
         <article className="flex-col ">
           <div className="flex justify-start m-1 items-center gap-2">
             <h1 className="text-2xl font-bold gap-2 flex justify-center items-center ">{user.name}</h1>
@@ -124,8 +127,8 @@ export const SectionProfile = ({
                 </DivProfile>
               </div>
               <div className="flex gap-3 w-full items-start">
-              <ButtonProfile />
-              <ProyectsUser isMe={isMe} username={user.username} />
+                <ButtonProfile />
+                <ProyectsUser isMe={isMe} username={user.username} />
               </div>
             </div>
           </section>
