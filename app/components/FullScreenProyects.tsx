@@ -66,7 +66,7 @@ export default function FullScreenProyects({ username, proyects, setProjects }: 
                                     <Beadge href={proyect.previewLink}> Preview <IconLink size={20} /></Beadge>
                                 </div>
                                 <div className="md:w-[541px] w-[323px] h-[323px] md:h-[344.047px]">
-                                    <img className="w-full h-full object-contain md:object-cover" src={proyect.preview} alt="Preview" />
+                                    <img className="w-full h-full object-contain " src={proyect.preview} alt="Preview" />
                                 </div>
 
                             </div>
