@@ -45,7 +45,7 @@ export default function SuggestionsSection() {
                     <h1 className="text-2xl font-bold">Suggestions</h1>
                     {suggestions.map(sug => (
                         <Link href={`/home/profile/${sug.username}`} key={sug.username} className="flex w-full hover:underline items-center gap-1 justify-start">
-                            <img className="size-14 rounded-full object-contain" src={sug.profile_pic} alt={`imagen de ${sug.name}`} />
+                            <img className="size-14 rounded-full object-cover" src={sug.profile_pic} alt={`imagen de ${sug.name}`} />
                             <div className="flex items-center flex-col gap-2"> 
                                 <h3 className="text-base flex gap-2 font-medium text-[#7B8A9E]">{sug.username} {Boolean(sug.is_verified) && <IconRosetteDiscountCheckFilled size={20} color="#1DA1F3" />}</h3></div>
 
