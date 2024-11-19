@@ -17,7 +17,7 @@
 - **Styling**: Tailwind CSS for a modern and responsive design.
 
 ## 📄 License
-Copyright (c) 2024 [Tu Nombre o Empresa].  
+Copyright (c) 2024 [ZDEV].  
 
 Permission is not granted to use, copy, modify, or distribute this software for any purpose. All rights reserved.
 
