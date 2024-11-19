@@ -1,4 +1,4 @@
-# zDev - The Social Network for Developers
+# zdev - The Social Network for Developers
 
 **zDev** is a platform exclusively designed for developers, aimed at facilitating interaction, learning, and collaboration on programming projects. Here, you can share code snippets, start discussions, discover new projects, and much more.
 
