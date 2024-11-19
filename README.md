@@ -16,4 +16,6 @@
 - **Authentication**: NextAuth with providers like GitHub, Google, and LinkedIn.
 - **Styling**: Tailwind CSS for a modern and responsive design.
 
+##Preview
+![zDev Screenshot](./project7.png)
 
