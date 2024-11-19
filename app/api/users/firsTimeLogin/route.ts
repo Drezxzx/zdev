@@ -30,19 +30,19 @@ export async function POST(req: Request) {
         {
           "id": 1,
           "name": "python",
-          "helloWorld": "print('Hola Mundo')"
+          "helloWorld": "print('HI zdev')"
         },
         {
           "id": 2,
           "name": "javascript",
-          "helloWorld": "console.log('Hola Mundo')"
+          "helloWorld": "console.log('HI zdev')"
         },
         {
           "id": 3,
           "name": "java",
           "helloWorld": `public class Main {
           public static void main(String[] args) {
-              System.out.println("Hola Mundo");
+              System.out.println("HI zdev");
           }
         }`
         },
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       using namespace std;
       
       int main() {
-          cout << "Hola Mundo" << endl;
+          cout << "HI zdev" << endl;
           return 0;
       }`
         },
@@ -64,20 +64,20 @@ export async function POST(req: Request) {
       
       class Program {
           static void Main() {
-              Console.WriteLine("Hola Mundo");
+              Console.WriteLine("HI zdev");
           }
       }`
         },
         {
           "id": 6,
           "name": "ruby",
-          "helloWorld": `puts 'Hola Mundo'`
+          "helloWorld": `puts 'HI zdev'`
         },
         {
           "id": 7,
           "name": "php",
           "helloWorld": `<?php
-      echo 'Hola Mundo';
+      echo 'HI zdev';
       ?>`
         },
         {
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
           "name": "swift",
           "helloWorld": `import Foundation
       
-      print("Hola Mundo")`
+      print("HI zdev")`
         },
         {
           "id": 9,
@@ -95,20 +95,20 @@ export async function POST(req: Request) {
       import "fmt"
       
       func main() {
-          fmt.Println("Hola Mundo")
+          fmt.Println("HI zdev")
       }`
         },
         {
           "id": 10,
           "name": "kotlin",
           "helloWorld": `fun main() {
-          println("Hola Mundo")
+          println("HI zdev")
         }`
         },
         {
           "id": 12,
           "name": "typescript",
-          "helloWorld": `console.log('Hola Mundo')`
+          "helloWorld": `console.log('HI zdev')`
         }
       ];
       
