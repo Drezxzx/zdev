@@ -71,7 +71,7 @@ export default function FullScreenFollowersFollowed({ username, isHidden, setIsH
                             <img
                                 src={item.profile_pic}
                                 alt="Imagen de usuario"
-                                className="size-10 object-contain rounded-full"
+                                className="size-10 object-cover rounded-full"
                             />
                             <h2 className="text-slate-400/80 hover:text-slate-200">
                                 {item.username}
