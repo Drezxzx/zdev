@@ -17,6 +17,7 @@ export default function Home() {
       const page = 0
       const elementsPerPage = 5
       const res = PostsClass.getPosts(elementsPerPage.toString(), page.toString())
+      setIsLoading(true)
      setPosts([])
       res.then((data) => {
         console.log({data})
@@ -26,6 +27,7 @@ export default function Home() {
         .catch(err =>{
           console.error(err);
         });
+       
     }
   }, [isChange, isChangePost]);
 
