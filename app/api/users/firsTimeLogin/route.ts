@@ -47,17 +47,6 @@ export async function POST(req: Request) {
         }`
         },
         {
-          "id": 4,
-          "name": "c++",
-          "helloWorld": `#include <iostream>
-      using namespace std;
-      
-      int main() {
-          cout << "Hi zdev" << endl;
-          return 0;
-      }`
-        },
-        {
           "id": 5,
           "name": "c#",
           "helloWorld": `using System;
@@ -124,7 +113,7 @@ export async function POST(req: Request) {
             sql: `SELECT profile_pic FROM users WHERE username = ?`,
             args: [username]
         })
-        const numberRandom = Math.floor(Math.random() * 10)
+        const numberRandom = Math.floor(Math.random() * 12)
         const languaje = languages.find(lang => lang.id === numberRandom)
         console.log(username, description, profile_pic.rows[0].profile_pic as string, languaje?.id as number, languaje?.helloWorld as string)
         if (updateUser.rowsAffected > 0) {
