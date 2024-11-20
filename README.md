@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# zdev - The Social Network for Developers
 
-## Getting Started
+**zDev** is a platform exclusively designed for developers, aimed at facilitating interaction, learning, and collaboration on programming projects. Here, you can share code snippets, start discussions, discover new projects, and much more.
 
-First, run the development server:
+## 🚀 Key Features
+- **Share Code**: Publish code snippets and get feedback from the community.
+- **Technical Discussions**: Create or join conversations on development topics.
+- **Recommendation System**: Tailored to your favorite programming languages.
+- **Project Management**: Share your projects with the community, including repository links and previews.
+- **Efficient Pagination**: Implemented in all API routes for optimal performance.
+- **Real-Time Notifications**: Stay informed about updates, comments, and relevant activities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Technologies Used
+- **Frontend**: [Next.js](https://nextjs.org/)
+- **Database**: [Turso DB](https://turso.tech/)
+- **Authentication**: NextAuth with providers like GitHub, Google, and LinkedIn.
+- **Styling**: Tailwind CSS for a modern and responsive design.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📄 License
+Copyright (c) 2024 [ZDEV].  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Permission is not granted to use, copy, modify, or distribute this software for any purpose. All rights reserved.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
